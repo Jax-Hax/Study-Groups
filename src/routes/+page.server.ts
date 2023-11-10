@@ -2,16 +2,10 @@ import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, locals: { supabase, getSession }}) {
   const session = await getSession()
-
+  console.log(session)
 	if (session) {
 	  throw redirect(302, '/dashboard')
-	}
-  const code = url.searchParams.get('code')
-	if (code) {
-		const { error } = await supabase.auth.verifyOtp({ token_hash: code, type: 'invite'})
-		if (error) console.log(error.message);
-    throw redirect(302, '/dashboard');
-	}
+  }
 }
 export const actions = {
   signup: async ({ request, url, locals: { supabase } }) => {
@@ -25,7 +19,7 @@ export const actions = {
       email,
       password,
       options: {
-        emailRedirectTo: `${url.origin}/auth/callback`,
+        emailRedirectTo: `${url.origin}/auth/confirm`,
       },
     })
 
@@ -54,6 +48,6 @@ export const actions = {
       return fail(422, { message: error.message, success: false, email })
     }
 
-    throw redirect(302, `/auth/callback`)
+    throw redirect(302, `/auth/confirm`)
   },
 }
