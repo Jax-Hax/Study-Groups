@@ -20,9 +20,36 @@
 <html lang="en">
 	<style>
 		:root {
-			--green: #26b54c;
-			--dark-green: #219c41;
+			--pop: #005b96;
+			--dark-pop: #219c41;
+            --highlight-pop: #005b96;
+            --background-1-darkest: #121212;
+            --background-2: #1e1e1e;
+            --background-3: #232323;
+            --background-4: #252525;
+            --background-5: #272727;
+            --background-6: #2c2c2c;
+            --background-7: #2e2e2e;
+            --background-8: #333333;
+            --background-9: #363636;
+            --background-10-lightest: #383838;
+            --text-color: white;
 		}
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Dark mode variables go here */
+                --background-1-darkest: #121212;
+                --background-2: #1e1e1e;
+                --background-3: #232323;
+                --background-4: #252525;
+                --background-5: #272727;
+                --background-6: #2c2c2c;
+                --background-7: #2e2e2e;
+                --background-8: #333333;
+                --background-9: #363636;
+                --background-10-lightest: #383838;
+            }
+        }
 		* {
 			margin: 0;
 			padding: 0;
@@ -38,7 +65,7 @@
 			letter-spacing: -3px;
 		}
 		.bouncyButton {
-			background-color: var(--green);
+			background-color: var(--pop);
 			border: none;
 			color: white;
 			padding: 1em 2em;
@@ -52,7 +79,7 @@
 		.bouncyButton:hover {
 			background-color: white;
 			box-shadow: 0 3px;
-			color: var(--green);
+			color: var(--pop);
 			transform: translateY(-0.25em);
 			transition: transform 0.25s;
 			border-width: 1px;

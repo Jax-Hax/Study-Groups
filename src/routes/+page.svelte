@@ -48,7 +48,7 @@
 		transition: all 0.3s ease 0s;
 	}
 	header a:hover {
-		color: var(--green);
+		color: var(--pop);
 		text-decoration: underline;
 	}
 	@media screen and (max-width: 585px) {
@@ -61,26 +61,26 @@
 	}
 	#loginButton {
 		background-color: white;
-		color: var(--green);
+		color: var(--pop);
 		cursor: pointer;
 		margin: -1px;
-		border: 1px solid var(--green);
+		border: 1px solid var(--pop);
 	}
 	#loginButton:hover {
-		background-color: #2bcf57;
+		background-color: var(--highlight-pop);
 		color: white;
 		transform: none;
 		transition: none;
 	}
 	#signupButton {
-		background-color: var(--green);
+		background-color: var(--pop);
 		color: white;
 		cursor: pointer;
 		border: none;
 		margin-right: 0.51em;
 	}
 	#signupButton:hover {
-		background-color: var(--dark-green);
+		background-color: var(--dark-pop);
 		color: white;
 	}
 	body {

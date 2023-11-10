@@ -4,10 +4,9 @@
 
 <div id="attention">
 	<div>
-		<h1>StockShare - Simulated Stock Competitions</h1>
+		<h1>___ - Everything Canvas can't give you</h1>
 		<p>
-			Invite your family and friends to a free stock competition, where you can invest fake money
-			into stocks to learn about the market.
+			Agendas for all classes (tests, quizzes, assignments, projects, etc), study material, study groups, a summary of the announcements/list of clubs, StudentVue grades, and more!
 		</p>
 		<button on:click={() => (showSignup = true)} class="bouncyButton"> Sign up </button>
 	</div>
