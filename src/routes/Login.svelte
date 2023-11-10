@@ -61,7 +61,7 @@
 		max-width: 20em;
 		margin: auto;
 		flex-direction: column;
-		color: white;
+		color: var(--text-color);
 		border-radius: 2em;
 	}
 	input:invalid {
@@ -81,20 +81,20 @@
 		max-width: 380px;
 		border: none;
 		border-radius: 1em;
-		background-color: #272727;
+		background-color: var(--background-5);
 	}
 	h1,
 	p,
 	label,
 	span {
-		color: white;
+		color: var(--text-color);
 	}
 	input {
 		padding: 0.75em 1em 0.75em;
 		border: 0.1em solid #46c759;
 		border-radius: 16px;
-		background-color: #121212;
-		color: white;
+		background-color: var(--background-1-darkest);
+		color: var(--text-color);
 		font-size: 18px;
 	}
 	.already {
@@ -102,7 +102,7 @@
 		text-align: center;
 	}
 	.already:hover {
-		color: var(--green);
+		color: var(--pop);
 		text-decoration: underline;
 	}
 	input::placeholder {

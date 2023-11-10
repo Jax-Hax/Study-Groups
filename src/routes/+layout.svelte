@@ -21,7 +21,7 @@
 	<style>
 		:root {
 			--pop: #005b96;
-			--dark-pop: #219c41;
+			--dark-pop: #011f4b;
             --highlight-pop: #005b96;
             --background-1-darkest: #121212;
             --background-2: #1e1e1e;
@@ -33,7 +33,7 @@
             --background-8: #333333;
             --background-9: #363636;
             --background-10-lightest: #383838;
-            --text-color: white;
+            --text-color: dark;
 		}
         @media (prefers-color-scheme: dark) {
             :root {
@@ -48,6 +48,7 @@
                 --background-8: #333333;
                 --background-9: #363636;
                 --background-10-lightest: #383838;
+                --text-color: white;
             }
         }
 		* {

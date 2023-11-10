@@ -21,22 +21,22 @@
 
 <style>
 	#attention {
-		background: #232323;
+		background: var(--background-3);
 		position: relative;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		padding: 10em 4vw;
 		justify-content: space-between;
-		color: white;
+		color: var(--text-color);
 		gap: 1rem;
 	}
 	#attention h1 {
 		font-size: max(4.5vw, 4em);
-		color: white;
+		color: var(--text-color);
 	}
 	#attention p {
-		color: white;
+		color: var(--text-color);
 		font-size: 1.5rem;
 		padding-bottom: 2em;
 	}

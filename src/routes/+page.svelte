@@ -40,11 +40,11 @@
 		justify-content: space-between;
 		padding: 0.5em;
 		align-items: center;
-		background-color: #2c2c2c;
+		background-color: var(--background-6);
 	}
 	header a {
 		text-decoration: none;
-		color: white;
+		color: var(--text-color);
 		transition: all 0.3s ease 0s;
 	}
 	header a:hover {
@@ -60,7 +60,7 @@
 		padding: 0.75em 2em;
 	}
 	#loginButton {
-		background-color: white;
+		background-color: var(--text-color);
 		color: var(--pop);
 		cursor: pointer;
 		margin: -1px;
@@ -68,22 +68,22 @@
 	}
 	#loginButton:hover {
 		background-color: var(--highlight-pop);
-		color: white;
+		color: var(--text-color);
 		transform: none;
 		transition: none;
 	}
 	#signupButton {
 		background-color: var(--pop);
-		color: white;
+		color: var(--text-color);
 		cursor: pointer;
 		border: none;
 		margin-right: 0.51em;
 	}
 	#signupButton:hover {
 		background-color: var(--dark-pop);
-		color: white;
+		color: var(--text-color);
 	}
 	body {
-		background-color: #232323;
+		background-color: var(--background-3);
 	}
 </style>
