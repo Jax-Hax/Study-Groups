@@ -14,7 +14,7 @@ export const GET = async (event) => {
       throw redirect(303, '/dashboard')
     }
     else {
-      console.log(error);
+      console.log("error with auth api: " + error);
     }
   }
 

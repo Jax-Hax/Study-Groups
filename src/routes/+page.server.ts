@@ -2,15 +2,14 @@ import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, locals: { supabase, getSession }}) {
   const session = await getSession()
-  console.log(session)
 	if (session) {
 	  throw redirect(302, '/dashboard')
   }
 }
 export const actions = {
-  signup: async ({ request, url, locals: { supabase } }) => {
-    const formData = await request.formData()
-    const email = formData.get('email')
+  signup: async ({ url, locals }) => {
+    const formData = locals.formData
+    /*const email = formData.get('email')
     const password = formData.get('password')
     if (password != formData.get('confirmPassword')){
       return fail(422, { message: 'Your passwords do not match', success: false })
@@ -31,7 +30,7 @@ export const actions = {
     return {
       message: 'Please check your email for a confirmation email to log into the website. If you do not get one, try logging in, as you might already have an account with that email.',
       success: true,
-    }
+    }*/
   },
   login: async ({ request, url, locals: { supabase } }) => {
     const formData = await request.formData()

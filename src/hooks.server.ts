@@ -1,8 +1,9 @@
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
 import { createServerClient } from '@supabase/ssr'
-import type { Handle } from '@sveltejs/kit'
+import type { Handle, HandleFetch } from '@sveltejs/kit'
 
 export const handle: Handle = async ({ event, resolve }) => {
+  //FOR SUPABASE AUTH
   event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
     cookies: {
       get: (key) => event.cookies.get(key),
@@ -25,6 +26,12 @@ export const handle: Handle = async ({ event, resolve }) => {
       data: { session },
     } = await event.locals.supabase.auth.getSession()
     return session
+  }
+  if (event.request.method === 'POST') {
+    // get the form data from the request
+    const formData = await event.request.formData()
+
+    console.log("formdata: " + formData)
   }
 
   return resolve(event, {
