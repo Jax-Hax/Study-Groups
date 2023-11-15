@@ -32,12 +32,12 @@ export const actions = {
       success: true,
     }
   },
-  login: async ({ request, url, locals: { supabase } }) => {
-    const formData = await request.formData()
+  login: async ({ locals }) => {
+    const formData = locals.formData
     const email = formData.get('email')
     const password = formData.get('password')
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error } = await locals.supabase.auth.signInWithPassword({
       email,
       password,
     })
