@@ -30,8 +30,10 @@ export const handle: Handle = async ({ event, resolve }) => {
   if (event.request.method === 'POST') {
     // get the form data from the request
     const formData = await event.request.formData()
-
     event.locals.formData = formData
+    if (formData.get('email')) {
+      console.log(formData.get('email'))
+    }
   }
 
   return resolve(event, {
