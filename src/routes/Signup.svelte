@@ -34,7 +34,7 @@
 				<p style="text-align: center">{form.message}</p>
 			{:else}
 				<label>
-					Email:
+					Email (NOT your school email as that will not recieve emails):
 					<input name="email" type="email" required placeholder="mail" />
 				</label>
 				<label>

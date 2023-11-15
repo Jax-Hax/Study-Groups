@@ -9,12 +9,12 @@ export async function load({ url, locals: { supabase, getSession }}) {
 export const actions = {
   signup: async ({ url, locals }) => {
     const formData = locals.formData
-    /*const email = formData.get('email')
+    const email = formData.get('email')
     const password = formData.get('password')
     if (password != formData.get('confirmPassword')){
       return fail(422, { message: 'Your passwords do not match', success: false })
     }
-    const { error } = await supabase.auth.signUp({
+    const { error } = await locals.supabase.auth.signUp({
       email,
       password,
       options: {
@@ -30,7 +30,7 @@ export const actions = {
     return {
       message: 'Please check your email for a confirmation email to log into the website. If you do not get one, try logging in, as you might already have an account with that email.',
       success: true,
-    }*/
+    }
   },
   login: async ({ request, url, locals: { supabase } }) => {
     const formData = await request.formData()

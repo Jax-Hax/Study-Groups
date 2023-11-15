@@ -31,7 +31,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     // get the form data from the request
     const formData = await event.request.formData()
 
-    console.log("formdata: " + formData)
+    event.locals.formData = formData
   }
 
   return resolve(event, {
