@@ -27,6 +27,8 @@
 	"type": "module",
 	"dependencies": {
 		"@supabase/ssr": "^0.0.9",
-		"@supabase/supabase-js": "^2.38.4"
+		"@supabase/supabase-js": "^2.38.4",
+		"soap": "^1.0.0",
+		"xml2json": "^0.12.0"
 	}
 }

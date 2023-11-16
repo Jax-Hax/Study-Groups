@@ -1,3 +1,4 @@
+import { login } from "$lib";
 import { redirect } from "@sveltejs/kit";
 
 export async function load({ url, locals: { supabase, getSession } }) {
@@ -22,5 +23,22 @@ export const actions = {
     signout: async ({ locals: { supabase, getSession } }) => {
         await supabase.auth.signOut()
         throw redirect(303, '/')
+    },
+    import: async ({ locals }) => {
+        const formData = locals.formData
+        const student_id = formData.get('student_id')
+        const student_password = formData.get('student_password')
+        const district = formData.get('district')
+        let client = await login(district, student_id, student_password);
+        let grades = await client.getGradebook();
+        let grades_json = JSON.parse(grades);
+        if (!grades_json.Gradebook) {
+            return {
+                message: 'You did not input a valid id or password, please try again',
+                success: false,
+            }
+        }
+        let courseOptions = grades_json.Gradebook.Courses.Course.map((course) => course.Title);
+        console.log(courseOptions)
     },
 }

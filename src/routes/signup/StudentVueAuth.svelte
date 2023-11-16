@@ -2,13 +2,12 @@
 	import { enhance } from '$app/forms';
 	export let form;
 	export let showStudentvue;
-	export let showLogin; //for use with Already a user? Log in
 	let dialog;
 	$: if (dialog && showStudentvue) dialog.showModal();
 	let text = "Import from StudentVue"
 </script>
 	<div class="dialog">
-		<form method="POST" use:enhance action="?/signup">
+		<form method="POST" use:enhance action="?/import">
 			<h1 style="text-align: center;">Import classes from StudentVue</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
@@ -23,12 +22,12 @@
 				</label>
 				<label>
 					Student Password:
-					<input style="margin: 0" name="password" type="password" required placeholder="lock" />
+					<input style="margin: 0" name="student_password" type="password" required placeholder="lock" />
 				</label>
 				<label>
 					District: <br>
 					<select name="district" id="district">
-						<option value="chesterfield">Chesterfield</option>
+						<option value="https://va-chesterfield-psv.edupoint.com/PXP2_Login_Student.aspx">Chesterfield</option>
 					</select>
 				</label>
 				<button class="bouncyButton" on:click={() => text="Loading..."}>{text}</button>

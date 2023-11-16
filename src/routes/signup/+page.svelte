@@ -10,7 +10,7 @@
 		<button class="bouncyButton" style="margin: 1em">Sign out</button>
 	</form>
 	<h1 style="color: var(--text-color); text-align: center; margin-top: -1em">Welcome to __!</h1>
-	<StudentVueAuth {form} bind:showStudentvue bind:showLogin /></body>
+	<StudentVueAuth {form} bind:showStudentvue /></body>
 
 <style>
 	body {
