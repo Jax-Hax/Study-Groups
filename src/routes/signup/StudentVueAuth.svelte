@@ -8,7 +8,7 @@
 </script>
 	<div class="dialog">
 		<form method="POST" use:enhance action="?/signup">
-			<h1 style="text-align: center; letter-spacing: 0.05em">Sign up</h1>
+			<h1 style="text-align: center;">Import classes from StudentVue</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
 				<!-- Can not just be !form.success or it will show if it is null -->
@@ -17,21 +17,20 @@
 				<p style="text-align: center">{form.message}</p>
 			{:else}
 				<label>
-					Email (NOT your school email as that will not recieve emails):
+					Student ID Number:
 					<input name="email" type="email" required placeholder="mail" />
 				</label>
 				<label>
-					Password:
+					Student Password:
 					<input style="margin: 0" name="password" type="password" required placeholder="lock" />
 				</label>
-				<p style="margin-bottom: 1em; color: #a9b2ba">
-					Password should be at least 6 characters long.
-				</p>
 				<label>
-					Confirm Password:
-					<input name="confirmPassword" type="password" required placeholder="key" />
+					District: <br>
+					<select name="district" id="district">
+						<option value="chesterfield">Chesterfield</option>
+					</select>
 				</label>
-				<button class="bouncyButton">Sign up</button>
+				<button class="bouncyButton">Import from StudentVue</button>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 				<p
@@ -52,7 +51,7 @@
 		position: relative;
 		display: flex;
 		padding: 2em;
-		max-width: 20em;
+		max-width: 30em;
 		margin: auto;
 		flex-direction: column;
 		color: var(--text-color);
@@ -61,11 +60,6 @@
 	input:invalid {
 		border: 1px solid red;
 	}
-	input {
-		width: 90%;
-		padding: 0.5em;
-		margin-bottom: 0.5em;
-	}
 	.dialog {
 		position: absolute;
 		top: 50%;
@@ -73,7 +67,7 @@
 		transform: translate(-50%, -50%);
 		padding: 3em;
 		width: 60vw;
-		max-width: 380px;
+		max-width: 600px;
 		border: none;
 		border-radius: 1em;
 		background-color: var(--background-5);
@@ -90,6 +84,17 @@
 		background-color: var(--background-1-darkest);
 		color: var(--text-color);
 		font-size: 18px;
+		width: 92%;
+		margin-bottom: 0.5em;
+	}
+	select {
+		padding: 0.75em 1em 0.75em;
+		border-radius: 16px;
+		background-color: var(--background-1-darkest);
+		color: var(--text-color);
+		font-size: 14px;
+		width: 100%;
+		margin-bottom: 0.5em;
 	}
 	.already {
 		cursor: pointer;
