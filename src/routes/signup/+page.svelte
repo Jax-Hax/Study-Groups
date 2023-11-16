@@ -4,6 +4,7 @@ import StudentVueAuth from './StudentVueAuth.svelte';
 	export let form;
 	let showStudentvue = true;
 	let showCourses = false;
+	$: if (form?.success == true) {showCourses = true; showStudentvue = false;}
 </script>
 
 <body> 
@@ -11,8 +12,12 @@ import StudentVueAuth from './StudentVueAuth.svelte';
 		<button class="bouncyButton" style="margin: 1em">Sign out</button>
 	</form>
 	<h1 style="color: var(--text-color); text-align: center; margin-top: -1em">Welcome to __!</h1>
+	{#if showStudentvue}
 	<StudentVueAuth {form} bind:showStudentvue bind:showCourses/>
+	{/if}
+	{#if showCourses}
 	<CourseSelection {form} bind:showCourses/>
+	{/if}
 </body>
 
 <style>

@@ -1,12 +1,9 @@
 <script>
 	import { enhance } from '$app/forms';
 	export let form;
-	export let showStudentvue;
-	export let showCourses;
 	let text = "Import from StudentVue"
-	$: if (form?.success == true) {showCourses = true; showStudentvue = false;}
+	
 </script>
-{#if showStudentvue}
 	<div class="dialog">
 		<form method="POST" use:enhance action="?/import">
 			<h1 style="text-align: center;">Import classes from StudentVue</h1>
@@ -35,7 +32,6 @@
 			{/if}
 		</form>
 	</div>
-{/if}
 <style>
 	form {
 		position: relative;
