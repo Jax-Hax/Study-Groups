@@ -13,10 +13,10 @@ import StudentVueAuth from './StudentVueAuth.svelte';
 	</form>
 	<h1 style="color: var(--text-color); text-align: center; margin-top: -1em">Welcome to __!</h1>
 	{#if showStudentvue}
-	<StudentVueAuth {form} bind:showStudentvue bind:showCourses/>
+	<StudentVueAuth {form} />
 	{/if}
 	{#if showCourses}
-	<CourseSelection {form} bind:showCourses/>
+	<CourseSelection {form} />
 	{/if}
 </body>
 

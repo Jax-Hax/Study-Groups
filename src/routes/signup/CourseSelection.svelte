@@ -2,14 +2,15 @@
 	import { enhance } from '$app/forms';
 	export let form;
 	let text = 'Import from StudentVue';
+    let courses = form.courseOptions;
 </script>
 
 <div class="dialog">
     <h1 style="text-align: center;">Class selection</h1>
-    {#each form.courseOptions as course}
+    {#each courses as course}
     <div style="display: flex;">
     <p class="course">{course}</p>
-    <button on:click={() => {const index = form.courseOptions.indexOf(course); if(index > -1) {console.log("her"); form.courseOptions.splice(index,1)}}}>aa</button>
+    <button on:click={() => {const index = courses.indexOf(course); if(index > -1) {console.log("her"); courses.splice(index,1); courses = courses}}}>aa</button>
 </div>
     {/each}
 </div>
