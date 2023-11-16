@@ -17,7 +17,6 @@ export const GET = async (event) => {
       console.log("error with auth api: " + error);
     }
   }
-
   // return the user to an error page with some instructions
   throw redirect(303, '/');
 };

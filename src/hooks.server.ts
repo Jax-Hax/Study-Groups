@@ -27,6 +27,8 @@ export const handle: Handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession()
     return session
   }
+
+  //for form actions
   if (event.request.method === 'POST') {
     // get the form data from the request
     const formData = await event.request.formData()
