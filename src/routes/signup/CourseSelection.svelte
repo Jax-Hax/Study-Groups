@@ -1,41 +1,45 @@
 <script>
 	import { enhance } from '$app/forms';
 	export let form;
-	export let showStudentvue;
 	export let showCourses;
-	let text = "Import from StudentVue"
-	$: if (form?.success == true) {showCourses = true; showStudentvue = false;}
+	let text = 'Import from StudentVue';
 </script>
-{#if showStudentvue}
+
+{#if showCourses}
 	<div class="dialog">
 		<form method="POST" use:enhance action="?/import">
-			<h1 style="text-align: center;">Import classes from StudentVue</h1>
+			<h1 style="text-align: center;">Class selection</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
-			{#if form?.success}
-				<p style="text-align: center">{form.message}</p>
-			{:else}
-				<label>
-					Student ID Number:
-					<input name="student_id" required placeholder="pin" />
-				</label>
-				<label>
-					Student Password:
-					<input style="margin: 0" name="student_password" type="password" required placeholder="lock" />
-				</label>
-				<label>
-					District: <br>
-					<select name="district" id="district">
-						<option value="https://va-chesterfield-psv.edupoint.com/PXP2_Login_Student.aspx">Chesterfield</option>
-					</select>
-				</label>
-				<button class="bouncyButton" on:click={() => text="Loading..."}>{text}</button>
-			{/if}
+			<label>
+				Student ID Number:
+				<input name="student_id" required placeholder="pin" />
+			</label>
+			<label>
+				Student Password:
+				<input
+					style="margin: 0"
+					name="student_password"
+					type="password"
+					required
+					placeholder="lock"
+				/>
+			</label>
+			<label>
+				District: <br />
+				<select name="district" id="district">
+					<option value="https://va-chesterfield-psv.edupoint.com/PXP2_Login_Student.aspx"
+						>Chesterfield</option
+					>
+				</select>
+			</label>
+			<button class="bouncyButton" on:click={() => (text = 'Loading...')}>{text}</button>
 		</form>
 	</div>
 {/if}
+
 <style>
 	form {
 		position: relative;

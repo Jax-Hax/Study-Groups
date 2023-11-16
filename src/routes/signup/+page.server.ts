@@ -39,6 +39,9 @@ export const actions = {
             }
         }
         let courseOptions = grades_json.Gradebook.Courses.Course.map((course) => course.Title);
-        console.log(courseOptions)
+        return {
+            courseOptions,
+            success: true
+        }
     },
 }
