@@ -1,29 +1,12 @@
 <script>
 	import { enhance } from '$app/forms';
 	export let form;
-	export let showSignup;
+	export let showStudentvue;
 	export let showLogin; //for use with Already a user? Log in
 	let dialog;
-	$: if (dialog && showSignup) dialog.showModal();
+	$: if (dialog && showStudentvue) dialog.showModal();
 </script>
-
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<dialog
-	bind:this={dialog}
-	on:close={() => (showSignup = false)}
-	on:click|self={() => dialog.close()}
->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div id="signupDiv" on:click|stopPropagation>
-		<!-- svelte-ignore a11y-click-events-have-key-events -->
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<span
-			class="material-symbols-outlined"
-			style="cursor: pointer; padding:0.25em; font-size: 30px"
-			on:click={() => dialog.close()}>arrow_back</span
-		>
+	<div class="dialog">
 		<form method="POST" use:enhance action="?/signup">
 			<h1 style="text-align: center; letter-spacing: 0.05em">Sign up</h1>
 			{#if form?.success == false}
@@ -63,7 +46,6 @@
 			{/if}
 		</form>
 	</div>
-</dialog>
 
 <style>
 	form {
@@ -84,7 +66,8 @@
 		padding: 0.5em;
 		margin-bottom: 0.5em;
 	}
-	dialog {
+	.dialog {
+		position: absolute;
 		top: 50%;
 		left: 50%;
 		transform: translate(-50%, -50%);
@@ -97,8 +80,7 @@
 	}
 	h1,
 	p,
-	label,
-	span {
+	label {
 		color: var(--text-color);
 	}
 	input {
