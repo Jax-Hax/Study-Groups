@@ -5,6 +5,7 @@
 	export let showLogin; //for use with Already a user? Log in
 	let dialog;
 	$: if (dialog && showStudentvue) dialog.showModal();
+	let text = "Import from StudentVue"
 </script>
 	<div class="dialog">
 		<form method="POST" use:enhance action="?/signup">
@@ -18,7 +19,7 @@
 			{:else}
 				<label>
 					Student ID Number:
-					<input name="email" type="email" required placeholder="mail" />
+					<input name="student_id" required placeholder="pin" />
 				</label>
 				<label>
 					Student Password:
@@ -30,18 +31,7 @@
 						<option value="chesterfield">Chesterfield</option>
 					</select>
 				</label>
-				<button class="bouncyButton">Import from StudentVue</button>
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-				<p
-					class="already"
-					on:click={() => {
-						dialog.close();
-						showLogin = true;
-					}}
-				>
-					Already a user? Log in
-				</p>
+				<button class="bouncyButton" on:click={() => text="Loading..."}>{text}</button>
 			{/if}
 		</form>
 	</div>
@@ -67,7 +57,7 @@
 		transform: translate(-50%, -50%);
 		padding: 3em;
 		width: 60vw;
-		max-width: 600px;
+		max-width: 400px;
 		border: none;
 		border-radius: 1em;
 		background-color: var(--background-5);
