@@ -39,8 +39,16 @@ export const actions = {
             }
         }
         let courseOptions = grades_json.Gradebook.Courses.Course.map((course) => course.Title);
+        const { courseData, error } = await locals.supabase
+            .from('courses')
+            .select('course_name')
+            .in('course_name', courseOptions);
+        if (error != null) {
+            console.error(error.message)
+        }
         return {
             courseOptions,
+            courseData,
             success: true
         }
     },

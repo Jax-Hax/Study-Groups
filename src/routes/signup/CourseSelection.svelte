@@ -2,35 +2,37 @@
 	import { enhance } from '$app/forms';
 	export let form;
 	let text = 'Import from StudentVue';
-    let courses = form.courseOptions;
+	let courses = form.courseOptions;
 </script>
 
 <div class="dialog">
-    <h1 style="text-align: center;">Class selection</h1>
-    {#each courses as course}
-    <div style="display: flex;">
-    <p class="course">{course}</p>
-    <button on:click={() => {const index = courses.indexOf(course); if(index > -1) {console.log("her"); courses.splice(index,1); courses = courses}}}>aa</button>
-</div>
-    {/each}
+	<h1 style="text-align: center;">Class selection</h1>
+	{#each courses as course}
+		<div style="display: flex;">
+			<p class="course">{course}</p>
+			{#if form.courseData}
+				{#if form.courseData.includes(course)}
+					yah
+				{:else}
+					na
+				{/if}
+			{/if}
+			<button
+				on:click={() => {
+					const index = courses.indexOf(course);
+					if (index > -1) {
+						courses.splice(index, 1);
+						courses = courses;
+					}
+				}}>aa</button
+			>
+		</div>
+	{/each}
 </div>
 
 <style>
-    .course{
-        font-size: 25px
-    }
-	form {
-		position: relative;
-		display: flex;
-		padding: 2em;
-		max-width: 30em;
-		margin: auto;
-		flex-direction: column;
-		color: var(--text-color);
-		border-radius: 2em;
-	}
-	input:invalid {
-		border: 1px solid red;
+	.course {
+		font-size: 25px;
 	}
 	.dialog {
 		position: absolute;
@@ -45,63 +47,7 @@
 		background-color: var(--background-5);
 	}
 	h1,
-	p,
-	label {
+	p {
 		color: var(--text-color);
-	}
-	input {
-		padding: 0.75em 1em 0.75em;
-		border: 0.1em solid #46c759;
-		border-radius: 16px;
-		background-color: var(--background-1-darkest);
-		color: var(--text-color);
-		font-size: 18px;
-		width: 92%;
-		margin-bottom: 0.5em;
-	}
-	select {
-		padding: 0.75em 1em 0.75em;
-		border-radius: 16px;
-		background-color: var(--background-1-darkest);
-		color: var(--text-color);
-		font-size: 14px;
-		width: 100%;
-		margin-bottom: 0.5em;
-	}
-	.already {
-		cursor: pointer;
-		text-align: center;
-	}
-	.already:hover {
-		color: var(--pop);
-		text-decoration: underline;
-	}
-	input::placeholder {
-		font-family: 'Material Symbols Outlined';
-		font-weight: normal;
-		font-style: normal;
-		font-size: 24px; /* Preferred icon size */
-		display: inline-block;
-		line-height: 1;
-		text-transform: none;
-		letter-spacing: normal;
-		word-wrap: normal;
-		white-space: nowrap;
-		direction: ltr;
-
-		/* Support for all WebKit browsers. */
-		-webkit-font-smoothing: antialiased;
-		/* Support for Safari and Chrome. */
-		text-rendering: optimizeLegibility;
-
-		/* Support for Firefox. */
-		-moz-osx-font-smoothing: grayscale;
-
-		/* Support for IE. */
-		font-feature-settings: 'liga';
-	}
-	.error {
-		text-align: center;
-		color: red;
 	}
 </style>
