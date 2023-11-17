@@ -42,10 +42,12 @@ export const actions = {
         const { courseData, error } = await locals.supabase
             .from('courses')
             .select('course_name')
-            .in('course_name', courseOptions);
+            .in('course_name', courseOptions)
+            .select('*')
         if (error != null) {
             console.error(error.message)
         }
+        console.log(courseData)
         return {
             courseOptions,
             courseData,
