@@ -20,7 +20,7 @@ export async function load({ url, locals: { supabase, getSession } }) {
     }
 }
 export const actions = {
-    signout: async ({ locals: { supabase, getSession } }) => {
+    signout: async ({ locals: { supabase } }) => {
         await supabase.auth.signOut()
         throw redirect(303, '/')
     },
@@ -39,7 +39,7 @@ export const actions = {
             }
         }
         let courseOptions = grades_json.Gradebook.Courses.Course.map((course) => course.Title);
-        const { courseData, error } = await locals.supabase
+        const { data, error } = await locals.supabase
             .from('courses')
             .select('course_name')
             .in('course_name', courseOptions)
@@ -47,6 +47,7 @@ export const actions = {
         if (error != null) {
             console.error(error.message)
         }
+        let courseData = data.map((course) => course.course_name);
         console.log(courseData)
         return {
             courseOptions,
