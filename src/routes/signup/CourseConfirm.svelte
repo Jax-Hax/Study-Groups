@@ -7,7 +7,7 @@
     let dialog;
     let selectedCoursesList;
 	$: if (dialog && courseConfirm) dialog.showModal();
-    $: selectedCoursesList = selectedCourses.join(',');
+    $: selectedCoursesList = selectedCourses.map(x => x.course_id);;
 </script>
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
