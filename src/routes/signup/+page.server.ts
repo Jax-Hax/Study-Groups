@@ -56,8 +56,17 @@ export const actions = {
         }
     },
     addCourses: async ({ locals }) => {
+        const session = await locals.getSession()
+        const userID = session.user.id
         const formData = locals.formData
-        const student_id = formData.get('selectedCoursesList')
-        console.log(student_id)
+        const course_list_data = formData.get('selectedCoursesList')
+        const course_list = course_list_data.split(",");
+        const course_list_with_UID = course_list.map(value => ({ user_id: userID, course_id: value }));
+        const { error } = await locals.supabase
+            .from('users_in_courses')
+            .insert(course_list_with_UID)
+        if (error != null) {
+            console.error(error)
+        }
     },
 }
