@@ -30,7 +30,7 @@
         <h1 style="text-align: center; letter-spacing: 0.05em">Selected Courses:</h1>
         {#each selectedCourses as course}
         <div class="courseDiv">
-            <p>{course}</p>
+            <p>{course.course_name}</p>
             <button
 				on:click={() => {
 					const index = selectedCourses.indexOf(course);

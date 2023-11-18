@@ -21,12 +21,13 @@
 	{#each courses as course}
 		<div class="courseDiv">
 			<p class="course">{course}</p>
-			<div>{#if form.courseData}
-				{#if form.courseData.includes(course)}
-					<button class="addBtn" on:click={() => {selectedCourses.push(course);const index = courses.indexOf(course);
+			<div>{#if form.courseNameData}
+				{#if form.courseNameData.includes(course)}
+					<button class="addBtn" on:click={() => {const index = courses.indexOf(course);
 						if (index > -1) {
 							courses.splice(index, 1);
 							courses = courses;
+							selectedCourses.push(form.courseData[form.courseNameData.indexOf(course)])
 						}}}><span class="material-symbols-outlined plus">add</span></button>
 					
 				
