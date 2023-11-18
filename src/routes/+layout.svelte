@@ -21,8 +21,11 @@
 	<style>
 		:root {
 			--pop: #005b96;
+			--grayed-pop: #28597a;
 			--dark-pop: #011f4b;
             --highlight-pop: #005b96;
+			--green: #26b54c;
+			--red: #ea5252;
             --background-1-darkest: #121212;
             --background-2: #1e1e1e;
             --background-3: #232323;
