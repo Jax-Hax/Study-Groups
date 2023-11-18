@@ -9,7 +9,7 @@ export async function load({ url, locals: { supabase, getSession }}) {
 	//grab players data from supabase
 	const { data, error } = await supabase
 		.from('user_data')
-		.select('student_number')
+		.select('*')
 		.eq('user_id', userID);
 	if (error != null) {
 		console.error(error.message)

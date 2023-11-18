@@ -6,18 +6,6 @@ export async function load({ url, locals: { supabase, getSession } }) {
     if (!session) {
         throw redirect(302, '/')
     }
-    const userID = session.user.id
-    //grab players data from supabase
-    const { data, error } = await supabase
-        .from('user_data')
-        .select('student_number')
-        .eq('user_id', userID);
-    if (error != null) {
-        console.error(error.message)
-    }
-    if (data.length > 0) {
-        throw redirect(302, `/dashboard`)
-    }
 }
 export const actions = {
     signout: async ({ locals: { supabase } }) => {
@@ -38,6 +26,24 @@ export const actions = {
                 success: false,
             }
         }
+        const session = await locals.getSession()
+        const userID = session.user.id
+        const { data: userData, error: userDataError } = await locals.supabase
+		.from('user_data')
+		.select('*')
+		.eq('user_id', userID);
+        if (userDataError != null) {
+            console.error(userDataError.message)
+        }
+        if (userData.length <= 0) {
+            const { data,error: userDataInsertError } = await locals.supabase
+            .from('user_data')
+            .insert({ user_id: userID, student_number: student_id })
+            if (userDataInsertError != null) {
+                console.error(userDataInsertError.message)
+            }
+        }
+        
         let courseOptions = grades_json.Gradebook.Courses.Course.map((course) => course.Title.replace(/\s+/g, ' ')); //removes whitespace
         const { data, error } = await locals.supabase
             .from('courses')
@@ -68,5 +74,6 @@ export const actions = {
         if (error != null) {
             console.error(error)
         }
+        throw redirect(302, '/dashboard');
     },
 }
