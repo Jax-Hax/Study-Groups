@@ -6,6 +6,7 @@
 
 <div class="dialog">
 	<h1 style="text-align: center;">Class selection</h1>
+	<p style="text-align: center; margin-bottom: 1em">Add the classes you would like to be a part of!</p>
 	<p style="text-align: center; margin-bottom: 1em">"Not available" means that no one has taken over the job of moderating the class, but you can apply if you want to!</p>
 	{#each courses as course}
 		<div class="courseDiv">
@@ -20,7 +21,7 @@
 						courses.splice(index, 1);
 						courses = courses;
 					}
-				}} class="addBtn" style="--green: var(--red);"><span class="material-symbols-outlined plus">remove</span></button
+				}} class="addBtn" style="--green: var(--red); --dark-green: var(--dark-red);"><span class="material-symbols-outlined plus">remove</span></button
 			>
 				{:else}
 				<p class="fakeButton">Not available</p>
@@ -62,14 +63,7 @@
 			cursor: pointer;
 		}
 		.addBtn:hover {
-			background-color: white;
-			box-shadow: 0 3px;
-			color: var(--green);
-			transform: translateY(-0.25em);
-			transition: transform 0.25s;
-			border-width: 1px;
-			border-style: solid;
-			margin: -1px;
+			background-color: var(--dark-green);
 		}
 	.dialog {
 		position: absolute;

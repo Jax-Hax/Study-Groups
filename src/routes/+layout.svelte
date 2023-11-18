@@ -25,7 +25,9 @@
 			--dark-pop: #011f4b;
             --highlight-pop: #005b96;
 			--green: #26b54c;
+			--dark-green: #1d8c3b;
 			--red: #ea5252;
+			--dark-red: #c44343;
             --background-1-darkest: #121212;
             --background-2: #1e1e1e;
             --background-3: #232323;
