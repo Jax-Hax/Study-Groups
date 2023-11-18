@@ -5,7 +5,9 @@
 	export let courseConfirm;
     export let form;
     let dialog;
+    let selectedCoursesList;
 	$: if (dialog && courseConfirm) dialog.showModal();
+    $: selectedCoursesList = selectedCourses.join(',');
 </script>
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -29,9 +31,19 @@
         {#each selectedCourses as course}
         <div class="courseDiv">
             <p>{course}</p>
+            <button
+				on:click={() => {
+					const index = selectedCourses.indexOf(course);
+					if (index > -1) {
+						selectedCourses.splice(index, 1);
+						selectedCourses = selectedCourses;
+					}
+				}} class="addBtn" style="--green: var(--red); --dark-green: var(--dark-red);"><span class="material-symbols-outlined plus">remove</span></button
+			>
         </div>
         {/each}
 		<form method="POST" use:enhance action="?/addCourses">
+            <input type="hidden" name="selectedCoursesList" value={selectedCoursesList} />
             <button class="bouncyButton">Confirm</button>
 		</form>
 	</div>
@@ -44,6 +56,18 @@
 		align-items: center;
 		padding: 1em
 	}
+    .addBtn {
+			background-color: var(--green);
+			border: none;
+			color: white;
+			padding: 0.5em;
+			border-radius: 50%;
+			text-align: center;
+			cursor: pointer;
+		}
+		.addBtn:hover {
+			background-color: var(--dark-green);
+		}
 	form {
 		position: relative;
 		display: flex;
