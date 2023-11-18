@@ -10,38 +10,46 @@
 <div class="dialog">
 	<div style="display: flex; justify-content: flex-end;">
 		<h1 style="text-align: center;margin: auto">Class selection</h1>
-		<button class="bouncyButton" on:click={() => courseConfirm = true}>Next</button>
-		
+		<button class="bouncyButton" on:click={() => (courseConfirm = true)}>Next</button>
 	</div>
-	
-	<p style="text-align: center; margin-bottom: 1em">Add the classes you would like to be a part of!</p>
-	<p style="text-align: center; margin-bottom: 1em">"Not available" means that no one has taken over the job of moderating the class, but you can apply if you want to!</p>
-	
-	
+
+	<p style="text-align: center; margin-bottom: 1em">
+		Add the classes you would like to be a part of!
+	</p>
+	<p style="text-align: center; margin-bottom: 1em">
+		"Not available" means that no one has taken over the job of moderating the class, but you can
+		apply if you want to!
+	</p>
+
 	{#each courses as course}
 		<div class="courseDiv">
 			<p class="course">{course}</p>
-			<div>{#if form.courseNameData}
-				{#if form.courseNameData.includes(course)}
-					<button class="addBtn" on:click={() => {const index = courses.indexOf(course);
-						if (index > -1) {
-							courses.splice(index, 1);
-							courses = courses;
-							selectedCourses.push(form.courseData[form.courseNameData.indexOf(course)])
-						}}}><span class="material-symbols-outlined plus">add</span></button>
-					
-				
-				{:else}
-				<p class="fakeButton">Not available</p>
+			<div>
+				{#if form.courseNameData}
+					{#if form.courseNameData.includes(course)}
+						<button
+							class="addBtn"
+							on:click={() => {
+								const index = courses.indexOf(course);
+								if (index > -1) {
+									courses.splice(index, 1);
+									courses = courses;
+									selectedCourses.push(form.courseData[form.courseNameData.indexOf(course)]);
+								}
+							}}><span class="material-symbols-outlined plus">add</span></button
+						>
+					{:else}
+						<p class="fakeButton">Not available</p>
+					{/if}
 				{/if}
-			{/if}
-		</div>
+			</div>
 		</div>
 	{/each}
 </div>
 {#if courseConfirm}
-	<CourseConfirm {selectedCourses} {form} bind:courseConfirm/>
+	<CourseConfirm {selectedCourses} {form} bind:courseConfirm />
 {/if}
+
 <style>
 	.course {
 		font-size: 25px;
@@ -57,24 +65,24 @@
 		display: inline-block;
 		font-size: 0.75rem;
 	}
-	.courseDiv{
-		display: flex; 
+	.courseDiv {
+		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 1em
+		padding: 1em;
 	}
 	.addBtn {
-			background-color: var(--green);
-			border: none;
-			color: white;
-			padding: 0.5em;
-			border-radius: 50%;
-			text-align: center;
-			cursor: pointer;
-		}
-		.addBtn:hover {
-			background-color: var(--dark-green);
-		}
+		background-color: var(--green);
+		border: none;
+		color: white;
+		padding: 0.5em;
+		border-radius: 50%;
+		text-align: center;
+		cursor: pointer;
+	}
+	.addBtn:hover {
+		background-color: var(--dark-green);
+	}
 	.dialog {
 		position: absolute;
 		top: 50%;
