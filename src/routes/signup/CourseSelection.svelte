@@ -1,28 +1,35 @@
 <script>
 	import { enhance } from '$app/forms';
+	import CourseConfirm from './CourseConfirm.svelte';
 	export let form;
 	let courses = form.courseOptions;
+	let selectedCourses = [];
+	let courseConfirm = false;
 </script>
 
 <div class="dialog">
-	<h1 style="text-align: center;">Class selection</h1>
+	<div style="display: flex; justify-content: flex-end;">
+		<h1 style="text-align: center;margin: auto">Class selection</h1>
+		<button class="bouncyButton" on:click={() => courseConfirm = true}>Next</button>
+		
+	</div>
+	
 	<p style="text-align: center; margin-bottom: 1em">Add the classes you would like to be a part of!</p>
 	<p style="text-align: center; margin-bottom: 1em">"Not available" means that no one has taken over the job of moderating the class, but you can apply if you want to!</p>
+	
+	
 	{#each courses as course}
 		<div class="courseDiv">
 			<p class="course">{course}</p>
 			<div>{#if form.courseData}
 				{#if form.courseData.includes(course)}
-					<button class="addBtn"><span class="material-symbols-outlined plus">add</span></button>
-					<button
-				on:click={() => {
-					const index = courses.indexOf(course);
-					if (index > -1) {
-						courses.splice(index, 1);
-						courses = courses;
-					}
-				}} class="addBtn" style="--green: var(--red); --dark-green: var(--dark-red);"><span class="material-symbols-outlined plus">remove</span></button
-			>
+					<button class="addBtn" on:click={() => {selectedCourses.push(course);const index = courses.indexOf(course);
+						if (index > -1) {
+							courses.splice(index, 1);
+							courses = courses;
+						}}}><span class="material-symbols-outlined plus">add</span></button>
+					
+				
 				{:else}
 				<p class="fakeButton">Not available</p>
 				{/if}
@@ -31,7 +38,9 @@
 		</div>
 	{/each}
 </div>
-
+{#if courseConfirm}
+	<CourseConfirm {selectedCourses} {form} bind:courseConfirm/>
+{/if}
 <style>
 	.course {
 		font-size: 25px;

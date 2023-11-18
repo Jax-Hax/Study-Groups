@@ -48,11 +48,13 @@ export const actions = {
             console.error(error.message)
         }
         let courseData = data.map((course) => course.course_name);
-        console.log(courseData)
         return {
             courseOptions,
             courseData,
             success: true
         }
+    },
+    addCourses: async ({ locals: { supabase } }) => {
+        
     },
 }
