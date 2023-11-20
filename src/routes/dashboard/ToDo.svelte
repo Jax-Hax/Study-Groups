@@ -5,10 +5,10 @@
 		let b_date = new Date(b.due_date);
         let a_date = new Date(a.due_date);
         if (a_date > b_date) {
-			return 1;
+			return -1;
 		}
         else if (b_date > a_date) {
-            return -1;
+            return 1;
         }
         else{
             return 0;
@@ -19,7 +19,11 @@
 <div id="grid">
 	{#each data.custom_todo_data as todo}
 		<div>
-			<h1>{new Date(todo.due_date)}</h1>
+            {#if Math.abs(+(((new Date() - new Date(todo.due_date))/ (3600000* 24)) ).toFixed(1)) > 1}
+			<p>Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ (3600000* 24)) ).toFixed(1))} days and {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
+            {:else}
+            <p style="color: var(--red)">Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
+            {/if}
 			<p>_ new assignments</p>
 			<p>_ new grades</p>
 		</div>
