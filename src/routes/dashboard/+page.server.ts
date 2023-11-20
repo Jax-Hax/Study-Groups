@@ -1,33 +1,51 @@
 import { fail, redirect } from '@sveltejs/kit'
 
-export async function load({ url, locals: { supabase, getSession }}) {
-    const session = await getSession()
-    if (!session) {
-        throw redirect(302, '/')
+export async function load({ url, locals: { supabase, getSession } }) {
+  const session = await getSession()
+  if (!session) {
+    throw redirect(302, '/')
+  }
+  const userID = session.user.id
+  //grab players data from supabase
+  const { data, error } = await supabase
+    .from('user_data')
+    .select('*')
+    .eq('user_id', userID);
+  if (error != null) {
+    console.error(error.message)
+  }
+  if (data.length <= 0) {
+    //user needs to do the signup process
+    throw redirect(302, `/signup`)
+  }
+  //grab courses the user is in
+  const { data: user_in_course_data, error: courseError1 } = await supabase
+    .from('users_in_courses')
+    .select('*')
+    .eq('user_id', userID);
+  if (courseError1 != null) {
+    console.error(courseError1.message)
+  }
+  const course_list = user_in_course_data.map(value => (value.course_id));
+  const { data: course_data, error: courseError2 } = await supabase
+    .from('courses')
+    .select()
+    .in('course_id', course_list);
+    if (courseError2 != null) {
+      console.error(courseError2.message)
     }
-    const userID = session.user.id
-	//grab players data from supabase
-	const { data, error } = await supabase
-		.from('user_data')
-		.select('*')
-		.eq('user_id', userID);
-	if (error != null) {
-		console.error(error.message)
-	}
-    if (data.length > 0) {
-
-    }
-    else{
-        //user needs to do the signup process
-        throw redirect(302, `/signup`)
-    }
+  console.log(course_data)
+  return {
+    user_data: data[0],
+    course_data
+  }
 }
 export const actions = {
   signup: async ({ url, locals }) => {
     const formData = locals.formData
     const email = formData.get('email')
     const password = formData.get('password')
-    if (password != formData.get('confirmPassword')){
+    if (password != formData.get('confirmPassword')) {
       return fail(422, { message: 'Your passwords do not match', success: false })
     }
     const { error } = await locals.supabase.auth.signUp({

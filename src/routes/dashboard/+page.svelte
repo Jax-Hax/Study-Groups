@@ -6,9 +6,15 @@ import Sidebar from "./Sidebar.svelte";
 	export let form;
 	export let data;
 </script>
-<Sidebar bind:dashboard bind:todo/>
+<div class="content">
+<Sidebar bind:dashboard bind:todo/></div>
 {#if dashboard}
-<Dashboard {form} {data}/>
+<div class="content"><Dashboard {form} {data}/></div>
 {:else if todo}
 heeeysdaasdasdsadasdsd
 {/if}
+<style>
+	.content {
+		margin-left: 5rem
+	}
+</style>
