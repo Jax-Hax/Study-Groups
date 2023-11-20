@@ -67,7 +67,7 @@ export const actions = {
         const formData = locals.formData
         const course_list_data = formData.get('selectedCoursesList')
         const course_list = course_list_data.split(",");
-        const course_list_with_UID = course_list.map(value => ({ user_id: userID, course_id: value }));
+        const course_list_with_UID = course_list.map(value => ({ user_id: userID, course_id: value.split("{$}")[0], hex: value.split("{$}")[1]}));
         const { error } = await locals.supabase
             .from('users_in_courses')
             .insert(course_list_with_UID)

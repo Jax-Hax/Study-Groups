@@ -7,7 +7,7 @@
 	let dialog;
 	let selectedCoursesList;
 	$: if (dialog && courseConfirm) dialog.showModal();
-	$: selectedCoursesList = selectedCourses.map((x) => x.course_id);
+	$: {selectedCoursesList = selectedCourses.map((x) => x.course_id + "{$}" + x.hex);};
 	import ColorPicker from 'svelte-awesome-color-picker';
 	let hex;
 	let course_name_color_code_opened = "";
