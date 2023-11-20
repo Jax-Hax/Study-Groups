@@ -80,6 +80,8 @@ export async function load({ url, locals: { supabase, getSession } }) {
 }
 export const actions = {
   get_studentvue_data: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
     const formData = locals.formData
     const student_id = formData.get('student_id');
     const student_password = formData.get('password');
@@ -87,15 +89,77 @@ export const actions = {
     let client = await login(district, student_id, student_password);
     let grades = await client.getGradebook();
     let grades_json = JSON.parse(grades);
-    console.log(grades_json)
     if (!grades_json.Gradebook) {
-        return {
-            error: 'You did not input the correct password, please try again',
-            success: false,
-        }
+      return {
+        error: 'You did not input the correct password, please try again',
+        success: false,
+      }
     }
+    let course_grades = grades_json.Gradebook.Courses.Course.map((course) => ({
+      name: course.Title.replace(/\s+/g, ' '),
+      grade: parseFloat(course.Marks.Mark[0].CalculatedScoreRaw)
+    }));
+    //get course info
+    const { data: user_in_course_data, error: courseError1 } = await locals.supabase
+      .from('users_in_courses')
+      .select()
+      .eq('user_id', userID);
+    if (courseError1 != null) {
+      console.error(courseError1.message)
+    }
+    //contains course ids
+    const course_list = user_in_course_data.map(value => (value.course_id));
+    const { data: course_data, error: courseError2 } = await locals.supabase
+      .from('courses')
+      .select()
+      .in('course_id', course_list);
+    if (courseError2 != null) {
+      console.error(courseError2.message)
+    }
+    let courses_with_grades = course_grades.map(course1 => {
+      const matchingCourse = course_data.find(course => course1.name === course.course_name);
+      return matchingCourse ? { "grade": course1.grade, ...matchingCourse } : null;
+    }).filter(Boolean);
+    //calculate gpa
+    courses_with_grades.map(course => {
+      let grade_offset = 0;
+      if (course.type_of_class === "AP") {
+        grade_offset = 1.0;
+      }
+      else if (course.type_of_class === "HON") {
+        grade_offset = 0.5;
+      }
+      let gpa = 0;
+      if (Math.round(course.grade) >= 97) {
+        gpa = 4.5;
+      }
+      else if (Math.round(course.grade) >= 90) {
+        gpa = 4;
+      }
+      else if (Math.round(course.grade) >= 86) {
+        gpa = 3.5;
+      }
+      else if (Math.round(course.grade) >= 80) {
+        gpa = 3;
+      }
+      else if (Math.round(course.grade) >= 76) {
+        gpa = 2.5;
+      }
+      else if (Math.round(course.grade) >= 70) {
+        gpa = 2;
+      }
+      else if (Math.round(course.grade) >= 66) {
+        gpa = 1.5;
+      }
+      else if (Math.round(course.grade) >= 60) {
+        gpa = 1;
+      }
+      gpa += grade_offset;
+      console.log(gpa)
+    })
     return {
-      grades: JSON.parse(grades).Gradebook.Courses.Course,
+      full_grades: grades_json.Gradebook.Courses.Course,
+      grades: course_grades,
       success: true,
     }
   },

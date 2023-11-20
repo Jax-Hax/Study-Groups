@@ -2,12 +2,12 @@
 	export let data;
 	export let form;
 	let courseAssignmentCounts;
-	$: {courseAssignmentCounts = data.new_assignments.reduce((acc, { course_id }) => {
-  acc[course_id] = (acc[course_id] || 0) + 1;
-  return acc;
-}, {}); console.log(courseAssignmentCounts)}
-
-
+	$: {
+		courseAssignmentCounts = data.new_assignments.reduce((acc, { course_id }) => {
+			acc[course_id] = (acc[course_id] || 0) + 1;
+			return acc;
+		}, {});
+	}
 </script>
 
 <div id="grid">
@@ -15,9 +15,9 @@
 		<div>
 			<h1>{course.course_name}</h1>
 			{#if courseAssignmentCounts[course.course_id]}
-			<p>{courseAssignmentCounts[course.course_id]} new assignment(s)</p>
+				<p>{courseAssignmentCounts[course.course_id]} new assignment(s)</p>
 			{:else}
-			<p>0 new assignment(s)</p>
+				<p>0 new assignment(s)</p>
 			{/if}
 			<p>_ new grades</p>
 		</div>
