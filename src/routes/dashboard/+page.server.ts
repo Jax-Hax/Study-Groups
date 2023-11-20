@@ -31,24 +31,45 @@ export async function load({ url, locals: { supabase, getSession } }) {
     .from('courses')
     .select()
     .in('course_id', course_list);
-    if (courseError2 != null) {
-      console.error(courseError2.message)
-    }
+  if (courseError2 != null) {
+    console.error(courseError2.message)
+  }
   //fetch todos
   const { data: custom_todo_data, error: courseError3 } = await supabase
     .from('custom_todos')
     .select()
     .eq('user_id', userID);
-    if (courseError3 != null) {
-      console.error(courseError3.message)
-    }
+  if (courseError3 != null) {
+    console.error(courseError3.message)
+  }
   const { data: course_todo_data, error: courseError4 } = await supabase
     .from('canvas_assignments')
     .select()
     .in('course_id', course_list);
-    if (courseError4 != null) {
-      console.error(courseError4.message)
+  if (courseError4 != null) {
+    console.error(courseError4.message)
+  }
+  const { data: user_canvas_todo_data, error: courseError5 } = await supabase
+    .from('users_canvas_assignments')
+    .select()
+    .eq('user_id', userID);
+  if (courseError5 != null) {
+    console.error(courseError5.message)
+  }
+  const user_assignments = user_canvas_todo_data.map(value => (value.assignment_id));
+  let new_assignments = course_todo_data.map((assignment) => {
+    user_in_course_data.filter(x => x.course_id === assignment.course_id)
+    const last_sign_in_date = new Date(user_in_course_data[0].last_sign_in_time)
+    const assignment_date = new Date(assignment.created_at)
+    if (last_sign_in_date > assignment_date) {
+      return undefined;
+    } else {
+      return assignment;
     }
+  }).filter(value => value !== undefined);
+  let current_assignments = course_todo_data.filter(value => user_assignments.includes(value.assignment_id));
+  console.log(current_assignments);
+  console.log(new_assignments)
   return {
     user_data: data[0],
     course_data,
