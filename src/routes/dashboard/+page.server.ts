@@ -76,6 +76,7 @@ export async function load({ url, locals: { supabase, getSession } }) {
     custom_todo_data,
     current_assignments,
     new_assignments,
+    user_in_course_data
   }
 }
 export const actions = {

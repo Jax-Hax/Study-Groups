@@ -27,7 +27,7 @@
             <p style="color: var(--red)">Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
             {/if}
 			
-			<p style="background-color: {course.hex}">{course.course_name}</p>
+			<p style="border-radius: 1em; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(value => value.course_id === todo.course_id)[0].hex}">{course.course_name}</p>
 		</div>
 	{/each}
 </div>
