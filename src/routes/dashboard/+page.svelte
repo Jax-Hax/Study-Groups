@@ -7,7 +7,6 @@
 	let new_stuff = false;
 	export let form;
 	export let data;
-	
 </script>
 <body>
 <div class="content">

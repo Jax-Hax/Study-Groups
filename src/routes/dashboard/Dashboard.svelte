@@ -1,13 +1,24 @@
 <script>
 	export let data;
 	export let form;
+	let courseAssignmentCounts;
+	$: {courseAssignmentCounts = data.new_assignments.reduce((acc, { course_id }) => {
+  acc[course_id] = (acc[course_id] || 0) + 1;
+  return acc;
+}, {}); console.log(courseAssignmentCounts)}
+
+
 </script>
 
 <div id="grid">
 	{#each data.course_data as course}
 		<div>
 			<h1>{course.course_name}</h1>
-			<p>_ new assignments</p>
+			{#if courseAssignmentCounts[course.course_id]}
+			<p>{courseAssignmentCounts[course.course_id]} new assignments</p>
+			{:else}
+			<p>0 new assignments</p>
+			{/if}
 			<p>_ new grades</p>
 		</div>
 	{/each}
