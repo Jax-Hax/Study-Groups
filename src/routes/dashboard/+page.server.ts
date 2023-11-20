@@ -26,6 +26,7 @@ export async function load({ url, locals: { supabase, getSession } }) {
   if (courseError1 != null) {
     console.error(courseError1.message)
   }
+  //contains course ids
   const course_list = user_in_course_data.map(value => (value.course_id));
   const { data: course_data, error: courseError2 } = await supabase
     .from('courses')
@@ -68,8 +69,6 @@ export async function load({ url, locals: { supabase, getSession } }) {
     }
   }).filter(value => value !== undefined);
   let current_assignments = course_todo_data.filter(value => user_assignments.includes(value.assignment_id));
-  console.log(current_assignments);
-  console.log(new_assignments)
   return {
     user_data: data[0],
     course_data,
