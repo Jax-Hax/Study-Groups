@@ -121,7 +121,7 @@ export const actions = {
       return matchingCourse ? { "grade": course1.grade, ...matchingCourse } : null;
     }).filter(Boolean);
     //calculate gpa
-    courses_with_grades.map(course => {
+    let gpas = courses_with_grades.map(course => {
       let grade_offset = 0;
       if (course.type_of_class === "AP") {
         grade_offset = 1.0;
@@ -155,12 +155,16 @@ export const actions = {
         gpa = 1;
       }
       gpa += grade_offset;
-      console.log(gpa)
+      return gpa
     })
+    var sum = gpas.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue
+    },0);
     return {
       full_grades: grades_json.Gradebook.Courses.Course,
       grades: course_grades,
       success: true,
+      gpa: sum/gpas.length
     }
   },
 }
