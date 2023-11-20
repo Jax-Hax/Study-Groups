@@ -18,14 +18,16 @@
 <h1 id="todo-h1">To-Do List</h1>
 <div id="grid">
 	{#each data.custom_todo_data as todo}
+    {@const course = data.course_data.filter(value => value.course_id === todo.course_id)[0]}
 		<div>
+            <p>{todo.text}</p>
             {#if Math.abs(+(((new Date() - new Date(todo.due_date))/ (3600000* 24)) ).toFixed(1)) > 1}
 			<p>Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ (3600000* 24)) ).toFixed(1))} days and {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
             {:else}
             <p style="color: var(--red)">Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
             {/if}
-			<p>_ new assignments</p>
-			<p>_ new grades</p>
+			
+			<p style="background-color: {course.hex}">{course.course_name}</p>
 		</div>
 	{/each}
 </div>
