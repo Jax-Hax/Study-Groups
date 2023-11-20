@@ -8,6 +8,9 @@
 	let selectedCoursesList;
 	$: if (dialog && courseConfirm) dialog.showModal();
 	$: selectedCoursesList = selectedCourses.map((x) => x.course_id);
+	import ColorPicker from 'svelte-awesome-color-picker';
+	let hex;
+	let course_name_color_code_opened = "";
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -29,8 +32,10 @@
 		>
 
 		<h1 style="text-align: center; letter-spacing: 0.05em">Selected Courses:</h1>
+		<p style="text-align: center">Click on the colors to color code your classes</p>
 		{#each selectedCourses as course}
 			<div class="courseDiv">
+				<span on:click={() => {if (course_name_color_code_opened === course.course_name) {course_name_color_code_opened = ""} else {(course_name_color_code_opened = course.course_name)}}} style="padding: 1em; background-color: {course.hex}; border-radius: 0.5em"></span>
 				<p>{course.course_name}</p>
 				<button
 					on:click={() => {
@@ -45,6 +50,9 @@
 					><span class="material-symbols-outlined plus">remove</span></button
 				>
 			</div>
+			{#if course_name_color_code_opened === course.course_name}
+			<ColorPicker bind:hex={course.hex} isAlpha={false} isInput={false}/>
+			{/if}
 		{/each}
 		<form method="POST" use:enhance action="?/addCourses">
 			<input type="hidden" name="selectedCoursesList" value={selectedCoursesList} />

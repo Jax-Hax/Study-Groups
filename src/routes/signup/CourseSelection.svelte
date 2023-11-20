@@ -34,7 +34,7 @@
 								if (index > -1) {
 									courses.splice(index, 1);
 									courses = courses;
-									selectedCourses.push(form.courseData[form.courseNameData.indexOf(course)]);
+									selectedCourses.push({"hex": "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);}), ...form.courseData[form.courseNameData.indexOf(course)] });
 								}
 							}}><span class="material-symbols-outlined plus">add</span></button
 						>
