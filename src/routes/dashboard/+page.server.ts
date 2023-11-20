@@ -34,10 +34,26 @@ export async function load({ url, locals: { supabase, getSession } }) {
     if (courseError2 != null) {
       console.error(courseError2.message)
     }
-  console.log(course_data)
+  //fetch todos
+  const { data: custom_todo_data, error: courseError3 } = await supabase
+    .from('custom_todos')
+    .select()
+    .eq('user_id', userID);
+    if (courseError3 != null) {
+      console.error(courseError3.message)
+    }
+  const { data: course_todo_data, error: courseError4 } = await supabase
+    .from('canvas_assignments')
+    .select()
+    .in('course_id', course_list);
+    if (courseError4 != null) {
+      console.error(courseError4.message)
+    }
   return {
     user_data: data[0],
-    course_data
+    course_data,
+    custom_todo_data,
+    course_todo_data
   }
 }
 export const actions = {
