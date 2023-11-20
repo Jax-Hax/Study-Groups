@@ -3,7 +3,15 @@
 	export let form;
 </script>
 
-
+<div id="grid">
+	{#each data.course_data as course}
+		<div>
+			<h1>{course.course_name}</h1>
+			<p>_ new assignments</p>
+			<p>_ new grades</p>
+		</div>
+	{/each}
+</div>
 
 <style>
 	#grid {

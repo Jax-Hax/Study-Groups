@@ -1,9 +1,11 @@
 <script>
     export let dashboard;
     export let todo;
+    export let new_stuff;
+    export let data;
 </script>
 <div id="sidebar">
-    <div class="icon" on:click={() => {dashboard = true; todo=false}}>
+    <div class="icon" on:click={() => {dashboard = true; todo=false; new_stuff=false}}>
         <span
 			class="material-symbols-outlined">home</span
 		>
@@ -11,7 +13,7 @@
             Dashboard
         </div>
     </div>
-    <div class="icon" on:click={() => {todo = true; dashboard=false}}>
+    <div class="icon" on:click={() => {todo = true; dashboard=false; new_stuff=false}}>
         {#if todo}
         <div class="enabled">
             test
@@ -22,6 +24,19 @@
 		>
         <div class="sidebar-tooltip">
             To-Do List
+        </div>
+    </div>
+    <div class="icon" on:click={() => {todo = false; dashboard=false; new_stuff=true}}>
+        {#if new_stuff}
+        <div class="enabled">
+            test
+        </div>
+        {/if}
+        <span
+			>{data.new_assignments.length}</span
+		>
+        <div class="sidebar-tooltip">
+            New
         </div>
     </div>
 </div>

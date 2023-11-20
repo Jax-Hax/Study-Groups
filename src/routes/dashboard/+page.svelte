@@ -4,12 +4,14 @@
 	import ToDo from "./ToDo.svelte";
 	let dashboard = true;
     let todo = false;
+	let new_stuff = false;
 	export let form;
 	export let data;
+	
 </script>
 <body>
 <div class="content">
-<Sidebar bind:dashboard bind:todo/></div>
+<Sidebar bind:dashboard bind:todo bind:new_stuff {data}/></div>
 {#if dashboard}
 <div class="content"><Dashboard {form} {data}/></div>
 {:else if todo}
