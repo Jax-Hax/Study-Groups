@@ -19,7 +19,6 @@
 <dialog
 	bind:this={dialog}
 	on:close={() => (courseConfirm = false)}
-	on:click|self={() => dialog.close()}
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div id="signupDiv" on:click|stopPropagation>
@@ -51,7 +50,7 @@
 				>
 			</div>
 			{#if course_name_color_code_opened === course.course_name}
-			<ColorPicker bind:hex={course.hex} isAlpha={false} isInput={false}/>
+			<ColorPicker bind:hex={course.hex} isAlpha={false} isInput={false} canChangeMode={false} disableCloseClickOutside={true}/>
 			{/if}
 		{/each}
 		<form method="POST" use:enhance action="?/addCourses">
