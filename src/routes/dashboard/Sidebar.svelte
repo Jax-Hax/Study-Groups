@@ -9,7 +9,7 @@
 
 <div id="sidebar">
 	<div
-		class="icon"
+		class="icon" style="margin-top: 0.5em"
 		on:click={() => {
 			dashboard = true;
 			todo = false;
