@@ -1,3 +1,4 @@
+import { login } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, locals: { supabase, getSession } }) {
@@ -80,10 +81,21 @@ export async function load({ url, locals: { supabase, getSession } }) {
 export const actions = {
   get_studentvue_data: async ({ locals }) => {
     const formData = locals.formData
-    const email = formData.get('student_id')
-    
+    const student_id = formData.get('student_id');
+    const student_password = formData.get('password');
+    const district = formData.get('district');
+    let client = await login(district, student_id, student_password);
+    let grades = await client.getGradebook();
+    let grades_json = JSON.parse(grades);
+    console.log(grades_json)
+    if (!grades_json.Gradebook) {
+        return {
+            error: 'You did not input the correct password, please try again',
+            success: false,
+        }
+    }
     return {
-      message: 'Please check your email for a confirmation email to log into the website. If you do not get one, try logging in, as you might already have an account with that email.',
+      grades: JSON.parse(grades).Gradebook.Courses.Course,
       success: true,
     }
   },
