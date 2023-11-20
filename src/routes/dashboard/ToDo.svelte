@@ -15,7 +15,7 @@
         }
 	});
 </script>
-
+<h1 id="todo-h1">To-Do List</h1>
 <div id="grid">
 	{#each data.custom_todo_data as todo}
 		<div>
@@ -51,4 +51,8 @@
 	p {
 		color: inherit;
 	}
+    #todo-h1{
+        color: var(--text-color);
+        text-align: center;
+    }
 </style>
