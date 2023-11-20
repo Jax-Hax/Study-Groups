@@ -22,7 +22,7 @@
         top: 0px;
         left: 0px;
         height: 100vh;
-        width: 4rem;
+        width: 5rem;
         display: flex;
         flex-direction: column;
         background-color: var(--background-2);
@@ -44,6 +44,7 @@
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 150ms;
         margin-bottom: 1em;
+        padding: 0.5em;
     }
     .icon:hover {
         border-radius: 1em;
@@ -51,7 +52,7 @@
     }
     .icon span {
         color: inherit;
-        font-size: 23px;
+        font-size: 30px;
     }
     .sidebar-tooltip{
         position: absolute;
@@ -59,7 +60,7 @@
         padding: 0.5rem;
         margin: 0.5rem;
         min-width: max-content;
-        left: 3.5rem;
+        left: 4.5rem;
         color: var(--text-color);
         background-color: var(--background-2);
         border-radius: 0.75em;
