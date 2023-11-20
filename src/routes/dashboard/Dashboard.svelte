@@ -15,9 +15,9 @@
 		<div>
 			<h1>{course.course_name}</h1>
 			{#if courseAssignmentCounts[course.course_id]}
-			<p>{courseAssignmentCounts[course.course_id]} new assignments</p>
+			<p>{courseAssignmentCounts[course.course_id]} new assignment(s)</p>
 			{:else}
-			<p>0 new assignments</p>
+			<p>0 new assignment(s)</p>
 			{/if}
 			<p>_ new grades</p>
 		</div>

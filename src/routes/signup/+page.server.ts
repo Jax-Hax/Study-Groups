@@ -38,7 +38,7 @@ export const actions = {
         if (userData.length <= 0) {
             const { data,error: userDataInsertError } = await locals.supabase
             .from('user_data')
-            .insert({ user_id: userID, student_number: student_id })
+            .insert({ user_id: userID, student_number: student_id, studentvue_url: district })
             if (userDataInsertError != null) {
                 console.error(userDataInsertError.message)
             }

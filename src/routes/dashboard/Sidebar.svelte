@@ -99,7 +99,7 @@
         padding: 0.5rem;
         margin: 0.5rem;
         min-width: max-content;
-        left: 7rem;
+        left: 9rem;
         color: var(--text-color);
         background-color: var(--background-2);
         border-radius: 0.75em;
