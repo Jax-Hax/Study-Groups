@@ -1,5 +1,9 @@
+<script>
+    export let dashboard;
+    export let todo;
+</script>
 <div id="sidebar">
-    <div class="icon">
+    <div class="icon" on:click={() => {dashboard = true; todo=false}}>
         <span
 			class="material-symbols-outlined">home</span
 		>
@@ -7,7 +11,12 @@
             Dashboard
         </div>
     </div>
-    <div class="icon">
+    <div class="icon" on:click={() => {todo = true; dashboard=false}}>
+        {#if todo}
+        <div class="enabled">
+            test
+        </div>
+        {/if}
         <span
 			class="material-symbols-outlined">lists</span
 		>
@@ -61,6 +70,21 @@
         margin: 0.5rem;
         min-width: max-content;
         left: 4.5rem;
+        color: var(--text-color);
+        background-color: var(--background-2);
+        border-radius: 0.75em;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 100ms;
+        transform-origin: left;
+        scale: 0;
+    }
+    .enabled{
+        position: absolute;
+        width: auto;
+        padding: 0.5rem;
+        margin: 0.5rem;
+        min-width: max-content;
+        left: 7rem;
         color: var(--text-color);
         background-color: var(--background-2);
         border-radius: 0.75em;
