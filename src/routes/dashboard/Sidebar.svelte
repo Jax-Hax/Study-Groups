@@ -1,10 +1,18 @@
 <div id="sidebar">
     <div class="icon">
         <span
-			class="material-symbols-outlined">arrow_back</span
+			class="material-symbols-outlined">home</span
 		>
         <div class="sidebar-tooltip">
-            test
+            Dashboard
+        </div>
+    </div>
+    <div class="icon">
+        <span
+			class="material-symbols-outlined">lists</span
+		>
+        <div class="sidebar-tooltip">
+            To-Do List
         </div>
     </div>
 </div>
@@ -35,6 +43,7 @@
         color: var(--text-color);
         transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         transition-duration: 150ms;
+        margin-bottom: 1em;
     }
     .icon:hover {
         border-radius: 1em;
@@ -45,11 +54,21 @@
         font-size: 23px;
     }
     .sidebar-tooltip{
+        position: absolute;
         width: auto;
         padding: 0.5rem;
         margin: 0.5rem;
         min-width: max-content;
         left: 3.5rem;
-        color: white;
+        color: var(--text-color);
+        background-color: var(--background-2);
+        border-radius: 0.75em;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 100ms;
+        transform-origin: left;
+        scale: 0;
+    }
+    .icon:hover div {
+        scale: 1
     }
 </style>
