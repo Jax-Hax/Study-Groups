@@ -119,3 +119,12 @@ export async function getDistrictUrls(zipCode: any) {
         Key: '5E4B7859-B805-474B-A833-FDB15D205D40'
     }, 'HDInfoServices'));
 }
+
+export async function getCanvasAPI(canvas_url: string, canvas_api_token: string, access_string: string) {
+    await fetch((canvas_url + "/api/v1/" + access_string), {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${canvas_api_token}`,
+        },
+    });
+}
