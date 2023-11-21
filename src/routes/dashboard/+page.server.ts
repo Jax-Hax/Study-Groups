@@ -182,7 +182,13 @@ export const actions = {
     const course_id = formData.get('course');
     const assignment_type = formData.get('assignment_type');
     const publicOrPrivate = formData.get('publicOrPrivate');
-    console.log(publicOrPrivate)
+    if (course_id === "None" && publicOrPrivate === "on"){
+      return {
+        message: 'You can not make a public assignment with no course chosen',
+        success: false,
+      }
+    }
+    
     if (publicOrPrivate === "on") {
       const { data, error: userDataInsertError } = await locals.supabase
         .from('canvas_assignments')

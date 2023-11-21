@@ -17,6 +17,7 @@
         }
 	});
 	let showAddTask = false;
+	$: if (form?.success == true) {showAddTask = false}
 </script>
 {#if showAddTask}
 			<AddTaskPopup {form} {data} bind:showAddTask />
@@ -34,8 +35,9 @@
             {:else}
             <p style="color: var(--red)">Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
             {/if}
-			
+			{#if course}
 			<p style="border-radius: 1em; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(value => value.course_id === todo.course_id)[0].hex}">{course.course_name}</p>
+			{/if}
 		</div>
 	{/each}
 </div>

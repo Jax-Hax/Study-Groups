@@ -180,5 +180,6 @@
 	.error {
 		text-align: center;
 		color: red;
+        font-size: 25px;
 	}
 </style>
