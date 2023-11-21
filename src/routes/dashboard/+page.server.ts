@@ -90,6 +90,7 @@ export const actions = {
     let client = await login(district, student_id, student_password);
     let grades = await client.getGradebook();
     let grades_json = JSON.parse(grades);
+    console.log(grades)
     if (!grades_json.Gradebook) {
       return {
         error: 'You did not input the correct password, please try again',

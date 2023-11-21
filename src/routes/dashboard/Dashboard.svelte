@@ -9,11 +9,11 @@
 		}, {});
 	}
 </script>
-<div id="gpa">
-	{#if form?.gpa}
-	GPA: {form.gpa}
-	{/if}
-</div>
+
+{#if form?.gpa}
+	<div id="gpa">
+		GPA: {form.gpa}
+	</div>{/if}
 <div id="grid">
 	{#each data.course_data as course}
 		<div>
@@ -46,7 +46,7 @@
 		text-align: center;
 		cursor: pointer;
 	}
-	#gpa{
+	#gpa {
 		background-color: var(--background-4);
 		padding: 2em;
 		color: var(--text-color);
