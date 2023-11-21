@@ -42,7 +42,7 @@
 			</label>
 			<label>
 				Optional: Add a link
-				<input name="link" placeholder="https://google.com" />
+				<input name="link" type="url" placeholder="https://google.com" />
 			</label>
 			<label>
 				Course: <br />
@@ -56,10 +56,10 @@
 			<label>
 				Assignment Type: <br />
 				<select name="assignment_type">
-					<option value="homework">Homework</option>
-					<option value="test">Test/Quiz</option>
-					<option value="project">Project</option>
-					<option value="other">Other</option>
+					<option value="Homework">Homework</option>
+					<option value="Test/Quiz">Test/Quiz</option>
+					<option value="Project">Project</option>
+					<option value="Other">Other</option>
 				</select>
 			</label>
 			<div style="display: flex; align-items: center; justify-content: center">
