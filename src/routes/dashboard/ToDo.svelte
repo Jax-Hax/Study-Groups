@@ -1,4 +1,6 @@
 <script>
+	import AddTaskPopup from "./AddTaskPopup.svelte";
+
 	export let data;
 	export let form;
 	$: data.custom_todo_data.sort((a, b) => {
@@ -14,9 +16,15 @@
             return 0;
         }
 	});
+	let showAddTask = false;
 </script>
+{#if showAddTask}
+			<AddTaskPopup {form} bind:showAddTask />
+		{/if}
 <h1 id="todo-h1">To-Do List</h1>
+
 <div id="grid">
+	<button class="bouncyButton" on:click={() => (showAddTask = true)} style="padding: 0.5em 4em; font-size: 30px">Add Task</button>
 	{#each data.custom_todo_data as todo}
     {@const course = data.course_data.filter(value => value.course_id === todo.course_id)[0]}
 		<div>
