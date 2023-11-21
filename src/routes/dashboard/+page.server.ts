@@ -1,4 +1,4 @@
-import { login } from '$lib';
+import { getCanvasAPI, login } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, locals: { supabase, getSession } }) {
@@ -70,6 +70,8 @@ export async function load({ url, locals: { supabase, getSession } }) {
     }
   }).filter(value => value !== undefined);
   let current_assignments = course_todo_data.filter(value => user_assignments.includes(value.assignment_id));
+  let canvas = await getCanvasAPI();
+  console.log(canvas)
   return {
     user_data: data[0],
     course_data,
