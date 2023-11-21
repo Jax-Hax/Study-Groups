@@ -160,34 +160,45 @@ export const actions = {
     })
     var sum = gpas.reduce((accumulator, currentValue) => {
       return accumulator + currentValue
-    },0);
+    }, 0);
     return {
       full_grades: grades_json.Gradebook.Courses.Course,
       grades: course_grades,
       success: true,
-      gpa: sum/gpas.length
+      gpa: sum / gpas.length
     }
   },
   signout: async ({ locals: { supabase } }) => {
     await supabase.auth.signOut()
     throw redirect(303, '/')
   },
-  add_todo: async ({ locals }) => {
+  addTodo: async ({ locals }) => {
     const session = await locals.getSession()
     const userID = session.user.id
     const formData = locals.formData
     const todo = formData.get('todo');
-    const due_date = formData.get('dueDate');
+    const due_date = new Date(formData.get('dueDate')).toISOString(); //date in utc time
     const link = formData.get('link');
     const course_id = formData.get('course');
     const assignment_type = formData.get('assignment_type');
     const publicOrPrivate = formData.get('publicOrPrivate');
-    
-    return {
-      full_grades: grades_json.Gradebook.Courses.Course,
-      grades: course_grades,
-      success: true,
-      gpa: sum/gpas.length
+    console.log(publicOrPrivate)
+    if (publicOrPrivate === "on") {
+      const { data, error: userDataInsertError } = await locals.supabase
+        .from('canvas_assignments')
+        .insert({ due_date, course_id: course_id === "None" ? null : course_id, text: todo, link, assignment_type })
+      if (userDataInsertError != null) {
+        console.error(userDataInsertError.message)
+      }
+
+    }
+    else {
+      const { data, error: userDataInsertError } = await locals.supabase
+        .from('custom_todos')
+        .insert({ user_id: userID, due_date, course_id: course_id === "None" ? null : course_id, text: todo, link, assignment_type })
+      if (userDataInsertError != null) {
+        console.error(userDataInsertError.message)
+      }
     }
   },
 }
