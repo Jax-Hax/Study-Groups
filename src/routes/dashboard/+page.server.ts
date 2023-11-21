@@ -71,7 +71,6 @@ export async function load({ url, locals: { supabase, getSession } }) {
   }).filter(value => value !== undefined);
   let current_assignments = course_todo_data.filter(value => user_assignments.includes(value.assignment_id));
   let canvas = await getCanvasAPI();
-  console.log(canvas)
   return {
     user_data: data[0],
     course_data,
@@ -173,5 +172,20 @@ export const actions = {
   signout: async ({ locals: { supabase } }) => {
     await supabase.auth.signOut()
     throw redirect(303, '/')
+  },
+  get_canvas_data: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const access_token = formData.get('access_token');
+    let canvas = await getCanvasAPI("https://mychesterfieldschools.instructure.com", access_token, "courses?enrollment_state=active&per_page=15");
+    let canvas_json = await canvas.json();
+    console.log(canvas_json)
+    return {
+      full_grades: grades_json.Gradebook.Courses.Course,
+      grades: course_grades,
+      success: true,
+      gpa: sum/gpas.length
+    }
   },
 }
