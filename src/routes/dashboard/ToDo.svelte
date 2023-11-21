@@ -31,7 +31,7 @@
 		<div>
             <p>{todo.text}</p>
             {#if Math.abs(+(((new Date() - new Date(todo.due_date))/ (3600000* 24)) ).toFixed(1)) > 1}
-			<p>Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ (3600000* 24)) ).toFixed(1))} days and {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
+			<p>Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ (3600000* 24)) ).toFixed(0))} days and {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
             {:else}
             <p style="color: var(--red)">Due in {Math.abs(+(((new Date() - new Date(todo.due_date))/ 3600000) % 24).toFixed(1))} hours</p>
             {/if}
@@ -57,9 +57,16 @@
 		border-radius: 16px;
 		font-size: 1.25em;
 		border-radius: 16px;
+		width: 80vw;
 		text-align: center;
 		cursor: pointer;
 	}
+	@media (max-width: 750px) {
+		#grid div {
+		width: 15em;
+	}
+}
+
 	#grid div:hover {
 		background-color: var(--background-6);
 	}
