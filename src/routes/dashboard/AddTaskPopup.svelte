@@ -1,9 +1,11 @@
 <script>
 	import { enhance } from '$app/forms';
 	export let form;
+    export let data;
 	export let showAddTask; //for use with Already a user? Log in
 	let dialog;
 	$: if (dialog && showAddTask) dialog.showModal();
+	let checked = false;
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -29,24 +31,72 @@
 				<p class="error">{form.message}</p>
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
-            <div style="display: flex; align-items: center; justify-content: center"><p>Public</p><input type="checkbox" name="publicOrPrivate" id="switch" /><label class="toggle" for="switch"></label><p>Private</p></div>
-			
-
+            <input name="todo" required placeholder="Todo" />
+            <label>
+                Due Date:
+            <input
+  type="datetime-local"
+  id="meeting-time"
+  name="meeting-time"
+  value={new Date().toISOString().slice(0, 16)} />
+</label>
 			<label>
-				Password:
-				<input name="password" type="password" required placeholder="Todo" />
+                Optional: Add a link
+				<input name="link" placeholder="https://google.com" />
 			</label>
-			<button class="bouncyButton">Log In</button>
+            <label>
+                Course: <br>
+                <select name="course">
+                    <option value="None">None</option>
+                    {#each data.course_data as course}
+                    <option value={course.course_id}>{course.course_name}</option>
+                    {/each}
+                </select>
+            </label>
+            <label>
+                Assignment Type: <br>
+                <select name="course">
+                    <option value="homework">Homework</option>
+                    <option value="test">Test/Quiz</option>
+                    <option value="project">Project</option>
+                    <option value="other">Other</option>
+                </select>
+            </label>
+            <div style="display: flex; align-items: center; justify-content: center">
+				<h3 style="color: var(--text-color); margin-right: 1em;">Private</h3>
+				<input bind:checked type="checkbox" name="publicOrPrivate" id="switch" /><label
+					class="toggle"
+					for="switch"
+				/>
+				<h3 style="color: var(--text-color); margin-left: 1em;">Public</h3>
+			</div>
+			{#if checked}
+				<p style="text-align:center; margin-top: 0.5em">Public: This is for uploading new canvas assignments for everyone to see. You will be banned if you post misinformation.</p>
+			{:else}
+            <p style="text-align:center; margin-top: 0.5em">Private: This is just for you to see</p>
+                {/if}
+
+			
+			<button class="bouncyButton" style="margin-top: 0.5em">Log In</button>
 		</form>
 	</div>
 </dialog>
 
 <style>
+    select {
+        color: var(--text-color);
+        background-color: var(--background-2);
+        border: 1px solid var(--pop);
+        border-radius: 10px;
+        padding: 0.5em;
+        width: 100%;
+        margin-bottom: 1em;
+    }
 	form {
 		position: relative;
 		display: flex;
 		padding: 2em;
-		max-width: 20em;
+		max-width: 30em;
 		margin: auto;
 		flex-direction: column;
 		color: var(--text-color);
@@ -63,7 +113,7 @@
 	dialog {
 		top: 50%;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translate(calc(-50% + 2.5rem), -50%);
 		padding: 3em;
 		width: 60vw;
 		max-width: 380px;
