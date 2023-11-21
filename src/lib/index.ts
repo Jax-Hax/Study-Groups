@@ -120,11 +120,10 @@ export async function getDistrictUrls(zipCode: any) {
     }, 'HDInfoServices'));
 }
 
-export async function getCanvasAPI(canvas_url: string, canvas_api_token: string, access_string: string) {
-    await fetch((canvas_url + "/api/v1/" + access_string), {
-        method: 'GET',
+export async function getCanvasAPI() {
+    return fetch('https://canvas.instructure.com/api/v1/courses?enrollment_state=active&per_page=15', {
         headers: {
-            Authorization: `Bearer ${canvas_api_token}`,
-        },
+            'Authorization': '<>',
+        }
     });
 }
