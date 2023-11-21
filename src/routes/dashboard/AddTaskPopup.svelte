@@ -1,7 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	export let form;
-    export let data;
+	export let data;
 	export let showAddTask; //for use with Already a user? Log in
 	let dialog;
 	$: if (dialog && showAddTask) dialog.showModal();
@@ -25,44 +25,44 @@
 			style="cursor: pointer; padding:0.25em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
-		<form method="POST" use:enhance action="?/login">
+		<form method="POST" use:enhance action="?/addTodo">
 			<h1 style="text-align: center; letter-spacing: 0.05em">Add Task</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
-            <input name="todo" required placeholder="Todo" />
-            <label>
-                Due Date:
-            <input
-  type="datetime-local"
-  id="meeting-time"
-  name="meeting-time"
-  value={new Date().toISOString().slice(0, 16)} />
-</label>
+			<input name="todo" required placeholder="Todo" />
 			<label>
-                Optional: Add a link
+				Due Date:
+				<input
+					type="datetime-local"
+					name="dueDate"
+					value={new Date().toISOString().slice(0, 16)}
+				/>
+			</label>
+			<label>
+				Optional: Add a link
 				<input name="link" placeholder="https://google.com" />
 			</label>
-            <label>
-                Course: <br>
-                <select name="course">
-                    <option value="None">None</option>
-                    {#each data.course_data as course}
-                    <option value={course.course_id}>{course.course_name}</option>
-                    {/each}
-                </select>
-            </label>
-            <label>
-                Assignment Type: <br>
-                <select name="course">
-                    <option value="homework">Homework</option>
-                    <option value="test">Test/Quiz</option>
-                    <option value="project">Project</option>
-                    <option value="other">Other</option>
-                </select>
-            </label>
-            <div style="display: flex; align-items: center; justify-content: center">
+			<label>
+				Course: <br />
+				<select name="course">
+					<option value="None">None</option>
+					{#each data.course_data as course}
+						<option value={course.course_id}>{course.course_name}</option>
+					{/each}
+				</select>
+			</label>
+			<label>
+				Assignment Type: <br />
+				<select name="assignment_type">
+					<option value="homework">Homework</option>
+					<option value="test">Test/Quiz</option>
+					<option value="project">Project</option>
+					<option value="other">Other</option>
+				</select>
+			</label>
+			<div style="display: flex; align-items: center; justify-content: center">
 				<h3 style="color: var(--text-color); margin-right: 1em;">Private</h3>
 				<input bind:checked type="checkbox" name="publicOrPrivate" id="switch" /><label
 					class="toggle"
@@ -71,27 +71,29 @@
 				<h3 style="color: var(--text-color); margin-left: 1em;">Public</h3>
 			</div>
 			{#if checked}
-				<p style="text-align:center; margin-top: 0.5em">Public: This is for uploading new canvas assignments for everyone to see. You will be banned if you post misinformation.</p>
+				<p style="text-align:center; margin-top: 0.5em">
+					Public: This is for uploading new canvas assignments for everyone to see. You will be
+					banned if you post misinformation.
+				</p>
 			{:else}
-            <p style="text-align:center; margin-top: 0.5em">Private: This is just for you to see</p>
-                {/if}
+				<p style="text-align:center; margin-top: 0.5em">Private: This is just for you to see</p>
+			{/if}
 
-			
 			<button class="bouncyButton" style="margin-top: 0.5em">Log In</button>
 		</form>
 	</div>
 </dialog>
 
 <style>
-    select {
-        color: var(--text-color);
-        background-color: var(--background-2);
-        border: 1px solid var(--pop);
-        border-radius: 10px;
-        padding: 0.5em;
-        width: 100%;
-        margin-bottom: 1em;
-    }
+	select {
+		color: var(--text-color);
+		background-color: var(--background-2);
+		border: 1px solid var(--pop);
+		border-radius: 10px;
+		padding: 0.5em;
+		width: 100%;
+		margin-bottom: 1em;
+	}
 	form {
 		position: relative;
 		display: flex;

@@ -171,5 +171,23 @@ export const actions = {
   signout: async ({ locals: { supabase } }) => {
     await supabase.auth.signOut()
     throw redirect(303, '/')
-  }
+  },
+  add_todo: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const todo = formData.get('todo');
+    const due_date = formData.get('dueDate');
+    const link = formData.get('link');
+    const course_id = formData.get('course');
+    const assignment_type = formData.get('assignment_type');
+    const publicOrPrivate = formData.get('publicOrPrivate');
+    
+    return {
+      full_grades: grades_json.Gradebook.Courses.Course,
+      grades: course_grades,
+      success: true,
+      gpa: sum/gpas.length
+    }
+  },
 }
