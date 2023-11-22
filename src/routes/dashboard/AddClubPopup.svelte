@@ -6,7 +6,7 @@
 	let dialog;
 	$: if (dialog && showNewClub) dialog.showModal();
 	let checked = false;
-    let selected;
+	let selected;
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -33,74 +33,63 @@
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
 			<input name="name" required placeholder="Club Name" />
-            <input name="sponsor" required placeholder="Sponsor (Teacher in charge of the club)" />
-            <input name="location" required placeholder="Location" />
-			<label>
-				Due Date:
-				<input
-					type="datetime-local"
-					name="dueDate"
-					value={new Date().toISOString().slice(0, 16)}
-				/>
-			</label>
+			<input name="sponsor" required placeholder="Sponsor (Teacher in charge of the club)" />
+			<input name="location" required placeholder="Location" />
+			
 			<label>
 				Every _ days/months at _ until _
 				<input name="link" type="url" placeholder="https://google.com" />
 			</label>
-			<label>
-				Course: <br />
-				<select name="course">
-					<option value="None">None</option>
-					{#each data.course_data as course}
-						<option value={course.course_id}>{course.course_name}</option>
-					{/each}
-				</select>
+            <label>
+				Starting time:
+				<input name="time" type="time" />
+			</label>
+            <label>
+				Ending time:
+				<input name="time" type="time" />
 			</label>
 			<label>
 				Repeats <br />
 				<select name="assignment_type" bind:value={selected}>
 					<option value="Weekly">Weekly</option>
-					<option value="Bi-Weekly">Bi-Weekly</option>
+					<option value="Bi-Weekly">Every Other Week</option>
 					<option value="Monthly">Monthly</option>
 					<option value="Other">Other</option>
 				</select>
 			</label>
-            {#if selected === "Weekly" || selected === "Bi-Weekly"}
-                <label>
-                    At:
-                    <input
-                        type="week"
-                        name="week"
-                    />
-                </label>
-            {:else if selected === "Monthly"}
-                <label>
-                    At:
-                    <input
-                        type="day"
-                        name="week"
-                    />
-                </label>
-            {:else}
-
-            {/if}
-			<div style="display: flex; align-items: center; justify-content: center">
-				<h3 style="color: var(--text-color); margin-right: 1em;">Private</h3>
-				<input bind:checked type="checkbox" name="publicOrPrivate" id="switch" /><label
-					class="toggle"
-					for="switch"
-				/>
-				<h3 style="color: var(--text-color); margin-left: 1em;">Public</h3>
-			</div>
-			{#if checked}
-				<p style="text-align:center; margin-top: 0.5em">
-					Public: This is for uploading new canvas assignments for everyone to see. You will be
-					banned if you post misinformation.
-				</p>
+			{#if selected === 'Weekly' || selected === 'Bi-Weekly'}
+				<label>
+					Day of the week:
+					<select name="assignment_type">
+                        <option value="Monday">Monday</option>
+                        <option value="Monday">Tuesday</option>
+                        <option value="Monday">Wednesday</option>
+                        <option value="Monday">Thursday</option>
+                        <option value="Monday">Friday</option>
+                        <option value="Monday">Saturday</option>
+                        <option value="Monday">Sunday</option>
+                    </select>
+				</label>
+			{:else if selected === 'Monthly'}
+				<label>
+					At:
+					<input type="day" name="week" />
+				</label>
 			{:else}
-				<p style="text-align:center; margin-top: 0.5em">Private: This is just for you to see</p>
+            <label>
+				Add dates (you can always add or remove more later):
+				<input type="datetime-local" name="dueDate" value={new Date().toISOString().slice(0, 16)} />
+			</label>{/if}
+			{#if selected === 'Bi-Weekly'}
+				<div style="display: flex; align-items: center; justify-content: center">
+					<h3 style="color: var(--text-color); margin-right: 1em;">Starting next week</h3>
+					<input bind:checked type="checkbox" name="publicOrPrivate" id="switch" /><label
+						class="toggle"
+						for="switch"
+					/>
+					<h3 style="color: var(--text-color); margin-left: 1em;">Starting in two weeks</h3>
+				</div>
 			{/if}
-
 			<button class="bouncyButton" style="margin-top: 0.5em">Log In</button>
 		</form>
 	</div>
@@ -120,7 +109,7 @@
 		position: relative;
 		display: flex;
 		padding: 2em;
-		max-width: 30em;
+		max-width: 40em;
 		margin: auto;
 		flex-direction: column;
 		color: var(--text-color);
@@ -202,6 +191,6 @@
 	.error {
 		text-align: center;
 		color: red;
-        font-size: 25px;
+		font-size: 25px;
 	}
 </style>
