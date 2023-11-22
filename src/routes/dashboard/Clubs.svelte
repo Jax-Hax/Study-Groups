@@ -1,6 +1,5 @@
 <script>
-	import AddTaskPopup from "./AddTaskPopup.svelte";
-
+	import AddClubPopup from "./AddClubPopup.svelte";
 	export let data;
 	export let form;
 	let courseAssignmentCounts;
@@ -13,22 +12,18 @@
     let showNewClub=false;
 </script>
 {#if showNewClub}
-	<AddTaskPopup {form} {data} bind:showNewClub />
+	<AddClubPopup {form} {data} bind:showNewClub />
 {/if}
-<h1>Clubs</h1>
-{#if form?.gpa}
-	<div id="gpa">
-		GPA: {form.gpa}
-	</div>{/if}
+<h1 style="text-align:center; color: var(--text-color)">Clubs</h1>
 <div id="grid">
-	{#each data.course_data as course}
+	{#each data.club_data as club}
 		<div>
-			<h1>{course.course_name}</h1>
-			{#if courseAssignmentCounts[course.course_id]}
-				<p>{courseAssignmentCounts[course.course_id]} new assignment(s)</p>
-			{:else}
-				<p>0 new assignment(s)</p>
-			{/if}
+			<h1>{club.name}</h1>
+            <p>Next meeting time: _</p>
+            <p>At: {club.location}</p>
+            <p>Sponsor: </p>
+            <p>_ new announcements</p>
+			
 			<p>_ new grades</p>
 		</div>
 	{/each}
@@ -38,7 +33,6 @@
 	#grid {
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
 		align-items: center;
 		padding: 1em;
 	}
@@ -48,17 +42,6 @@
 		color: var(--text-color);
 		border-radius: 16px;
 		font-size: 1.25em;
-		border-radius: 16px;
-		text-align: center;
-		cursor: pointer;
-	}
-	#gpa {
-		background-color: var(--background-4);
-		padding: 2em;
-		color: var(--text-color);
-		border-radius: 16px;
-		font-size: 1.25em;
-		margin: 1rem 1rem 0rem 1rem;
 		border-radius: 16px;
 		text-align: center;
 		cursor: pointer;

@@ -70,13 +70,32 @@ export async function load({ url, locals: { supabase, getSession } }) {
     }
   }).filter(value => value !== undefined);
   let current_assignments = course_todo_data.filter(value => user_assignments.includes(value.assignment_id));
+  //fetch clubs
+  const { data: user_in_club_data, error: clubError } = await supabase
+    .from('users_in_clubs')
+    .select('*')
+    .eq('user_id', userID);
+  if (clubError != null) {
+    console.error(clubError.message)
+  }
+  //contains course ids
+  const club_list = user_in_club_data.map(value => (value.club_id));
+  const { data: club_data, error: clubError1 } = await supabase
+    .from('clubs')
+    .select()
+    .in('club_id', club_list);
+  if (clubError1 != null) {
+    console.error(clubError1.message)
+  }
+  console.log(club_data)
   return {
     user_data: data[0],
     course_data,
     custom_todo_data,
     current_assignments,
     new_assignments,
-    user_in_course_data
+    user_in_course_data,
+    club_data
   }
 }
 export const actions = {
