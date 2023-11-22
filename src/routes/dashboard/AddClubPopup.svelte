@@ -23,7 +23,7 @@
 		<!-- svelte-ignore a11y-no-static-element-interactions -->
 		<span
 			class="material-symbols-outlined"
-			style="cursor: pointer; padding:0.25em; font-size: 30px"
+			style="cursor: pointer; margin-top:1em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
 		<form method="POST" use:enhance action="?/addTodo">
@@ -140,7 +140,7 @@
 		top: 50%;
 		left: 50%;
 		transform: translate(calc(-50% + 2.5rem), -50%);
-		padding: 5em;
+		padding: 2em 5em;
 		width: 40vw;
 		border: none;
 		border-radius: 1em;
