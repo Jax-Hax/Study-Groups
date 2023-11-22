@@ -26,12 +26,14 @@
 			on:click={() => dialog.close()}>arrow_back</span
 		>
 		<form method="POST" use:enhance action="?/addTodo">
-			<h1 style="text-align: center; letter-spacing: 0.05em">Add Task</h1>
+			<h1 style="text-align: center; letter-spacing: 0.05em">Create Club</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
-			<input name="todo" required placeholder="Todo" />
+			<input name="name" required placeholder="Club Name" />
+            <input name="sponsor" required placeholder="Sponsor (Teacher in charge of the club)" />
+            <input name="location" required placeholder="Location" />
 			<label>
 				Due Date:
 				<input
@@ -41,7 +43,7 @@
 				/>
 			</label>
 			<label>
-				Optional: Add a link
+				Every _ days/months at _ until _
 				<input name="link" type="url" placeholder="https://google.com" />
 			</label>
 			<label>
@@ -54,11 +56,11 @@
 				</select>
 			</label>
 			<label>
-				Assignment Type: <br />
+				Repeats <br />
 				<select name="assignment_type">
-					<option value="Homework">Homework</option>
-					<option value="Test/Quiz">Test/Quiz</option>
-					<option value="Project">Project</option>
+					<option value="Weekly">Weekly</option>
+					<option value="Bi-Weekly">Bi-Weekly</option>
+					<option value="Monthly">Monthly</option>
 					<option value="Other">Other</option>
 				</select>
 			</label>

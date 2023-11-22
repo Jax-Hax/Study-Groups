@@ -15,7 +15,13 @@
 	<AddClubPopup {form} {data} bind:showNewClub />
 {/if}
 <h1 style="text-align:center; color: var(--text-color)">Clubs</h1>
+
 <div id="grid">
+    <button
+		class="bouncyButton"
+		on:click={() => (showNewClub = true)}
+		style="padding: 0.5em 0; font-size: 30px">Create New Club</button
+	>
 	{#each data.club_data as club}
 		<div>
 			<h1>{club.name}</h1>
@@ -23,8 +29,6 @@
             <p>At: {club.location}</p>
             <p>Sponsor: </p>
             <p>_ new announcements</p>
-			
-			<p>_ new grades</p>
 		</div>
 	{/each}
 </div>
