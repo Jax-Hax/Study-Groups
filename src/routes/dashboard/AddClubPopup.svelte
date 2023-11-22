@@ -67,13 +67,21 @@
 				</label>
 			{:else if selected === 'Monthly'}
 				<label>
-					Day of the month:
-					<input type="day" name="week" />
+					First ______ of the week:
+					<select name="assignment_type">
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
+                    </select>
 				</label>
 			{:else}
             <label>
 				Add dates (you can always add or remove more later):
-				<input type="datetime-local" name="dueDate" value={new Date().toISOString().slice(0, 16)} />
+				<input type="date" name="dueDate" />
 			</label>{/if}
 			{#if selected === 'Bi-Weekly'}
 				<div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1em">
