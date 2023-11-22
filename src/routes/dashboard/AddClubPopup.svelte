@@ -127,8 +127,7 @@
 	form {
 		position: relative;
 		display: flex;
-		padding: 2em;
-		max-width: 40em;
+		width: 100%;
 		margin: auto;
 		flex-direction: column;
 		color: var(--text-color);
@@ -137,16 +136,11 @@
 	input:invalid {
 		border: 1px solid red;
 	}
-	input {
-		width: 90%;
-		padding: 0.5em;
-		margin-bottom: 0.5em;
-	}
 	dialog {
 		top: 50%;
 		left: 50%;
 		transform: translate(calc(-50% + 2.5rem), -50%);
-		padding: 3em;
+		padding: 5em;
 		width: 40vw;
 		border: none;
 		border-radius: 1em;
@@ -159,12 +153,14 @@
 		color: var(--text-color);
 	}
 	input {
-		padding: 0.75em 1em 0.75em;
+		padding: 0.75em 1em;
 		border: 0.1em solid #46c759;
 		border-radius: 16px;
 		background-color: var(--background-1-darkest);
 		color: var(--text-color);
 		font-size: 18px;
+        width: calc(100% - 2em);
+		margin-bottom: 0.5em;
 	}
 	input[type='checkbox'] {
 		height: 0;
