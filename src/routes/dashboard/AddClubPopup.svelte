@@ -33,16 +33,16 @@
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
 			<input name="name" required placeholder="Club Name" />
-            <textarea name="description" placeholder="Club Description"></textarea>
+            <textarea name="description" required placeholder="Club Description"></textarea>
 			<input name="sponsor" required placeholder="Sponsor (Teacher in charge of the club)" />
 			<input name="location" required placeholder="Location" />
             <label>
 				Starting time:
-				<input name="time" type="time" />
+				<input required name="time" type="time" />
 			</label>
             <label>
 				Ending time:
-				<input name="time" type="time" />
+				<input required name="time" type="time" />
 			</label>
 			<label>
 				Repeats <br />
@@ -97,7 +97,7 @@
             {#if selected !== "Other"}
             <label>
 				Final club date (Dates will be auto-generated up until this point):
-				<input type="datetime-local" name="dueDate" value={new Date().toISOString().slice(0, 16)} />
+				<input type="datetime-local" required name="dueDate" value={new Date().toISOString().slice(0, 16)} />
 			</label>
             {/if}
 			<button class="bouncyButton" style="margin-top: 0.5em">Log In</button>
