@@ -119,3 +119,20 @@ export async function getDistrictUrls(zipCode: any) {
         Key: '5E4B7859-B805-474B-A833-FDB15D205D40'
     }, 'HDInfoServices'));
 }
+function getFirstWednesdays(year, months) {
+  const firstWednesdays = [];
+  months.forEach(month => {
+    const date = new Date(year, month - 1, 1); // Subtract 1 from month as months are zero-indexed
+    while (date.getDay() !== 3) { // Wednesday has index 3 (0-indexed)
+      date.setDate(date.getDate() + 1);
+    }
+    firstWednesdays.push(date.toDateString());
+  });
+  return firstWednesdays;
+  /*
+const year = 2023;
+const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; // January to December
+const firstWednesdays = getFirstWednesdays(year, months);
+  */
+}
+
