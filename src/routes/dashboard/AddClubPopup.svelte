@@ -35,11 +35,6 @@
 			<input name="name" required placeholder="Club Name" />
 			<input name="sponsor" required placeholder="Sponsor (Teacher in charge of the club)" />
 			<input name="location" required placeholder="Location" />
-			
-			<label>
-				Every _ days/months at _ until _
-				<input name="link" type="url" placeholder="https://google.com" />
-			</label>
             <label>
 				Starting time:
 				<input name="time" type="time" />
@@ -62,17 +57,17 @@
 					Day of the week:
 					<select name="assignment_type">
                         <option value="Monday">Monday</option>
-                        <option value="Monday">Tuesday</option>
-                        <option value="Monday">Wednesday</option>
-                        <option value="Monday">Thursday</option>
-                        <option value="Monday">Friday</option>
-                        <option value="Monday">Saturday</option>
-                        <option value="Monday">Sunday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                        <option value="Sunday">Sunday</option>
                     </select>
 				</label>
 			{:else if selected === 'Monthly'}
 				<label>
-					At:
+					Day of the month:
 					<input type="day" name="week" />
 				</label>
 			{:else}
@@ -81,7 +76,7 @@
 				<input type="datetime-local" name="dueDate" value={new Date().toISOString().slice(0, 16)} />
 			</label>{/if}
 			{#if selected === 'Bi-Weekly'}
-				<div style="display: flex; align-items: center; justify-content: center">
+				<div style="display: flex; align-items: center; justify-content: center; margin-bottom: 1em">
 					<h3 style="color: var(--text-color); margin-right: 1em;">Starting next week</h3>
 					<input bind:checked type="checkbox" name="publicOrPrivate" id="switch" /><label
 						class="toggle"
@@ -90,6 +85,12 @@
 					<h3 style="color: var(--text-color); margin-left: 1em;">Starting in two weeks</h3>
 				</div>
 			{/if}
+            {#if selected !== "Other"}
+            <label>
+				Final club date (Dates will be auto-generated up until this point):
+				<input type="datetime-local" name="dueDate" value={new Date().toISOString().slice(0, 16)} />
+			</label>
+            {/if}
 			<button class="bouncyButton" style="margin-top: 0.5em">Log In</button>
 		</form>
 	</div>
@@ -128,8 +129,7 @@
 		left: 50%;
 		transform: translate(calc(-50% + 2.5rem), -50%);
 		padding: 3em;
-		width: 60vw;
-		max-width: 380px;
+		width: 40vw;
 		border: none;
 		border-radius: 1em;
 		background-color: var(--background-5);
