@@ -33,6 +33,7 @@
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
 			<input name="name" required placeholder="Club Name" />
+            <textarea name="description" placeholder="Club Description"></textarea>
 			<input name="sponsor" required placeholder="Sponsor (Teacher in charge of the club)" />
 			<input name="location" required placeholder="Location" />
             <label>
@@ -105,10 +106,19 @@
 </dialog>
 
 <style>
+    textarea {
+        resize: none;
+        border-radius: 1em;
+        padding: 0.5em;
+        background-color: var(--background-2);
+        color: var(--text-color);
+        border: 0.1em solid var(--pop);
+        margin: 0.5em 0
+    }
 	select {
 		color: var(--text-color);
 		background-color: var(--background-2);
-		border: 1px solid var(--pop);
+		border: 0.1em solid var(--pop);
 		border-radius: 10px;
 		padding: 0.5em;
 		width: 100%;
