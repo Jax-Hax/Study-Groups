@@ -1,4 +1,5 @@
 <script>
+	import Clubs from "./Clubs.svelte";
 	import Dashboard from "./Dashboard.svelte";
 	import Sidebar from "./Sidebar.svelte";
 	import StudentVueLogin from "./StudentVueLogin.svelte";
@@ -6,6 +7,7 @@
 	let dashboard = true;
     let todo = false;
 	let new_stuff = false;
+	let clubs = false;
 	let showLogin = true;
 	export let form;
 	export let data;
@@ -13,11 +15,15 @@
 <body>
 	<StudentVueLogin {form} {data} bind:showLogin/>
 <div class="content">
-<Sidebar bind:dashboard bind:todo bind:new_stuff {data}/></div>
+<Sidebar bind:dashboard bind:todo bind:new_stuff {data} bind:clubs/></div>
 {#if dashboard}
 <div class="content"><Dashboard {form} {data}/></div>
 {:else if todo}
 <div class="content"><ToDo {form} {data}/></div>
+{:else if new_stuff}
+<div class="content"><ToDo {form} {data}/></div>
+{:else if clubs}
+<div class="content"><Clubs {form} {data}/></div>
 {/if}</body>
 <style>
 	.content {

@@ -5,6 +5,7 @@
 	export let todo;
 	export let new_stuff;
 	export let data;
+	export let clubs;
 </script>
 
 <div id="sidebar">
@@ -14,6 +15,7 @@
 			dashboard = true;
 			todo = false;
 			new_stuff = false;
+			clubs = false;
 		}}
 	>
 		<span class="material-symbols-outlined">home</span>
@@ -25,6 +27,7 @@
 			todo = true;
 			dashboard = false;
 			new_stuff = false;
+			clubs = false;
 		}}
 	>
 		{#if todo}
@@ -34,11 +37,24 @@
 		<div class="sidebar-tooltip">To-Do List</div>
 	</div>
 	<div
+		class="icon" style="margin-top: 0.5em"
+		on:click={() => {
+			dashboard = false;
+			todo = false;
+			new_stuff = false;
+			clubs = true;
+		}}
+	>
+		<span class="material-symbols-outlined">sports_tennis</span>
+		<div class="sidebar-tooltip">Clubs</div>
+	</div>
+	<div
 		class="icon"
 		on:click={() => {
 			todo = false;
 			dashboard = false;
 			new_stuff = true;
+			clubs = false;
 		}}
 	>
 		{#if new_stuff}
