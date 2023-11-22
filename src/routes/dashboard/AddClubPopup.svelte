@@ -6,6 +6,7 @@
 	let dialog;
 	$: if (dialog && showNewClub) dialog.showModal();
 	let checked = false;
+    let selected;
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -57,13 +58,32 @@
 			</label>
 			<label>
 				Repeats <br />
-				<select name="assignment_type">
+				<select name="assignment_type" bind:value={selected}>
 					<option value="Weekly">Weekly</option>
 					<option value="Bi-Weekly">Bi-Weekly</option>
 					<option value="Monthly">Monthly</option>
 					<option value="Other">Other</option>
 				</select>
 			</label>
+            {#if selected === "Weekly" || selected === "Bi-Weekly"}
+                <label>
+                    At:
+                    <input
+                        type="week"
+                        name="week"
+                    />
+                </label>
+            {:else if selected === "Monthly"}
+                <label>
+                    At:
+                    <input
+                        type="day"
+                        name="week"
+                    />
+                </label>
+            {:else}
+
+            {/if}
 			<div style="display: flex; align-items: center; justify-content: center">
 				<h3 style="color: var(--text-color); margin-right: 1em;">Private</h3>
 				<input bind:checked type="checkbox" name="publicOrPrivate" id="switch" /><label
