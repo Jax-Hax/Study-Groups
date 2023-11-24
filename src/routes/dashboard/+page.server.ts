@@ -227,6 +227,7 @@ export const actions = {
   },
   addClub: async ({ locals }) => {
     const session = await locals.getSession()
+    console.log("yeah")
     const userID = session.user.id
     const formData = locals.formData
     const name = formData.get('name');
@@ -237,37 +238,8 @@ export const actions = {
     const end_time = formData.get('end_time');
     const meeting_time = formData.get('meeting_time');
     const day_of_week = formData.get('day_of_week');
-
-
+    const date_list = formData.get('date_list');
+    console.log(date_list)
     
-    const due_date = new Date(formData.get('dueDate')).toISOString(); //date in utc time
-    
-    const course_id = formData.get('course');
-    
-    const publicOrPrivate = formData.get('publicOrPrivate');
-    if (course_id === "None" && publicOrPrivate === "on"){
-      return {
-        message: 'You can not make a public assignment with no course chosen',
-        success: false,
-      }
-    }
-    
-    if (publicOrPrivate === "on") {
-      const { data, error: userDataInsertError } = await locals.supabase
-        .from('canvas_assignments')
-        .insert({ due_date, course_id: course_id === "None" ? null : course_id, text: todo, link, assignment_type })
-      if (userDataInsertError != null) {
-        console.error(userDataInsertError.message)
-      }
-
-    }
-    else {
-      const { data, error: userDataInsertError } = await locals.supabase
-        .from('custom_todos')
-        .insert({ user_id: userID, due_date, course_id: course_id === "None" ? null : course_id, text: todo, link, assignment_type })
-      if (userDataInsertError != null) {
-        console.error(userDataInsertError.message)
-      }
-    }
   },
 }

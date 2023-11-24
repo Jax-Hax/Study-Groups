@@ -94,6 +94,9 @@
 		width: 100%;
 		margin-bottom: 1em;
 	}
+	option {
+		color: var(--text-color)
+	}
 	form {
 		position: relative;
 		display: flex;
