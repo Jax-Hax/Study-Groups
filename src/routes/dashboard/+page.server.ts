@@ -245,7 +245,7 @@ export const actions = {
     let dates;
     const currentDate = new Date(); // Current date
     if (meeting_time === "Weekly") {
-      const dates = getDaysOfWeek(currentDate, final_date, day_of_week);
+      dates = getDaysOfWeek(currentDate, final_date, day_of_week);
     } else if (meeting_time === "Bi-Weekly") {
       
     } else if (meeting_time === "Monthly") {
@@ -254,11 +254,12 @@ export const actions = {
       //other
 
     }
-    const { data, error: clubError } = await locals.supabase
+    console.log(dates)
+    /*const { data, error: clubError } = await locals.supabase
         .from('clubs')
         .insert({ sponsor, name, description, location, start_time: starting_time, end_time, dates })
       if (clubError != null) {
         console.error(clubError.message)
-      }
+      }*/
   },
 }
