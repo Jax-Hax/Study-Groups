@@ -87,6 +87,13 @@ export async function load({ url, locals: { supabase, getSession } }) {
   if (clubError1 != null) {
     console.error(clubError1.message)
   }
+  const { data: all_club_data, error: clubError2 } = await supabase
+    .from('clubs')
+    .select()
+    .eq('school_id', data[0].school_id)
+  if (clubError2 != null) {
+    console.error(clubError2.message)
+  }
   return {
     user_data: data[0],
     course_data,
@@ -94,7 +101,8 @@ export async function load({ url, locals: { supabase, getSession } }) {
     current_assignments,
     new_assignments,
     user_in_course_data,
-    club_data
+    club_data,
+    all_club_data
   }
 }
 export const actions = {
