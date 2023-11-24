@@ -227,7 +227,6 @@ export const actions = {
   },
   addClub: async ({ locals }) => {
     const session = await locals.getSession()
-    console.log("yeah")
     const userID = session.user.id
     const formData = locals.formData
     const name = formData.get('name');
@@ -237,7 +236,6 @@ export const actions = {
     const starting_time = formData.get('starting_time');
     const end_time = formData.get('end_time');
     const meeting_time = formData.get('meeting_time');
-
     const day_of_week = formData.get('day_of_week');
     const date_list = formData.get('date_list');
     const starting_in_two_weeks_or_one = formData.get('publicOrPrivate');
@@ -258,14 +256,14 @@ export const actions = {
       dates = getFirstDayOfMonth(currentDate, final_date, day_of_week);
     } else {
       //other
-
+      dates = date_list.split(",").map(date => new Date(date))
     }
-    console.log(dates)
-    /*const { data, error: clubError } = await locals.supabase
+    const list_of_dates = dates.map(date => date.toISOString().split("T")[0])
+    const { data, error: clubError } = await locals.supabase
         .from('clubs')
-        .insert({ sponsor, name, description, location, start_time: starting_time, end_time, dates })
+        .insert({ sponsor, name, description, location, start_time: starting_time, end_time, dates: list_of_dates, is_approved: false })
       if (clubError != null) {
         console.error(clubError.message)
-      }*/
+      }
   },
 }
