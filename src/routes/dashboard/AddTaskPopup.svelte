@@ -25,7 +25,7 @@
 			style="cursor: pointer; padding:0.25em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
-		<form method="POST" use:enhance action="?/addTodo">
+		<form method="POST" class="form" use:enhance action="?/addTodo">
 			<h1 style="text-align: center; letter-spacing: 0.05em">Add Task</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
@@ -85,36 +85,6 @@
 </dialog>
 
 <style>
-	select {
-		color: var(--text-color);
-		background-color: var(--background-2);
-		border: 1px solid var(--pop);
-		border-radius: 10px;
-		padding: 0.5em;
-		width: 100%;
-		margin-bottom: 1em;
-	}
-	option {
-		color: var(--text-color)
-	}
-	form {
-		position: relative;
-		display: flex;
-		padding: 2em;
-		max-width: 30em;
-		margin: auto;
-		flex-direction: column;
-		color: var(--text-color);
-		border-radius: 2em;
-	}
-	input:invalid {
-		border: 1px solid red;
-	}
-	input {
-		width: 90%;
-		padding: 0.5em;
-		margin-bottom: 0.5em;
-	}
 	dialog {
 		top: 50%;
 		left: 50%;
@@ -132,20 +102,6 @@
 	span {
 		color: var(--text-color);
 	}
-	input {
-		padding: 0.75em 1em 0.75em;
-		border: 0.1em solid #46c759;
-		border-radius: 16px;
-		background-color: var(--background-1-darkest);
-		color: var(--text-color);
-		font-size: 18px;
-	}
-	input[type='checkbox'] {
-		height: 0;
-		width: 0;
-		visibility: hidden;
-	}
-
 	.toggle {
 		cursor: pointer;
 		width: 5em;
