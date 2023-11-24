@@ -236,10 +236,28 @@ export const actions = {
     const location = formData.get('location');
     const starting_time = formData.get('starting_time');
     const end_time = formData.get('end_time');
+
     const meeting_time = formData.get('meeting_time');
     const day_of_week = formData.get('day_of_week');
     const date_list = formData.get('date_list');
-    console.log(date_list)
-    
+    const starting_in_two_weeks_or_one = formData.get('publicOrPrivate');
+    const final_date = new Date(formData.get('final_date')).toISOString(); //date in utc time
+    let dates;
+    if (meeting_time === "Weekly") {
+
+    } else if (meeting_time === "Bi-Weekly") {
+      
+    } else if (meeting_time === "Monthly") {
+
+    } else {
+      //other
+
+    }
+    const { data, error: clubError } = await locals.supabase
+        .from('clubs')
+        .insert({ sponsor, name, description, location, start_time: starting_time, end_time, dates })
+      if (clubError != null) {
+        console.error(clubError.message)
+      }
   },
 }

@@ -126,7 +126,7 @@
 					<input
 						type="datetime-local"
 						required
-						name="dueDate"
+						name="final_date"
 						value={new Date().toISOString().slice(0, 16)}
 					/>
 				</label>
