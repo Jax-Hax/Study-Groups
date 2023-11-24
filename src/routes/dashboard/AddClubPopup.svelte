@@ -30,7 +30,7 @@
 			style="cursor: pointer; margin-top:1em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
-		<form method="POST" use:enhance action="?/addClub">
+		<form method="POST" class="form" use:enhance action="?/addClub">
 			<h1 style="text-align: center; letter-spacing: 0.05em">Create Club</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
@@ -137,39 +137,6 @@
 </dialog>
 
 <style>
-	textarea {
-		resize: none;
-		border-radius: 1em;
-		padding: 0.5em;
-		background-color: var(--background-2);
-		color: var(--text-color);
-		border: 0.1em solid var(--pop);
-		margin: 0.5em 0;
-	}
-	option {
-		color: var(--text-color);
-	}
-	select {
-		color: var(--text-color);
-		background-color: var(--background-2);
-		border: 0.1em solid var(--pop);
-		border-radius: 10px;
-		padding: 0.5em;
-		width: 100%;
-		margin-bottom: 1em;
-	}
-	form {
-		position: relative;
-		display: flex;
-		width: 100%;
-		margin: auto;
-		flex-direction: column;
-		color: var(--text-color);
-		border-radius: 2em;
-	}
-	input:invalid {
-		border: 1px solid red;
-	}
 	dialog {
 		top: 50%;
 		left: 50%;
@@ -185,21 +152,6 @@
 	label,
 	span {
 		color: var(--text-color);
-	}
-	input {
-		padding: 0.75em 1em;
-		border: 0.1em solid #46c759;
-		border-radius: 16px;
-		background-color: var(--background-1-darkest);
-		color: var(--text-color);
-		font-size: 18px;
-		width: calc(100% - 2em);
-		margin-bottom: 0.5em;
-	}
-	input[type='checkbox'] {
-		height: 0;
-		width: 0;
-		visibility: hidden;
 	}
 
 	.toggle {

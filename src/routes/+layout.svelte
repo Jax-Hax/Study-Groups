@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { invalidate } from '$app/navigation'
 	import { onMount } from 'svelte'
-
+	import './form.css'
 	export let data
 
 	let { supabase, session } = data
