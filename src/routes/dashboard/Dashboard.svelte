@@ -33,10 +33,10 @@
 					<p>0 new assignment(s)</p>
 				{/if}
 				<p>_ new grades</p>
-				<p>Grade:</p>
+				<p style="display: inline">Grade:</p>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-				<p class:textshadow={!showGrades} on:click={() => (showGrades = !showGrades)}>
+				<p style="display: inline" class:textshadow={!showGrades} on:click={() => (showGrades = !showGrades)}>
 					{#if showGrades}{course.grade}{:else}Show{/if}
 				</p>
 			</div>
