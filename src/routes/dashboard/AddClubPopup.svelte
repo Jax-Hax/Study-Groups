@@ -124,10 +124,9 @@
 				<label>
 					Final club date (Dates will be auto-generated up until this point):
 					<input
-						type="datetime-local"
+						type="date"
 						required
 						name="final_date"
-						value={new Date().toISOString().slice(0, 16)}
 					/>
 				</label>
 			{/if}
