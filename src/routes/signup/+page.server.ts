@@ -12,7 +12,8 @@ export async function load({ url, locals: { supabase, getSession } }) {
     if (schoolData != null) {
         console.error(schoolData.message)
     }
-    return schoolData
+    console.log(schoolData)
+    return {schoolData}
 }
 export const actions = {
     signout: async ({ locals: { supabase } }) => {
@@ -23,8 +24,17 @@ export const actions = {
         const formData = locals.formData
         const student_id = formData.get('student_id')
         const student_password = formData.get('student_password')
-        const district = formData.get('district')
-        let client = await login(district, student_id, student_password);
+        const district = formData.get('school_ids')
+        const session = await locals.getSession()
+        const userID = session.user.id
+        const { data: schoolData, error: schoolError } = await locals.supabase
+		.from('schools')
+		.select()
+		.eq('school_id', district);
+        if (schoolError != null) {
+            console.error(schoolError.message)
+        }
+        let client = await login(schoolData[0].school_studentvue_url, student_id, student_password);
         let grades = await client.getGradebook();
         let grades_json = JSON.parse(grades);
         if (!grades_json.Gradebook) {
@@ -33,8 +43,6 @@ export const actions = {
                 success: false,
             }
         }
-        const session = await locals.getSession()
-        const userID = session.user.id
         const { data: userData, error: userDataError } = await locals.supabase
 		.from('user_data')
 		.select('*')
@@ -45,7 +53,7 @@ export const actions = {
         if (userData.length <= 0) {
             const { data,error: userDataInsertError } = await locals.supabase
             .from('user_data')
-            .insert({ user_id: userID, student_number: student_id, studentvue_url: district })
+            .insert({ user_id: userID, student_number: student_id, school_id: district })
             if (userDataInsertError != null) {
                 console.error(userDataInsertError.message)
             }

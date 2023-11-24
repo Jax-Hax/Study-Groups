@@ -27,7 +27,7 @@
 					District: <br>
 					<select name="school_ids" id="district">
 						{#each data.schoolData as school}
-						<option value={school.school_id}>{school.name}</option>
+							<option value={school.school_id}>{school.school_name}</option>
 						{/each}
 					</select>
 				</label>
