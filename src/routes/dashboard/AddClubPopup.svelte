@@ -38,15 +38,15 @@
 			<input name="location" required placeholder="Location" />
             <label>
 				Starting time:
-				<input required name="time" type="time" />
+				<input required name="starting_time" type="time" />
 			</label>
             <label>
 				Ending time:
-				<input required name="time" type="time" />
+				<input required name="end_time" type="time" />
 			</label>
 			<label>
 				Repeats <br />
-				<select name="assignment_type" bind:value={selected}>
+				<select name="meeting_time" bind:value={selected}>
 					<option value="Weekly">Weekly</option>
 					<option value="Bi-Weekly">Every Other Week</option>
 					<option value="Monthly">Monthly</option>
@@ -56,7 +56,7 @@
 			{#if selected === 'Weekly' || selected === 'Bi-Weekly'}
 				<label>
 					Day of the week:
-					<select name="assignment_type">
+					<select name="day_of_week">
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>
@@ -69,7 +69,7 @@
 			{:else if selected === 'Monthly'}
 				<label>
 					First ______ of the week:
-					<select name="assignment_type">
+					<select name="day_of_week">
                         <option value="Monday">Monday</option>
                         <option value="Tuesday">Tuesday</option>
                         <option value="Wednesday">Wednesday</option>

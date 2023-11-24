@@ -87,7 +87,6 @@ export async function load({ url, locals: { supabase, getSession } }) {
   if (clubError1 != null) {
     console.error(clubError1.message)
   }
-  console.log(club_data)
   return {
     user_data: data[0],
     course_data,
@@ -109,7 +108,6 @@ export const actions = {
     let client = await login(district, student_id, student_password);
     let grades = await client.getGradebook();
     let grades_json = JSON.parse(grades);
-    console.log(grades)
     if (!grades_json.Gradebook) {
       return {
         error: 'You did not input the correct password, please try again',
@@ -201,6 +199,51 @@ export const actions = {
     const link = formData.get('link');
     const course_id = formData.get('course');
     const assignment_type = formData.get('assignment_type');
+    const publicOrPrivate = formData.get('publicOrPrivate');
+    if (course_id === "None" && publicOrPrivate === "on"){
+      return {
+        message: 'You can not make a public assignment with no course chosen',
+        success: false,
+      }
+    }
+    
+    if (publicOrPrivate === "on") {
+      const { data, error: userDataInsertError } = await locals.supabase
+        .from('canvas_assignments')
+        .insert({ due_date, course_id: course_id === "None" ? null : course_id, text: todo, link, assignment_type })
+      if (userDataInsertError != null) {
+        console.error(userDataInsertError.message)
+      }
+
+    }
+    else {
+      const { data, error: userDataInsertError } = await locals.supabase
+        .from('custom_todos')
+        .insert({ user_id: userID, due_date, course_id: course_id === "None" ? null : course_id, text: todo, link, assignment_type })
+      if (userDataInsertError != null) {
+        console.error(userDataInsertError.message)
+      }
+    }
+  },
+  addClub: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const name = formData.get('name');
+    const description = formData.get('description');
+    const sponsor = formData.get('sponsor');
+    const location = formData.get('location');
+    const starting_time = formData.get('starting_time');
+    const end_time = formData.get('end_time');
+    const meeting_time = formData.get('meeting_time');
+    const day_of_week = formData.get('day_of_week');
+
+
+    
+    const due_date = new Date(formData.get('dueDate')).toISOString(); //date in utc time
+    
+    const course_id = formData.get('course');
+    
     const publicOrPrivate = formData.get('publicOrPrivate');
     if (course_id === "None" && publicOrPrivate === "on"){
       return {
