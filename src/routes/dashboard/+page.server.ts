@@ -181,7 +181,7 @@ export const actions = {
     }, 0);
     return {
       full_grades: grades_json.Gradebook.Courses.Course,
-      grades: course_grades,
+      grades: courses_with_grades,
       success: true,
       gpa: sum / gpas.length
     }

@@ -8,24 +8,51 @@
 			return acc;
 		}, {});
 	}
+	let showGpa = false;
+	let showGrades = false;
 </script>
 
 {#if form?.gpa}
+	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<div id="gpa">
-		GPA: {form.gpa}
+		<h1>GPA:</h1>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
+		<p class:textshadow={!showGpa} on:click={() => (showGpa = !showGpa)}>
+			{#if showGpa}{form.gpa}{:else}Show{/if}
+		</p>
+		<p>Includes all of your classes, even if they aren't part of the app</p>
 	</div>{/if}
 <div id="grid">
-	{#each data.course_data as course}
-		<div>
-			<h1>{course.course_name}</h1>
-			{#if courseAssignmentCounts[course.course_id]}
-				<p>{courseAssignmentCounts[course.course_id]} new assignment(s)</p>
-			{:else}
-				<p>0 new assignment(s)</p>
-			{/if}
-			<p>_ new grades</p>
-		</div>
-	{/each}
+	{#if form?.grades}
+		{#each form.grades as course}
+			<div>
+				<h1>{course.course_name}</h1>
+				{#if courseAssignmentCounts[course.course_id]}
+					<p>{courseAssignmentCounts[course.course_id]} new assignment(s)</p>
+				{:else}
+					<p>0 new assignment(s)</p>
+				{/if}
+				<p>_ new grades</p>
+				<p>Grade:</p>
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+				<p class:textshadow={!showGrades} on:click={() => (showGrades = !showGrades)}>
+					{#if showGrades}{course.grade}{:else}Show{/if}
+				</p>
+			</div>
+		{/each}
+	{:else}
+		{#each data.course_data as course}
+			<div>
+				<h1>{course.course_name}</h1>
+				{#if courseAssignmentCounts[course.course_id]}
+					<p>{courseAssignmentCounts[course.course_id]} new assignment(s)</p>
+				{:else}
+					<p>0 new assignment(s)</p>
+				{/if}
+			</div>
+		{/each}
+	{/if}
 </div>
 
 <style>
@@ -63,5 +90,9 @@
 	h1,
 	p {
 		color: inherit;
+	}
+	.textshadow {
+		color: transparent;
+		text-shadow: 0 0 5px var(--text-blur);
 	}
 </style>

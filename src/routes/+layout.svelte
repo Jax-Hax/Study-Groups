@@ -38,7 +38,8 @@
             --background-8: #333333;
             --background-9: #363636;
             --background-10-lightest: #383838;
-            --text-color: dark;
+            --text-color: black;
+			--text-blur: rgba(0,0,0,0.5);
 		}
         @media (prefers-color-scheme: dark) {
             :root {
@@ -54,6 +55,7 @@
                 --background-9: #363636;
                 --background-10-lightest: #383838;
                 --text-color: white;
+				--text-blur: rgba(255, 255, 255, 0.5);
             }
         }
 		* {
