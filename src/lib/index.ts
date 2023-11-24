@@ -1,5 +1,5 @@
 import { createClientAsync } from "soap";
-import { toJson} from "xml2json";
+import { toJson } from "xml2json";
 class StudentVueClient {
     username;
     password;
@@ -95,7 +95,7 @@ class StudentVueClient {
 
 export async function login(url: string | URL, username: string, password: string, soapOptions = {}) {
     const host = new URL(url).host;
-    const endpoint = `https://${ host }/Service/PXPCommunication.asmx`;
+    const endpoint = `https://${host}/Service/PXPCommunication.asmx`;
 
     const resolvedOptions = Object.assign({
         endpoint: endpoint, // enforces https
@@ -119,45 +119,62 @@ export async function getDistrictUrls(zipCode: any) {
         Key: '5E4B7859-B805-474B-A833-FDB15D205D40'
     }, 'HDInfoServices'));
 }
-function getFirstXOfMonth(year, months) {
-  const firstWednesdays = [];
-  months.forEach(month => {
-    const date = new Date(year, month - 1, 1); // Subtract 1 from month as months are zero-indexed
-    while (date.getDay() !== 3) { // Wednesday has index 3 (0-indexed)
-      date.setDate(date.getDate() + 1);
+export function getFirstDayOfMonth(currentDate, endDate, dayOfWeek) {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayIndex = daysOfWeek.findIndex(day => day === dayOfWeek);
+
+    if (dayIndex === -1) {
+        throw new Error('Invalid day of the week. Please provide a valid day like "Monday", "Tuesday", etc.');
     }
-    firstWednesdays.push(date.toDateString());
-  });
-  return firstWednesdays;
-  /*
-const year = 2023;
-const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; // January to December
-const firstWednesdays = getFirstWednesdays(year, months);
-  */
+
+    const days = [];
+    let currentDateObj = new Date(currentDate);
+    const end = new Date(endDate);
+
+    // Ensure we start at the beginning of the month
+    currentDateObj.setDate(1);
+
+    while (currentDateObj <= end) {
+        // Move to the first occurrence of the day in the current month
+        currentDateObj.setDate(1);
+        while (currentDateObj.getDay() !== dayIndex) {
+            currentDateObj.setDate(currentDateObj.getDate() + 1);
+        }
+
+        // Check if the date is within the range
+        if (currentDateObj <= end) {
+            days.push(new Date(currentDateObj));
+        }
+
+        // Move to the next month
+        currentDateObj.setMonth(currentDateObj.getMonth() + 1);
+    }
+
+    return days;
 }
 export function getDaysOfWeek(currentDate, endDate, dayOfWeek) {
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const dayIndex = daysOfWeek.findIndex(day => day === dayOfWeek);
-  
+
     if (dayIndex === -1) {
-      throw new Error('Invalid day of the week. Please provide a valid day like "Monday", "Tuesday", etc.');
+        throw new Error('Invalid day of the week. Please provide a valid day like "Monday", "Tuesday", etc.');
     }
-  
+
     const days = [];
     let currentDateObj = new Date(currentDate);
     const end = new Date(endDate);
-  
+
     // Get the difference in days between the current day and the target day
     let diff = (dayIndex + 7 - currentDateObj.getDay()) % 7;
-  
+
     // Adjust the current date to the first occurrence of the target day
     currentDateObj.setDate(currentDateObj.getDate() + diff);
-  
+
     // Loop to get all occurrences of the target day
     while (currentDateObj <= end) {
-      days.push(new Date(currentDateObj));
-      currentDateObj.setDate(currentDateObj.getDate() + 7);
+        days.push(new Date(currentDateObj));
+        currentDateObj.setDate(currentDateObj.getDate() + 7);
     }
-  
+
     return days;
-  }
+}

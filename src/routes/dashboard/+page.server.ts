@@ -1,4 +1,4 @@
-import { login, getDaysOfWeek } from '$lib';
+import { login, getDaysOfWeek, getFirstDayOfMonth } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, locals: { supabase, getSession } }) {
@@ -247,9 +247,15 @@ export const actions = {
     if (meeting_time === "Weekly") {
       dates = getDaysOfWeek(currentDate, final_date, day_of_week);
     } else if (meeting_time === "Bi-Weekly") {
-      
+      dates = getDaysOfWeek(currentDate, final_date, day_of_week);
+      if (starting_in_two_weeks_or_one === "on") {
+        dates = dates.filter((d, i) => (i + 1) % 2 == 0) //remove every other date
+      }
+      else {
+        dates = dates.filter((d, i) => (i + 1) % 2 == 1) //remove every other date
+      }
     } else if (meeting_time === "Monthly") {
-
+      dates = getFirstDayOfMonth(currentDate, final_date, day_of_week);
     } else {
       //other
 

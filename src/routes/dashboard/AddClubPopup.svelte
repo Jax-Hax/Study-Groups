@@ -112,12 +112,12 @@
 				<div
 					style="display: flex; align-items: center; justify-content: center; margin-bottom: 1em"
 				>
-					<h3 style="color: var(--text-color); margin-right: 1em;">Starting next week</h3>
+					<h3 style="color: var(--text-color); margin-right: 1em;">Starting next occurance</h3>
 					<input bind:checked type="checkbox" name="publicOrPrivate" id="switch" /><label
 						class="toggle"
 						for="switch"
 					/>
-					<h3 style="color: var(--text-color); margin-left: 1em;">Starting in two weeks</h3>
+					<h3 style="color: var(--text-color); margin-left: 1em;">Starting in two occurances</h3>
 				</div>
 			{/if}
 			{#if selected !== 'Other'}
