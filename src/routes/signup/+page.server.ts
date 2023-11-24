@@ -12,7 +12,6 @@ export async function load({ url, locals: { supabase, getSession } }) {
     if (schoolData != null) {
         console.error(schoolData.message)
     }
-    console.log(schoolData)
     return {schoolData}
 }
 export const actions = {
