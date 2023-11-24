@@ -240,6 +240,7 @@ export const actions = {
     const date_list = formData.get('date_list');
     const starting_in_two_weeks_or_one = formData.get('publicOrPrivate');
     const final_date = new Date(formData.get('final_date')); //date in utc time
+    const school_id = formData.get('school_id');
     let dates;
     const currentDate = new Date(); // Current date
     if (meeting_time === "Weekly") {
@@ -261,7 +262,7 @@ export const actions = {
     const list_of_dates = dates.map(date => date.toISOString().split("T")[0])
     const { data, error: clubError } = await locals.supabase
         .from('clubs')
-        .insert({ sponsor, name, description, location, start_time: starting_time, end_time, dates: list_of_dates, is_approved: false })
+        .insert({ sponsor, school_id, name, description, location, start_time: starting_time, end_time, dates: list_of_dates, is_approved: false })
       if (clubError != null) {
         console.error(clubError.message)
       }

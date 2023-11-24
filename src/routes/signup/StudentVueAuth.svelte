@@ -1,6 +1,7 @@
 <script>
 	import { enhance } from '$app/forms';
 	export let form;
+	export let data;
 	let text = "Import from StudentVue"
 	
 </script>
@@ -24,8 +25,10 @@
 				</label>
 				<label>
 					District: <br>
-					<select name="district" id="district">
-						<option value="https://va-chesterfield-psv.edupoint.com/PXP2_Login_Student.aspx">Chesterfield</option>
+					<select name="school_ids" id="district">
+						{#each data.schoolData as school}
+						<option value={school.school_id}>{school.name}</option>
+						{/each}
 					</select>
 				</label>
 				<button class="bouncyButton" on:click={() => text="Loading..."}>{text}</button>

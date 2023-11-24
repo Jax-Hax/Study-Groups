@@ -6,6 +6,13 @@ export async function load({ url, locals: { supabase, getSession } }) {
     if (!session) {
         throw redirect(302, '/')
     }
+    const { data: schoolData, error: userDataError } = await supabase
+		.from('schools')
+		.select()
+    if (schoolData != null) {
+        console.error(schoolData.message)
+    }
+    return schoolData
 }
 export const actions = {
     signout: async ({ locals: { supabase } }) => {

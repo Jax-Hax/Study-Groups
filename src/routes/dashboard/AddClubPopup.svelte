@@ -130,6 +130,7 @@
 					/>
 				</label>
 			{/if}
+			<input type="hidden" name="school_id" value={data.user_data.school_id} />
 			<button type="submit" class="bouncyButton" style="margin-top: 0.5em">Log In</button>
 		</form>
 	</div>
