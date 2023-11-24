@@ -62,9 +62,9 @@ export const actions = {
         let courseOptions = grades_json.Gradebook.Courses.Course.map((course) => course.Title.replace(/\s+/g, ' ')); //removes whitespace
         const { data, error } = await locals.supabase
             .from('courses')
-            .select('course_name')
+            .select()
+            .eq('school_id', userData[0].school_id)
             .in('course_name', courseOptions)
-            .select('*')
         if (error != null) {
             console.error(error.message)
         }
