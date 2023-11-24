@@ -119,7 +119,7 @@ export async function getDistrictUrls(zipCode: any) {
         Key: '5E4B7859-B805-474B-A833-FDB15D205D40'
     }, 'HDInfoServices'));
 }
-function getFirstWednesdays(year, months) {
+function getFirstXOfMonth(year, months) {
   const firstWednesdays = [];
   months.forEach(month => {
     const date = new Date(year, month - 1, 1); // Subtract 1 from month as months are zero-indexed
@@ -135,4 +135,29 @@ const months = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; // January to December
 const firstWednesdays = getFirstWednesdays(year, months);
   */
 }
-
+export function getDaysOfWeek(currentDate, endDate, dayOfWeek) {
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const dayIndex = daysOfWeek.findIndex(day => day === dayOfWeek);
+  
+    if (dayIndex === -1) {
+      throw new Error('Invalid day of the week. Please provide a valid day like "Monday", "Tuesday", etc.');
+    }
+  
+    const days = [];
+    let currentDateObj = new Date(currentDate);
+    const end = new Date(endDate);
+  
+    // Get the difference in days between the current day and the target day
+    let diff = (dayIndex + 7 - currentDateObj.getDay()) % 7;
+  
+    // Adjust the current date to the first occurrence of the target day
+    currentDateObj.setDate(currentDateObj.getDate() + diff);
+  
+    // Loop to get all occurrences of the target day
+    while (currentDateObj <= end) {
+      days.push(new Date(currentDateObj));
+      currentDateObj.setDate(currentDateObj.getDate() + 7);
+    }
+  
+    return days;
+  }

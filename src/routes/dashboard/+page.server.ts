@@ -1,4 +1,4 @@
-import { login } from '$lib';
+import { login, getDaysOfWeek } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, locals: { supabase, getSession } }) {
@@ -236,15 +236,16 @@ export const actions = {
     const location = formData.get('location');
     const starting_time = formData.get('starting_time');
     const end_time = formData.get('end_time');
-
     const meeting_time = formData.get('meeting_time');
+
     const day_of_week = formData.get('day_of_week');
     const date_list = formData.get('date_list');
     const starting_in_two_weeks_or_one = formData.get('publicOrPrivate');
-    const final_date = new Date(formData.get('final_date')).toISOString(); //date in utc time
+    const final_date = new Date(formData.get('final_date')); //date in utc time
     let dates;
+    const currentDate = new Date(); // Current date
     if (meeting_time === "Weekly") {
-
+      const dates = getDaysOfWeek(currentDate, final_date, day_of_week);
     } else if (meeting_time === "Bi-Weekly") {
       
     } else if (meeting_time === "Monthly") {
