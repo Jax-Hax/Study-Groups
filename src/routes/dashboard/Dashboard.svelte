@@ -32,7 +32,7 @@
 				{:else}
 					<p>0 new assignment(s)</p>
 				{/if}
-				<p>_ new grades</p>
+				<p>{course.new_assignments.length} new grade(s)</p>
 				<p style="display: inline">Grade:</p>
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
