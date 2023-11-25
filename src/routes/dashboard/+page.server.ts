@@ -121,8 +121,8 @@ export const actions = {
             console.error(schoolError.message)
         }
     let client = await login(schoolData[0].school_studentvue_url, student_id, student_password);
-    let grades = await client.getGradebook();
-    let grades_json = JSON.parse(grades);
+    let grades_return = await client.getGradebook();
+    let grades_json = JSON.parse(grades_return);
     if (!grades_json.Gradebook) {
       return {
         error: 'You did not input the correct password, please try again',
@@ -155,7 +155,6 @@ export const actions = {
       const matchingCourse = course_data.find(course => course1.name === course.course_name);
       return matchingCourse ? { "grade": course1.grade, "assignment_list": course1.assignment_list, "known_assignments": user_in_course_data.find(course => matchingCourse.course_id === course.course_id).grade_id_list, ...matchingCourse } : null;
     }).filter(Boolean);
-    console.log(JSON.stringify(courses_with_grades))
     //calculate gpa
     let gpas = courses_with_grades.map(course => {
       let grade_offset = 0;
@@ -197,10 +196,24 @@ export const actions = {
       return accumulator + currentValue
     }, 0);
     //get new grades
-    
+    courses_with_grades
+    const grades = courses_with_grades.map(course => {
+      // Destructure the item and extract the 'name' property
+      const { known_assignments, ...rest } = course;
+      const filteredAssignments = course.assignment_list.filter(assignment => {
+        const gradebookID = parseInt(assignment.GradebookID, 10);
+        return !known_assignments.includes(gradebookID);
+      });
+      // Create a new object with the remaining properties and the modified 'fullName' property
+      return {
+        ...rest,
+        new_assignments: filteredAssignments, // Changing the value of 'name' to 'fullName'
+        new_assignments_list_of_ids: filteredAssignments.map(value => parseInt(value.GradebookID))
+      };
+    });
+    console.log(grades)
     return {
-      full_grades: grades_json.Gradebook.Courses.Course,
-      grades: courses_with_grades,
+      grades,
       success: true,
       gpa: sum / gpas.length
     }
