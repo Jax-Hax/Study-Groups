@@ -211,7 +211,6 @@ export const actions = {
         new_assignments_list_of_ids: filteredAssignments.map(value => value.GradebookID).join()
       };
     });
-    console.log(grades)
     return {
       grades,
       success: true,

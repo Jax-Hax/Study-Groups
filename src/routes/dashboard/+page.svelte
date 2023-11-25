@@ -1,6 +1,7 @@
 <script>
 	import Clubs from "./Clubs.svelte";
 	import Dashboard from "./Dashboard.svelte";
+	import New from "./New.svelte";
 	import Sidebar from "./Sidebar.svelte";
 	import StudentVueLogin from "./StudentVueLogin.svelte";
 	import ToDo from "./ToDo.svelte";
@@ -21,7 +22,7 @@
 {:else if todo}
 <div class="content"><ToDo {form} {data}/></div>
 {:else if new_stuff}
-<div class="content"><ToDo {form} {data}/></div>
+<div class="content"><New {form} {data}/></div>
 {:else if clubs}
 <div class="content"><Clubs {form} {data}/></div>
 {/if}</body>
