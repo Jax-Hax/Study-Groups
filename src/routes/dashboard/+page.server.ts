@@ -113,7 +113,14 @@ export const actions = {
     const student_id = formData.get('student_id');
     const student_password = formData.get('password');
     const district = formData.get('district');
-    let client = await login(district, student_id, student_password);
+    const { data: schoolData, error: schoolError } = await locals.supabase
+		.from('schools')
+		.select()
+		.eq('school_id', district);
+        if (schoolError != null) {
+            console.error(schoolError.message)
+        }
+    let client = await login(schoolData[0].school_studentvue_url, student_id, student_password);
     let grades = await client.getGradebook();
     let grades_json = JSON.parse(grades);
     if (!grades_json.Gradebook) {
@@ -187,6 +194,9 @@ export const actions = {
     var sum = gpas.reduce((accumulator, currentValue) => {
       return accumulator + currentValue
     }, 0);
+    console.log(JSON.stringify(grades_json.Gradebook.Courses.Course))
+    //get new grades
+    
     return {
       full_grades: grades_json.Gradebook.Courses.Course,
       grades: courses_with_grades,

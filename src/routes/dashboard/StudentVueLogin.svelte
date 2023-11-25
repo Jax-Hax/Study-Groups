@@ -26,7 +26,7 @@
 			{/if}
             <input name="password" type="password" required placeholder="lock" />
             <input type="hidden" name="student_id" value={data.user_data.student_number} />
-            <input type="hidden" name="district" value={data.user_data.studentvue_url} />
+            <input type="hidden" name="district" value={data.user_data.school_id} />
 			<button class="bouncyButton">Log In</button>
 		</form>
 	</div>
