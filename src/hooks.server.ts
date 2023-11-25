@@ -1,4 +1,5 @@
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from '$env/static/public'
+import { login } from '$lib'
 import { createServerClient } from '@supabase/ssr'
 import type { Handle, HandleFetch } from '@sveltejs/kit'
 
@@ -27,14 +28,18 @@ export const handle: Handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession()
     return session
   }
-
-  //for form actions
+  
+  //for form actions for logging in with studentvue
   if (event.request.method === 'POST') {
     // get the form data from the request
     const formData = await event.request.formData()
     event.locals.formData = formData
-    if (formData.get('email')) {
-      console.log(formData.get('email'))
+    if (formData.get('studentvue_password_for_auth')) {
+      const student_id = formData.get('student_id_for_auth');
+      const student_password = formData.get('studentvue_password_for_auth');
+      const district = formData.get('district_for_auth');
+      let client = await login(schoolData[0].school_studentvue_url, student_id, student_password);
+      event.locals.studentVueAuth = client
     }
   }
 

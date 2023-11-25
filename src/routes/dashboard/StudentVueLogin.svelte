@@ -24,9 +24,9 @@
 				<p class="error">{form.error}</p>
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
-            <input name="password" type="password" required placeholder="lock" />
-            <input type="hidden" name="student_id" value={data.user_data.student_number} />
-            <input type="hidden" name="district" value={data.user_data.school_id} />
+            <input name="studentvue_password_for_auth" type="password" required placeholder="lock" />
+            <input type="hidden" name="student_id_for_auth" value={data.user_data.student_number} />
+            <input type="hidden" name="district_for_auth" value={data.user_data.school_id} />
 			<button class="bouncyButton">Log In</button>
 		</form>
 	</div>
