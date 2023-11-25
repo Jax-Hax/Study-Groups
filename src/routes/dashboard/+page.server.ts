@@ -208,7 +208,7 @@ export const actions = {
       return {
         ...rest,
         new_assignments: filteredAssignments, // Changing the value of 'name' to 'fullName'
-        new_assignments_list_of_ids: filteredAssignments.map(value => parseInt(value.GradebookID))
+        new_assignments_list_of_ids: filteredAssignments.map(value => value.GradebookID).join()
       };
     });
     console.log(grades)
