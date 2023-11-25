@@ -131,7 +131,8 @@ export const actions = {
     }
     let course_grades = grades_json.Gradebook.Courses.Course.map((course) => ({
       name: course.Title.replace(/\s+/g, ' '),
-      grade: parseFloat(course.Marks.Mark[0].CalculatedScoreRaw)
+      grade: parseFloat(course.Marks.Mark[0].CalculatedScoreRaw),
+      assignment_list: course.Marks.Mark[0].Assignments.Assignment
     }));
     //get course info
     const { data: user_in_course_data, error: courseError1 } = await locals.supabase
@@ -152,8 +153,9 @@ export const actions = {
     }
     let courses_with_grades = course_grades.map(course1 => {
       const matchingCourse = course_data.find(course => course1.name === course.course_name);
-      return matchingCourse ? { "grade": course1.grade, ...matchingCourse } : null;
+      return matchingCourse ? { "grade": course1.grade, "assignment_list": course1.assignment_list, "known_assignments": user_in_course_data.find(course => matchingCourse.course_id === course.course_id).grade_id_list, ...matchingCourse } : null;
     }).filter(Boolean);
+    console.log(JSON.stringify(courses_with_grades))
     //calculate gpa
     let gpas = courses_with_grades.map(course => {
       let grade_offset = 0;
@@ -194,7 +196,6 @@ export const actions = {
     var sum = gpas.reduce((accumulator, currentValue) => {
       return accumulator + currentValue
     }, 0);
-    console.log(JSON.stringify(grades_json.Gradebook.Courses.Course))
     //get new grades
     
     return {
