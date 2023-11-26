@@ -102,9 +102,9 @@
 							{course.course_name}
 						</p>
 					{/if}
-					{#if todo.assignment_type !== 'Other'}
+					{#if todo.assignment_type === "Test/Quiz" || todo.assignment_type === "Homework" || todo.assignment_type === "Project"}
 						<p
-							style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {getColorOfAssignment(
+							style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; margin-top: 0.5em; background-color: {getColorOfAssignment(
 								todo
 							)}"
 						>
@@ -147,9 +147,9 @@
 						{course.course_name}
 					</p>
 				{/if}
-				{#if todo.assignment_type !== 'Other'}
+				{#if todo.assignment_type === "Test/Quiz" || todo.assignment_type === "Homework" || todo.assignment_type === "Project"}
 					<p
-						style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {getColorOfAssignment(
+						style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em;margin-top: 0.5em;  background-color: {getColorOfAssignment(
 							todo
 						)}"
 					>
