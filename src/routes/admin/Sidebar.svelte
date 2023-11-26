@@ -3,28 +3,19 @@
 
 	export let class_mod;
 	export let school_admin;
+    export let new_stuff;
 	export let data;
 </script>
 
 <div id="sidebar">
-	<div
-		class="icon"
+    <div
+		class="icon" 
 		style="margin-top: 0.5em"
-		class:enabled={school_admin}
-		on:click={() => {
-			school_admin = true;
-			class_mod = false;
-		}}
-	>
-		<span class="material-symbols-outlined">things_to_do</span>
-		<div class="sidebar-tooltip">School Admin</div>
-	</div>
-	<div
-		class="icon"
 		class:enabled={class_mod}
 		on:click={() => {
 			school_admin = false;
 			class_mod = true;
+            new_stuff = false;
 		}}
 	>
 		<span class="material-symbols-outlined">local_library</span>
@@ -32,12 +23,24 @@
 	</div>
 	<div
 		class="icon"
+		class:enabled={school_admin}
+		on:click={() => {
+			school_admin = true;
+			class_mod = false;
+            new_stuff = false;
+		}}
+	>
+		<span class="material-symbols-outlined">things_to_do</span>
+		<div class="sidebar-tooltip">School Admin</div>
+	</div>
+	
+	<div
+		class="icon"
 		class:enabled={new_stuff}
 		on:click={() => {
-			todo = false;
-			dashboard = false;
-			new_stuff = true;
-			clubs = false;
+			school_admin = false;
+			class_mod = true;
+            new_stuff = false;
 		}}
 	>
         <span>1</span>
