@@ -16,7 +16,7 @@
 <body>
 	<StudentVueLogin {form} {data} bind:showLogin/>
 <div class="content">
-<Sidebar bind:dashboard bind:todo bind:new_stuff {data} bind:clubs/></div>
+<Sidebar bind:dashboard bind:todo bind:new_stuff {data} {form} bind:clubs/></div>
 {#if dashboard}
 <div class="content"><Dashboard {form} {data}/></div>
 {:else if todo}

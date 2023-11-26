@@ -17,34 +17,16 @@
             <h1 style="text-align: center; flex: 1; color: white;">New Assignments</h1>
         </section>
 
-		{#if form?.grades}
-			{#each form.grades as course}
+		
+			{#each data.new_assignments as assignment}
 				<div>
 					<button
 						class="addBtn"
-						on:click={() => {
-							const index = courses.indexOf(course);
-							if (index > -1) {
-								courses.splice(index, 1);
-								courses = courses;
-								selectedCourses.push({
-									hex: '#000000'.replace(/0/g, function () {
-										return (~~(Math.random() * 16)).toString(16);
-									}),
-									...form.courseData[form.courseNameData.indexOf(course)]
-								});
-							}
-						}}><span class="material-symbols-outlined plus">add</span></button
+						on:click={() => {}}><span class="material-symbols-outlined plus">add</span></button
 					>
-					<h3 style="color: var(--text-color)">{course.course_name}</h3>
-					{#each course.new_assignments as assignment}
-						<p>
-							{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(/\.$/, '')}
-						</p>
-					{/each}
+					<h3 style="color: var(--text-color)">{assignment.text}</h3>
 				</div>
 			{/each}
-		{/if}
 	</div>
 {:else}
 	<Hidden bind:isEnabled={assignmentsShown}

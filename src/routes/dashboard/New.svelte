@@ -7,5 +7,7 @@ import NewGrades from "./NewGrades.svelte";
 	let gradesShown = false;
 	let assignmentsShown = false;
 </script>
+{#if form?.grades}
 <NewGrades {form} {data} bind:gradesShown/>
+{/if}
 <NewAssignments {form} {data} bind:assignmentsShown />

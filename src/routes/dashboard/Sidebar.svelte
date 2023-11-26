@@ -5,6 +5,7 @@
 	export let todo;
 	export let new_stuff;
 	export let data;
+	export let form;
 	export let clubs;
 </script>
 
@@ -60,7 +61,11 @@
 		{#if new_stuff}
 			<div class="enabled">test</div>
 		{/if}
+		{#if form?.grades}
+		<span>{data.new_assignments.length + form.grades.reduce((count, obj) => count + obj.new_assignments.length, 0)}</span>
+		{:else}
 		<span>{data.new_assignments.length}</span>
+		{/if}
 		<div class="sidebar-tooltip">New</div>
 	</div>
 	<form method="POST" style="margin-top: auto;" use:enhance action="?/signout">
