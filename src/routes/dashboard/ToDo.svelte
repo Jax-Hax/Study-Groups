@@ -68,7 +68,7 @@
 		{@const due_in = new Date(todo.due_date) - new Date()}
 		{#if todo.link !== null && todo.link !== ''}
 			<a href={todo.link} target="”_blank”">
-				<div class:hover={todo.link !== null && todo.link !== ''}>
+				<div class="hover">
 					<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
 					{#if due_in > 0}
 						{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
@@ -189,7 +189,7 @@
 	}
 
 	.hover:hover {
-		background-color: var(--background-6);
+		background-color: var(--background-5) !important;
 		cursor: pointer;
 	}
 	h1,
