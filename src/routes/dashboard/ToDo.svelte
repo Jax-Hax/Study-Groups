@@ -66,21 +66,31 @@
 	{#each assignment_array as todo}
 		{@const course = data.course_data.filter((value) => value.course_id === todo.course_id)[0]}
 		{@const due_in = new Date(todo.due_date) - new Date()}
-		<p style="color: white">{due_in}</p>
 		{#if todo.link !== null && todo.link !== ''}
 			<a href={todo.link} target="”_blank”">
 				<div class:hover={todo.link !== null && todo.link !== ''}>
 					<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
-
-					{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
+					{#if due_in > 0}
+						{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
+							<p>
+								Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
+									+((due_in / 3600000) % 24).toFixed(1)
+								)} hours
+							</p>
+						{:else}
+							<p style="color: var(--red)">
+								Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
+							</p>
+						{/if}
+					{:else if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
 						<p>
-							Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
+							Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 								+((due_in / 3600000) % 24).toFixed(1)
 							)} hours
 						</p>
 					{:else}
 						<p style="color: var(--red)">
-							Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
+							Overdue by {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
 						</p>
 					{/if}
 					{#if course}
@@ -103,19 +113,29 @@
 					{/if}
 				</div></a
 			>{:else}
-			<div class:hover={todo.link !== null && todo.link !== ''}>
+			<div>
 				<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
-				{#if Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(1)) > 1}
+				{#if due_in > 0}
+					{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
+						<p>
+							Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
+								+((due_in / 3600000) % 24).toFixed(1)
+							)} hours
+						</p>
+					{:else}
+						<p style="color: var(--red)">
+							Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
+						</p>
+					{/if}
+				{:else if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
 					<p>
-						Due in {Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(0))}
-						days and {Math.abs(
-							+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1)
+						Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
+							+((due_in / 3600000) % 24).toFixed(1)
 						)} hours
 					</p>
 				{:else}
 					<p style="color: var(--red)">
-						Due in {Math.abs(+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1))}
-						hours
+						Overdue by {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
 					</p>
 				{/if}
 				{#if course}
