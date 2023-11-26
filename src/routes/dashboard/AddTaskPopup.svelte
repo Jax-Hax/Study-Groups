@@ -78,7 +78,7 @@
 				<p style="text-align:center; margin-top: 0.5em">Private: This is just for you to see</p>
 			{/if}
 
-			<button class="bouncyButton" style="margin-top: 0.5em">Log In</button>
+			<button class="bouncyButton" style="margin-top: 0.5em">Add Task</button>
 		</form>
 	</div>
 </dialog>

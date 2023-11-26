@@ -52,9 +52,7 @@
 	}
 </script>
 
-{#if showAddTask}
 	<AddTaskPopup {form} {data} bind:showAddTask />
-{/if}
 <h1 id="todo-h1">To-Do List</h1>
 
 <div id="grid">
