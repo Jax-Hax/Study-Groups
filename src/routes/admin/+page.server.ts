@@ -23,8 +23,18 @@ export async function load({ url, locals }) {
     if (courseError4 != null) {
         console.error(courseError4.message)
     }
-    console.log(course_todo_data)
-    return { course_data }
+    let new_assignments = course_todo_data.map((assignment) => {
+        let date = course_data.filter(x => x.course_id === assignment.course_id)
+        const last_sign_in_date = new Date(date[0].moderator_last_approval_time)
+        const assignment_date = new Date(assignment.created_at)
+        if (last_sign_in_date > assignment_date) {
+          return undefined;
+        } else {
+          return assignment;
+        }
+      }).filter(value => value !== undefined);
+    console.log(new_assignments)
+    return { course_data, new_assignments }
 }
 export const actions = {
     signout: async ({ locals: { supabase } }) => {

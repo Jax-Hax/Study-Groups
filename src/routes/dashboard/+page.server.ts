@@ -60,8 +60,8 @@ export async function load({ url, locals: { supabase, getSession } }) {
   }
   const user_assignments = user_canvas_todo_data.map(value => (value.assignment_id));
   let new_assignments = course_todo_data.map((assignment) => {
-    user_in_course_data.filter(x => x.course_id === assignment.course_id)
-    const last_sign_in_date = new Date(user_in_course_data[0].last_sign_in_time)
+    let date = user_in_course_data.filter(x => x.course_id === assignment.course_id)
+    const last_sign_in_date = new Date(date[0].last_sign_in_time)
     const assignment_date = new Date(assignment.created_at)
     if (last_sign_in_date > assignment_date) {
       return undefined;
