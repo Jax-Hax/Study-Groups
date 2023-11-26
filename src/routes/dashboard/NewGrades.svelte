@@ -7,6 +7,14 @@
 </script>
 {#if gradesShown}
 <div id="grid">
+	<section id="header" on:click={() => (gradesShown = false)}>
+		<span
+			class="material-symbols-outlined"
+			style="color: var(--text-color); cursor: pointer; font-size: 35px"
+			>remove</span
+		>
+		<h1 style="text-align: center; flex: 1; color: white;">New Grades</h1>
+	</section>
 	{#if form?.grades}
 		{#each form.grades as course}
 			<div>
@@ -30,7 +38,7 @@
 	{/if}
 </div>
 {:else}
-    <Hidden bind:isEnabled={gradesShown}><h1 style="text-align: center; flex: 1; color: white;">Join</h1></Hidden>
+    <Hidden bind:isEnabled={gradesShown}><h1 style="text-align: center; flex: 1; color: white;">New Grades</h1></Hidden>
 {/if}
 <style>
 	#grid {
@@ -40,6 +48,9 @@
 		align-items: center;
 		padding: 1em;
         background-color: var(--background-2);
+		padding: 2em;
+		margin: 2em;
+		border-radius: 3em;
 	}
 	#grid div {
 		background-color: var(--background-4);
@@ -68,5 +79,11 @@
 	}
 	p {
 		color: inherit;
+	}
+	#header {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+        width: 100%
 	}
 </style>
