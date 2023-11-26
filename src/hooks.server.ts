@@ -28,11 +28,14 @@ export const handle: Handle = async ({ event, resolve }) => {
     } = await event.locals.supabase.auth.getSession()
     return session
   }
-  
+  event.locals.getGrades = async () => {
+    return false;
+  }
   //for form actions for logging in with studentvue
   if (event.request.method === 'POST') {
     // get the form data from the request
     const formData = await event.request.formData()
+    console.log(formData)
     event.locals.formData = formData
     if (formData.get('studentvue_password_for_auth')) {
       const student_id = formData.get('student_id_for_auth');

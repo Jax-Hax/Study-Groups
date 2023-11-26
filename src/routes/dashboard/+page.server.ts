@@ -111,10 +111,22 @@ export const actions = {
     const userID = session.user.id
     const formData = locals.formData
     const student_id = formData.get('student_id_for_auth');
-    const student_password = formData.get('studentvue_password_for_auth');
-    const district = formData.get('district_for_auth');
+      const student_password = formData.get('studentvue_password_for_auth');
+      const district = formData.get('district_for_auth');
+      const { data: schoolData, error: schoolError } = await locals.supabase
+      .from('schools')
+      .select()
+      .eq('school_id', district);
+        if (schoolError != null) {
+            console.error(schoolError.message)
+        }
+      let client = await login(schoolData[0].school_studentvue_url, student_id, student_password);
+      locals.getGrades = async () => {
+        let grades_return = await client.getGradebook();
+        let grades_json = JSON.parse(grades_return);
+        return grades_json
+      }
     const grades_json = await locals.getGrades();
-    console.log(grades_json)
     if (!grades_json.Gradebook) {
       return {
         error: 'You did not input the correct password, please try again',
