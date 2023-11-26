@@ -183,7 +183,6 @@ export const actions = {
       return accumulator + currentValue
     }, 0);
     //get new grades
-    courses_with_grades
     const grades = courses_with_grades.map(course => {
       // Destructure the item and extract the 'name' property
       const { known_assignments, ...rest } = course;

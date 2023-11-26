@@ -33,8 +33,19 @@ export async function load({ url, locals }) {
           return assignment;
         }
       }).filter(value => value !== undefined);
-    console.log(new_assignments)
-    return { course_data, new_assignments }
+    // Add 'assignment_list' parameter to each course
+    course_data.forEach(course => {
+    course.assignment_list = [];
+  });
+  
+  // Loop through the assignments and associate them with courses
+  new_assignments.forEach(assignment => {
+    const courseIndex = course_data.findIndex(course => course.course_id === assignment.course_id);
+    if (courseIndex !== -1) {
+        course_data[courseIndex].assignment_list.push(assignment);
+    }
+  });
+    return { course_data }
 }
 export const actions = {
     signout: async ({ locals: { supabase } }) => {
