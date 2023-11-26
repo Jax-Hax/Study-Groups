@@ -10,5 +10,11 @@ export async function load({ url, locals: { supabase, getSession } }) {
   return {userID}
 }
 export const actions = {
-  
+    signout: async ({ locals: { supabase } }) => {
+        await supabase.auth.signOut()
+        throw redirect(303, '/')
+      },
+      switchToSchool: async ({  }) => {
+        throw redirect(303, '/dashboard')
+      }, 
 }
