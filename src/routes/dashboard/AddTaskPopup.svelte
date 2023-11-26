@@ -72,8 +72,7 @@
 			</div>
 			{#if checked}
 				<p style="text-align:center; margin-top: 0.5em">
-					Public: This is for uploading new canvas assignments for everyone to see. You will be
-					banned if you post misinformation.
+					Public: This is for uploading new canvas assignments for everyone to see. Warning: A mod can ban you for any bad content.
 				</p>
 			{:else}
 				<p style="text-align:center; margin-top: 0.5em">Private: This is just for you to see</p>

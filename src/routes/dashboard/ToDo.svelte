@@ -83,13 +83,13 @@
 							</p>
 						{/if}
 					{:else if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
-						<p>
+						<p style="color: var(--dark-red)">
 							Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 								+((due_in / 3600000) % 24).toFixed(1)
 							)} hours
 						</p>
 					{:else}
-						<p style="color: var(--red)">
+						<p style="color: var(--dark-red)">
 							Overdue by {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
 						</p>
 					{/if}
@@ -128,13 +128,13 @@
 						</p>
 					{/if}
 				{:else if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
-					<p>
+					<p style="color: var(--dark-red)">
 						Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 							+((due_in / 3600000) % 24).toFixed(1)
 						)} hours
 					</p>
 				{:else}
-					<p style="color: var(--red)">
+					<p style="color: var(--dark-red)">
 						Overdue by {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
 					</p>
 				{/if}
