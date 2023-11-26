@@ -208,6 +208,9 @@ export const actions = {
     await supabase.auth.signOut()
     throw redirect(303, '/')
   },
+  switchToAdmin: async ({  }) => {
+    throw redirect(303, '/admin')
+  },
   addTodo: async ({ locals }) => {
     const session = await locals.getSession()
     const userID = session.user.id

@@ -11,7 +11,9 @@
 
 <div id="sidebar">
 	<div
-		class="icon" style="margin-top: 0.5em"
+		class="icon"
+		style="margin-top: 0.5em"
+		class:enabled={dashboard}
 		on:click={() => {
 			dashboard = true;
 			todo = false;
@@ -24,6 +26,7 @@
 	</div>
 	<div
 		class="icon"
+		class:enabled={todo}
 		on:click={() => {
 			todo = true;
 			dashboard = false;
@@ -31,14 +34,13 @@
 			clubs = false;
 		}}
 	>
-		{#if todo}
-			<div class="enabled">test</div>
-		{/if}
 		<span class="material-symbols-outlined">lists</span>
 		<div class="sidebar-tooltip">To-Do List</div>
 	</div>
 	<div
-		class="icon" style="margin-top: 0.5em"
+		class="icon"
+		style="margin-top: 0.5em"
+		class:enabled={clubs}
 		on:click={() => {
 			dashboard = false;
 			todo = false;
@@ -51,6 +53,7 @@
 	</div>
 	<div
 		class="icon"
+		class:enabled={new_stuff}
 		on:click={() => {
 			todo = false;
 			dashboard = false;
@@ -58,17 +61,23 @@
 			clubs = false;
 		}}
 	>
-		{#if new_stuff}
-			<div class="enabled">test</div>
-		{/if}
 		{#if form?.grades}
-		<span>{data.new_assignments.length + form.grades.reduce((count, obj) => count + obj.new_assignments.length, 0)}</span>
+			<span
+				>{data.new_assignments.length +
+					form.grades.reduce((count, obj) => count + obj.new_assignments.length, 0)}</span
+			>
 		{:else}
-		<span>{data.new_assignments.length}</span>
+			<span>{data.new_assignments.length}</span>
 		{/if}
 		<div class="sidebar-tooltip">New</div>
 	</div>
 	<form method="POST" style="margin-top: auto;" use:enhance action="?/signout">
+		<button class="icon" style="padding: 2.5em">
+			<span class="material-symbols-outlined">admin_panel_settings</span>
+			<div class="sidebar-tooltip">Switch to Admin Dashboard</div>
+		</button>
+	</form>
+	<form method="POST" use:enhance action="?/switchToAdmin">
 		<button class="icon" style="padding: 2.5em">
 			<span class="material-symbols-outlined">logout</span>
 			<div class="sidebar-tooltip">Sign out</div>
@@ -114,6 +123,7 @@
 	.icon span {
 		color: inherit;
 		font-size: 30px;
+		user-select: none;
 	}
 	.sidebar-tooltip {
 		position: absolute;
@@ -131,19 +141,7 @@
 		scale: 0;
 	}
 	.enabled {
-		position: absolute;
-		width: auto;
-		padding: 0.5rem;
-		margin: 0.5rem;
-		min-width: max-content;
-		left: 9rem;
-		color: var(--text-color);
-		background-color: var(--background-2);
-		border-radius: 0.75em;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-		transition-duration: 100ms;
-		transform-origin: left;
-		scale: 0;
+		background-color: var(--grayed-pop);
 	}
 	.icon:hover div {
 		scale: 1;
