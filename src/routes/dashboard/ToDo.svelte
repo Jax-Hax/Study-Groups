@@ -3,7 +3,10 @@
 
 	export let data;
 	export let form;
-	$: data.custom_todo_data.sort((a, b) => {
+	let assignment_array;
+	$: assignment_array = data.custom_todo_data.concat(data.current_assignments, data.new_assignments);
+	
+	$: assignment_array.sort((a, b) => {
 		let b_date = new Date(b.due_date);
 		let a_date = new Date(a.due_date);
 		if (a_date > b_date) {
@@ -40,20 +43,23 @@
 		on:click={() => (showAddTask = true)}
 		style="padding: 0.5em 4em; font-size: 30px">Add Task</button
 	>
-	{#each data.custom_todo_data as todo}
+	{#each assignment_array as todo}
 		{@const course = data.course_data.filter((value) => value.course_id === todo.course_id)[0]}
+		{@const due_in = new Date(todo.due_date) - new Date()}
+		<p style="color: white">{due_in}</p>
 		{#if todo.link !== null && todo.link !== ''}
 		<a href={todo.link} target=”_blank”>
 		<div class:hover={todo.link !== null && todo.link !== ''}>
 			<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
-			{#if Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(1)) > 1}
+			
+			{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
 				<p>
-					Due in {Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(0))} days
-					and {Math.abs(+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1))} hours
+					Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days
+					and {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
 				</p>
 			{:else}
 				<p style="color: var(--red)">
-					Due in {Math.abs(+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1))} hours
+					Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
 				</p>
 			{/if}
 			{#if course}
