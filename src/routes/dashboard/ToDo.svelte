@@ -4,17 +4,37 @@
 	export let data;
 	export let form;
 	let assignment_array;
-	$: assignment_array = data.custom_todo_data.concat(data.current_assignments, data.new_assignments);
-	
+	$: assignment_array = data.custom_todo_data.concat(
+		data.current_assignments,
+		data.new_assignments
+	);
+
 	$: assignment_array.sort((a, b) => {
 		let b_date = new Date(b.due_date);
 		let a_date = new Date(a.due_date);
-		if (a_date > b_date) {
-			return -1;
-		} else if (b_date > a_date) {
-			return 1;
+		let current_date = new Date(); // Get the current date
+
+		// Check if a or b is overdue
+		let a_overdue = a_date < current_date;
+		let b_overdue = b_date < current_date;
+
+		// Prioritize overdue assignments
+		if (a_overdue && !b_overdue) {
+			return -1; // a is overdue, so it comes first
+		} else if (!a_overdue && b_overdue) {
+			return 1; // b is overdue, so it comes first
+		} else if (a_overdue && b_overdue) {
+			// Both a and b are overdue, prioritize by most overdue
+			return a_date - b_date; // Sort by the difference in overdue time
 		} else {
-			return 0;
+			// Neither a nor b is overdue, sort based on due dates
+			if (a_date > b_date) {
+				return -1;
+			} else if (b_date > a_date) {
+				return 1;
+			} else {
+				return 0;
+			}
 		}
 	});
 	let showAddTask = false;
@@ -48,70 +68,75 @@
 		{@const due_in = new Date(todo.due_date) - new Date()}
 		<p style="color: white">{due_in}</p>
 		{#if todo.link !== null && todo.link !== ''}
-		<a href={todo.link} target=”_blank”>
-		<div class:hover={todo.link !== null && todo.link !== ''}>
-			<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
-			
-			{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
-				<p>
-					Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days
-					and {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
-				</p>
-			{:else}
-				<p style="color: var(--red)">
-					Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
-				</p>
-			{/if}
-			{#if course}
-				<p
-					style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(
-						(value) => value.course_id === todo.course_id
-					)[0].hex}"
-				>
-					{course.course_name}
-				</p>
-			{/if}
-			{#if todo.assignment_type !== 'Other'}
-				<p
-					style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {getColorOfAssignment(
-						todo
-					)}"
-				>
-					{todo.assignment_type}
-				</p>
-			{/if}
-		</div></a>{:else}
-		<div class:hover={todo.link !== null && todo.link !== ''}>
-			<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
-			{#if Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(1)) > 1}
-				<p>
-					Due in {Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(0))} days
-					and {Math.abs(+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1))} hours
-				</p>
-			{:else}
-				<p style="color: var(--red)">
-					Due in {Math.abs(+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1))} hours
-				</p>
-			{/if}
-			{#if course}
-				<p
-					style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(
-						(value) => value.course_id === todo.course_id
-					)[0].hex}"
-				>
-					{course.course_name}
-				</p>
-			{/if}
-			{#if todo.assignment_type !== 'Other'}
-				<p
-					style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {getColorOfAssignment(
-						todo
-					)}"
-				>
-					{todo.assignment_type}
-				</p>
-			{/if}
-		</div>
+			<a href={todo.link} target="”_blank”">
+				<div class:hover={todo.link !== null && todo.link !== ''}>
+					<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
+
+					{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
+						<p>
+							Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
+								+((due_in / 3600000) % 24).toFixed(1)
+							)} hours
+						</p>
+					{:else}
+						<p style="color: var(--red)">
+							Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
+						</p>
+					{/if}
+					{#if course}
+						<p
+							style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(
+								(value) => value.course_id === todo.course_id
+							)[0].hex}"
+						>
+							{course.course_name}
+						</p>
+					{/if}
+					{#if todo.assignment_type !== 'Other'}
+						<p
+							style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {getColorOfAssignment(
+								todo
+							)}"
+						>
+							{todo.assignment_type}
+						</p>
+					{/if}
+				</div></a
+			>{:else}
+			<div class:hover={todo.link !== null && todo.link !== ''}>
+				<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
+				{#if Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(1)) > 1}
+					<p>
+						Due in {Math.abs(+((new Date() - new Date(todo.due_date)) / (3600000 * 24)).toFixed(0))}
+						days and {Math.abs(
+							+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1)
+						)} hours
+					</p>
+				{:else}
+					<p style="color: var(--red)">
+						Due in {Math.abs(+(((new Date() - new Date(todo.due_date)) / 3600000) % 24).toFixed(1))}
+						hours
+					</p>
+				{/if}
+				{#if course}
+					<p
+						style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(
+							(value) => value.course_id === todo.course_id
+						)[0].hex}"
+					>
+						{course.course_name}
+					</p>
+				{/if}
+				{#if todo.assignment_type !== 'Other'}
+					<p
+						style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {getColorOfAssignment(
+							todo
+						)}"
+					>
+						{todo.assignment_type}
+					</p>
+				{/if}
+			</div>
 		{/if}
 	{/each}
 </div>
