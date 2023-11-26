@@ -10,7 +10,7 @@ class StudentVueClient {
 
         this.client = client;
     }
-
+    
     getMessages() {
         return this._xmlJsonSerialize(this._makeServiceRequest('GetPXPMessages'));
     }
