@@ -68,6 +68,7 @@ export const actions = {
             console.error(error.message)
         }
         let courseNameData = data.map((course) => course.course_name);
+        
         return {
             courseOptions,
             courseNameData,

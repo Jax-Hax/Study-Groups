@@ -154,6 +154,13 @@
 						{todo.assignment_type}
 					</p>
 				{/if}
+				{#if todo.user_id}
+					<p
+						style="border-radius: 1em; width: min(7.5em,17vw); margin: auto; padding: 0.1em 1em;margin-top: 0.5em;  background-color: gray"
+					>
+						Custom
+					</p>
+				{/if}
 			</div>
 		{/if}
 	{/each}
