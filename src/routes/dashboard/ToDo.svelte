@@ -29,9 +29,9 @@
 		} else {
 			// Neither a nor b is overdue, sort based on due dates
 			if (a_date > b_date) {
-				return -1;
-			} else if (b_date > a_date) {
 				return 1;
+			} else if (b_date > a_date) {
+				return -1;
 			} else {
 				return 0;
 			}
