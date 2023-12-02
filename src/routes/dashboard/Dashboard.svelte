@@ -54,17 +54,6 @@
 				</p>
 			</div>
 		{/each}
-	{:else}
-		{#each data.course_data as course}
-			<div>
-				<h1>{course.course_name}</h1>
-				{#if courseAssignments[course.course_id]}
-					<p>{courseAssignments[course.course_id].length} new assignment(s)</p>
-				{:else}
-					<p>0 new assignment(s)</p>
-				{/if}
-			</div>
-		{/each}
 	{/if}
 </div>
 

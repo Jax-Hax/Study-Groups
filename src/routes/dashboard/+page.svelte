@@ -14,7 +14,8 @@
 	export let data;
 </script>
 <body>
-	<StudentVueLogin {form} {data} bind:showLogin/>
+	{#if showLogin}
+	<StudentVueLogin {form} {data} bind:showLogin/>{:else}
 <div class="content">
 <Sidebar bind:dashboard bind:todo bind:new_stuff {data} {form} bind:clubs/></div>
 {#if dashboard}
@@ -25,7 +26,7 @@
 <div class="content"><New {form} {data}/></div>
 {:else if clubs}
 <div class="content"><Clubs {form} {data}/></div>
-{/if}</body>
+{/if}{/if}</body>
 <style>
 	.content {
 		margin-left: 5rem
