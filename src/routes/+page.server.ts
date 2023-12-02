@@ -47,6 +47,6 @@ export const actions = {
       return fail(422, { message: error.message, success: false, email })
     }
 
-    throw redirect(302, `/auth/confirm`)
+    throw redirect(302, `/dashboard`)
   },
 }

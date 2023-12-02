@@ -5,7 +5,9 @@
 	export let showLogin;
     $: if (form?.success == true) showLogin = false
 </script>
-
+<form method="post" action="?/signout">
+	<button class="bouncyButton" style="margin: 1em">Sign out</button>
+</form>
 <div id="signupDiv">
 	<form method="POST" use:enhance action="?/get_studentvue_data" class="form">
 		<h1 style="text-align: center; letter-spacing: 0.05em">StudentVue Login</h1>
@@ -22,7 +24,7 @@
 </div>
 
 <style>
-	form {
+	.form {
 		display: flex;
 		padding: 2em;
 		max-width: 30em;
@@ -30,7 +32,7 @@
 		margin: auto;
 		flex-direction: column;
 		justify-content: center;
-		margin-top: 15vh;
+		margin-top: 5vh;
 		color: var(--text-color);
 		border-radius: 2em;
 		background-color: var(--background-5);
