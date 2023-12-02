@@ -37,7 +37,7 @@
 		<span class="material-symbols-outlined">lists</span>
 		<div class="sidebar-tooltip">To-Do List</div>
 	</div>
-	<div
+	<!--<div
 		class="icon"
 		style="margin-top: 0.5em"
 		class:enabled={clubs}
@@ -50,7 +50,7 @@
 	>
 		<span class="material-symbols-outlined">sports_tennis</span>
 		<div class="sidebar-tooltip">Clubs</div>
-	</div>
+	</div>-->
 	<div
 		class="icon"
 		class:enabled={new_stuff}
