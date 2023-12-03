@@ -292,6 +292,8 @@ export const actions = {
     const userID = session.user.id
     const formData = locals.formData
     const name = formData.get('if_custom');
+    const assignment_id = formData.get('assignment_id');
     console.log(name)
+    return {delete_assignment_id: assignment_id}
   },
 }

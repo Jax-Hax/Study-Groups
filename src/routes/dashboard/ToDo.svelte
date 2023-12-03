@@ -59,6 +59,10 @@
 			return 'canvas';
 		}
 	}
+	$: if(form?.delete_assignment_id) {
+		let index = assignment_array.indexOf(form.delete_assignment_id)
+		assignment_array.splice(index, 1);
+	}
 </script>
 
 <AddTaskPopup {form} {data} bind:showAddTask />
@@ -81,15 +85,15 @@
 								method="POST"
 								action="?/deleteTodo"
 							>
-								<button
+								
+								<input type="hidden" value={todo.assignment_id} name="assignment_id" />
+								<input type="hidden" value={getIfCustom(todo.user_id)} name="if_custom" />
+								<button type="submit"
 									on:click={(e) => {
 										checked_assignment = '';
-										assignment_array.splice(i, 1);
 										e.preventDefault();
 									}}>Delete</button
 								>
-								<input type="hidden" value={todo.assignment_id} name="assignment_id" />
-								<input type="hidden" value={getIfCustom(todo.user_id)} name="if_custom" />
 							</form>{:else}<button
 								on:click={(e) => {
 									checked_assignment = todo.assignment_id;
