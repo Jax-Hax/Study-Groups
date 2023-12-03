@@ -61,8 +61,8 @@
 			return 'canvas';
 		}
 	}
-	$: if(form?.delete_assignment_id) {
-		let index = assignment_array.indexOf(form.delete_assignment_id)
+	$: if (form?.delete_assignment_id) {
+		let index = assignment_array.indexOf(form.delete_assignment_id);
 		assignment_array.splice(index, 1);
 	}
 </script>
@@ -86,18 +86,16 @@
 						{#if checked_assignment === todo.assignment_id}<form
 								method="POST"
 								action="?/deleteTodo"
-								use:enhance={ () => {
-									checked_assignment = "";
-									return async ({update}) => {
-										await update({invalidateAll: false});
-									}
+								use:enhance={() => {
+									checked_assignment = '';
+									return async ({ update }) => {
+										await update({ invalidateAll: false });
+									};
 								}}
 							>
-								
 								<input type="hidden" value={todo.assignment_id} name="assignment_id" />
 								<input type="hidden" value={getIfCustom(todo.user_id)} name="if_custom" />
-								<button>Delete</button
-								>
+								<button>Delete</button>
 							</form>{:else}<button
 								on:click={(e) => {
 									checked_assignment = todo.assignment_id;

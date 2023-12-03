@@ -1,6 +1,5 @@
 import { login, getDaysOfWeek, getFirstDayOfMonth } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
-
 export async function load({ url, locals }) {
     const session = await locals.getSession()
     if (!session) {
