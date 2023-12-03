@@ -35,24 +35,13 @@
 		{#each selectedCourses as course}
 			<div class="courseDiv">
 				<span on:click={() => {if (course_name_color_code_opened === course.course_name) {course_name_color_code_opened = ""} else {(course_name_color_code_opened = course.course_name)}}} style="padding: 1em; background-color: {course.hex}; border-radius: 0.5em"></span>
-				<p>{course.course_name}</p>
-				<button
-					on:click={() => {
-						const index = selectedCourses.indexOf(course);
-						if (index > -1) {
-							selectedCourses.splice(index, 1);
-							selectedCourses = selectedCourses;
-						}
-					}}
-					class="addBtn"
-					style="--green: var(--red); --dark-green: var(--dark-red);"
-					><span class="material-symbols-outlined plus">remove</span></button
-				>
+				<p style="text-align: center">{course.course_name}</p>
+				<p style="text-align: center">({course.course_level})</p>
 			</div>
 			{#if course_name_color_code_opened === course.course_name}
 			<ColorPicker bind:hex={course.hex} isAlpha={false} isInput={false} canChangeMode={false} disableCloseClickOutside={true}/>
 			{/if}
-			<p>{course.course_level}</p>
+			
 		{/each}
 		<form method="POST" use:enhance action="?/addCourses">
 			<input type="hidden" name="selectedCoursesList" value={selectedCoursesList} />
@@ -68,23 +57,11 @@
 		align-items: center;
 		padding: 1em;
 	}
-	.addBtn {
-		background-color: var(--green);
-		border: none;
-		color: white;
-		padding: 0.5em;
-		border-radius: 50%;
-		text-align: center;
-		cursor: pointer;
-	}
-	.addBtn:hover {
-		background-color: var(--dark-green);
-	}
 	form {
 		position: relative;
 		display: flex;
 		padding: 2em;
-		max-width: 20em;
+		max-width: 30em;
 		margin: auto;
 		flex-direction: column;
 		color: var(--text-color);
@@ -96,7 +73,7 @@
 		transform: translate(-50%, -50%);
 		padding: 3em;
 		width: 60vw;
-		max-width: 380px;
+		max-width: 500px;
 		border: none;
 		border-radius: 1em;
 		background-color: var(--background-5);
