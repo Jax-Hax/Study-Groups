@@ -35,14 +35,7 @@
 		<h1 style="text-align: center;margin: auto">Class selection</h1>
 		<button class="bouncyButton" on:click={() => (courseConfirm = true)}>Next</button>
 	</div>
-
-	<p style="text-align: center; margin-bottom: 1em">
-		Add the classes you would like to be a part of!
-	</p>
-	<p style="text-align: center; margin-bottom: 1em">
-		"Not available" means that no one has taken over the job of moderating the class, but you can
-		apply if you want to!
-	</p>
+	<br>
 
 	{#each selectedCourses as course}
 		<div class="courseDiv">
