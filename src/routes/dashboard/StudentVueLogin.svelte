@@ -4,12 +4,23 @@
     export let data;
 	export let showLogin;
     $: if (form?.success == true) showLogin = false
+	let loading = false;
 </script>
 <form method="post" action="?/signout">
 	<button class="bouncyButton" style="margin: 1em">Sign out</button>
 </form>
 <div id="signupDiv">
-	<form method="POST" use:enhance action="?/get_studentvue_data" class="form">
+	
+	<form method="POST" use:enhance={ () => {
+		loading = true;
+		return async ({update}) => {
+			await update();
+			loading = false;
+		}
+	}} action="?/get_studentvue_data" class="form">
+	{#if loading}
+	<div id="loading" style="color: inherit; margin: auto; font-size: 2rem">Loading...</div>
+	{:else}
 		<h1 style="text-align: center; letter-spacing: 0.05em">StudentVue Login</h1>
 		<p>Enter your studentvue password to see new grades, GPA, etc.</p>
 		{#if form?.success == false}
@@ -19,8 +30,9 @@
 		<input name="studentvue_password_for_auth" type="password" required placeholder="lock" />
 		<input type="hidden" name="student_id_for_auth" value={data.user_data.student_number} />
 		<input type="hidden" name="district_for_auth" value={data.user_data.school_id} />
-		<button class="bouncyButton">Log In</button>
+		<button class="bouncyButton">Log In</button>{/if}
 	</form>
+	
 </div>
 
 <style>
