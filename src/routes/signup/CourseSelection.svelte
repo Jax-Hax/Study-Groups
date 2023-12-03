@@ -1,10 +1,26 @@
 <script>
 	import { enhance } from '$app/forms';
 	import CourseConfirm from './CourseConfirm.svelte';
+	/**
+	 * @type {{ courseOptions: any; courseNameData: string | any[]; courseData: { [x: string]: any; }; }}
+	 */
 	export let form;
 	let courses = form.courseOptions;
+	/**
+	 * @type {any[]}
+	 */
 	let selectedCourses = [];
 	let courseConfirm = false;
+	courses.forEach((courseToFind) => {
+		selectedCourses.push({
+			hex: '#000000'.replace(/0/g, function () {
+				return (~~(Math.random() * 16)).toString(16);
+			}),
+			course_level: "HON",
+			course_name: form.courseOptions[form.courseOptions.indexOf(courseToFind)]
+		});
+	});
+	console.log(selectedCourses)
 </script>
 
 <div class="dialog">
@@ -21,25 +37,19 @@
 		apply if you want to!
 	</p>
 
-	{#each courses as course}
+	{#each selectedCourses as course}
 		<div class="courseDiv">
-			<p class="course">{course}</p>
+			<p class="course">{course.course_name}</p>
 			<div>
 				{#if form.courseNameData}
-					{#if form.courseNameData.includes(course)}
-						<button
-							class="addBtn"
-							on:click={() => {
-								const index = courses.indexOf(course);
-								if (index > -1) {
-									courses.splice(index, 1);
-									courses = courses;
-									selectedCourses.push({"hex": "#000000".replace(/0/g,function(){return (~~(Math.random()*16)).toString(16);}), ...form.courseData[form.courseNameData.indexOf(course)] });
-								}
-							}}><span class="material-symbols-outlined plus">add</span></button
-						>
+					{#if form.courseNameData.includes(course.course_name)}
+						<p class="fakeButton">Class is already in database</p>
 					{:else}
-						<p class="fakeButton">Not available</p>
+					<select name="assignment_type" bind:value={course.course_level}>
+						<option value="HON">Honors</option>
+						<option value="C">C Level</option>
+						<option value="AP">AP/DE/IB</option>
+					</select>
 					{/if}
 				{/if}
 			</div>

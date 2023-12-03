@@ -1,7 +1,13 @@
 <script>
 	import { enhance } from '$app/forms';
-	export let form;
-	export let data;
+	/**
+	 * @type {{ success: boolean; message: any; }}
+	 */
+	 export let form;
+	/**
+	 * @type {{ schoolData: any; }}
+	 */
+	 export let data;
 	let text = "Import from StudentVue"
 	
 </script>
@@ -84,14 +90,6 @@
 		font-size: 14px;
 		width: 100%;
 		margin-bottom: 0.5em;
-	}
-	.already {
-		cursor: pointer;
-		text-align: center;
-	}
-	.already:hover {
-		color: var(--pop);
-		text-decoration: underline;
 	}
 	input::placeholder {
 		font-family: 'Material Symbols Outlined';
