@@ -1,4 +1,5 @@
 <script>
+	import { fade } from 'svelte/transition';
 	import AddTaskPopup from './AddTaskPopup.svelte';
 
 	export let data;
@@ -67,7 +68,7 @@
 		{@const due_in = new Date(todo.due_date) - new Date()}
 		{#if todo.link !== null && todo.link !== ''}
 			<a href={todo.link} target="”_blank”">
-				<div class="hover">
+				<div class="hover" out:fade>
 					<section>
 						{#if checked_assignment === todo.assignment_id}<form method="POST" action="?/deleteTodo"><button
 								on:click={(e) => {
