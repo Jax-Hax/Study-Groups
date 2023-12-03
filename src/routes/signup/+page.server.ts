@@ -9,8 +9,8 @@ export async function load({ url, locals: { supabase, getSession } }) {
     const { data: schoolData, error: userDataError } = await supabase
 		.from('schools')
 		.select()
-    if (schoolData != null) {
-        console.error(schoolData.message)
+    if (userDataError != null) {
+        console.error(userDataError.message)
     }
     return {schoolData}
 }

@@ -52,6 +52,7 @@
 			{#if course_name_color_code_opened === course.course_name}
 			<ColorPicker bind:hex={course.hex} isAlpha={false} isInput={false} canChangeMode={false} disableCloseClickOutside={true}/>
 			{/if}
+			<p>{course.course_level}</p>
 		{/each}
 		<form method="POST" use:enhance action="?/addCourses">
 			<input type="hidden" name="selectedCoursesList" value={selectedCoursesList} />

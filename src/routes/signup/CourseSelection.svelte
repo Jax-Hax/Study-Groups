@@ -16,11 +16,18 @@
 			hex: '#000000'.replace(/0/g, function () {
 				return (~~(Math.random() * 16)).toString(16);
 			}),
-			course_level: "HON",
+			course_level: get_course_level(courseToFind),
 			course_name: form.courseOptions[form.courseOptions.indexOf(courseToFind)]
 		});
 	});
-	console.log(selectedCourses)
+	function get_course_level(courseToFind) {
+		let index = form.courseNameData.indexOf(courseToFind)
+		console.log(index)
+		if (index > -1) {
+			return form.courseData[index].type_of_class
+		}
+		return "HON"
+	}
 </script>
 
 <div class="dialog">
