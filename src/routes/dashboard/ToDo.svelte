@@ -4,6 +4,7 @@
 	export let data;
 	export let form;
 	let assignment_array;
+	let checked_assignment;
 	$: assignment_array = data.custom_todo_data.concat(
 		data.current_assignments,
 		data.new_assignments
@@ -52,7 +53,7 @@
 	}
 </script>
 
-	<AddTaskPopup {form} {data} bind:showAddTask />
+<AddTaskPopup {form} {data} bind:showAddTask />
 <h1 id="todo-h1">To-Do List</h1>
 
 <div id="grid">
@@ -67,48 +68,63 @@
 		{#if todo.link !== null && todo.link !== ''}
 			<a href={todo.link} target="”_blank”">
 				<div class="hover">
-					<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
-					{#if due_in > 0}
-						{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
-							<p>
-								Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
+					<section>
+						{#if checked_assignment === todo.assignment_id}<button
+								on:click={(e) => {
+									checked_assignment = todo.assignment_id;
+									e.preventDefault();
+								}}>Delete</button
+							>{:else}<button
+								on:click={(e) => {
+									checked_assignment = todo.assignment_id;
+									e.preventDefault();
+								}}>not</button
+							>{/if}
+					</section>
+					<section style="flex-grow: 2">
+						<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
+						{#if due_in > 0}
+							{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
+								<p>
+									Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
+										+((due_in / 3600000) % 24).toFixed(1)
+									)} hours
+								</p>
+							{:else}
+								<p style="color: var(--red)">
+									Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
+								</p>
+							{/if}
+						{:else if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
+							<p style="color: var(--dark-red)">
+								Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 									+((due_in / 3600000) % 24).toFixed(1)
 								)} hours
 							</p>
 						{:else}
-							<p style="color: var(--red)">
-								Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
+							<p style="color: var(--dark-red)">
+								Overdue by {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
 							</p>
 						{/if}
-					{:else if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
-						<p style="color: var(--dark-red)">
-							Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
-								+((due_in / 3600000) % 24).toFixed(1)
-							)} hours
-						</p>
-					{:else}
-						<p style="color: var(--dark-red)">
-							Overdue by {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
-						</p>
-					{/if}
-					{#if course}
-						<p
-							style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(
-								(value) => value.course_id === todo.course_id
-							)[0].hex}"
-						>
-							{course.course_name}
-						</p>
-					{/if}
-					{#if todo.assignment_type === "Test/Quiz" || todo.assignment_type === "Homework" || todo.assignment_type === "Project"}
-						<p
-							style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; margin-top: 0.5em; background-color: {getColorOfAssignment(
-								todo
-							)}"
-						>
-							{todo.assignment_type}
-						</p>
-					{/if}
+						{#if course}
+							<p
+								style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; background-color: {data.user_in_course_data.filter(
+									(value) => value.course_id === todo.course_id
+								)[0].hex}"
+							>
+								{course.course_name}
+							</p>
+						{/if}
+						{#if todo.assignment_type === 'Test/Quiz' || todo.assignment_type === 'Homework' || todo.assignment_type === 'Project'}
+							<p
+								style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em; margin-top: 0.5em; background-color: {getColorOfAssignment(
+									todo
+								)}"
+							>
+								{todo.assignment_type}
+							</p>
+						{/if}
+					</section>
 				</div></a
 			>{:else}
 			<div>
@@ -145,7 +161,7 @@
 						{course.course_name}
 					</p>
 				{/if}
-				{#if todo.assignment_type === "Test/Quiz" || todo.assignment_type === "Homework" || todo.assignment_type === "Project"}
+				{#if todo.assignment_type === 'Test/Quiz' || todo.assignment_type === 'Homework' || todo.assignment_type === 'Project'}
 					<p
 						style="border-radius: 1em; width: min(15em,35vw); margin: auto; padding: 0.25em 1em;margin-top: 0.5em;  background-color: {getColorOfAssignment(
 							todo
@@ -177,6 +193,9 @@
 	a {
 		text-decoration: none;
 	}
+	section {
+		color: inherit;
+	}
 	#grid div {
 		background-color: var(--background-4);
 		padding: 2em;
@@ -186,6 +205,7 @@
 		border-radius: 16px;
 		width: 80vw;
 		text-align: center;
+		display: flex;
 	}
 	@media (max-width: 750px) {
 		#grid div {
