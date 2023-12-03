@@ -287,4 +287,11 @@ export const actions = {
         console.error(clubError.message)
       }
   },
+  deleteTodo: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const name = formData.get('if_custom');
+    console.log(name)
+  },
 }

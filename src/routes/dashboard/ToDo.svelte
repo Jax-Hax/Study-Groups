@@ -52,6 +52,13 @@
 			return '#e0bc00';
 		}
 	}
+	function getIfCustom(userID) {
+		if (userID) {
+			return 'custom';
+		} else {
+			return 'canvas';
+		}
+	}
 </script>
 
 <AddTaskPopup {form} {data} bind:showAddTask />
@@ -63,20 +70,27 @@
 		on:click={() => (showAddTask = true)}
 		style="padding: 0.5em 4em; font-size: 30px">Add Task</button
 	>
-	{#each assignment_array as todo,i}
+	{#each assignment_array as todo, i}
 		{@const course = data.course_data.filter((value) => value.course_id === todo.course_id)[0]}
 		{@const due_in = new Date(todo.due_date) - new Date()}
 		{#if todo.link !== null && todo.link !== ''}
 			<a href={todo.link} target="”_blank”">
 				<div class="hover" out:fade>
 					<section>
-						{#if checked_assignment === todo.assignment_id}<form method="POST" action="?/deleteTodo"><button
-								on:click={(e) => {
-									checked_assignment = "";
-									assignment_array.splice(i,1)
-									e.preventDefault();
-								}}>Delete</button
-							></form>{:else}<button
+						{#if checked_assignment === todo.assignment_id}<form
+								method="POST"
+								action="?/deleteTodo"
+							>
+								<button
+									on:click={(e) => {
+										checked_assignment = '';
+										assignment_array.splice(i, 1);
+										e.preventDefault();
+									}}>Delete</button
+								>
+								<input type="hidden" value={todo.assignment_id} name="assignment_id" />
+								<input type="hidden" value={getIfCustom(todo.user_id)} name="if_custom" />
+							</form>{:else}<button
 								on:click={(e) => {
 									checked_assignment = todo.assignment_id;
 									e.preventDefault();
@@ -208,6 +222,7 @@
 		width: 80vw;
 		text-align: center;
 		display: flex;
+		align-items: center;
 	}
 	@media (max-width: 750px) {
 		#grid div {
