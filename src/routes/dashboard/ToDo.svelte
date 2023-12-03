@@ -1,6 +1,8 @@
 <script>
 	import { fade } from 'svelte/transition';
 	import AddTaskPopup from './AddTaskPopup.svelte';
+	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
 
 	export let data;
 	export let form;
@@ -84,15 +86,17 @@
 						{#if checked_assignment === todo.assignment_id}<form
 								method="POST"
 								action="?/deleteTodo"
+								use:enhance={ () => {
+									checked_assignment = "";
+									return async ({update}) => {
+										await update({invalidateAll: false});
+									}
+								}}
 							>
 								
 								<input type="hidden" value={todo.assignment_id} name="assignment_id" />
 								<input type="hidden" value={getIfCustom(todo.user_id)} name="if_custom" />
-								<button type="submit"
-									on:click={(e) => {
-										checked_assignment = '';
-										e.preventDefault();
-									}}>Delete</button
+								<button>Delete</button
 								>
 							</form>{:else}<button
 								on:click={(e) => {
