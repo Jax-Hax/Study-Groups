@@ -62,23 +62,24 @@
 		on:click={() => (showAddTask = true)}
 		style="padding: 0.5em 4em; font-size: 30px">Add Task</button
 	>
-	{#each assignment_array as todo}
+	{#each assignment_array as todo,i}
 		{@const course = data.course_data.filter((value) => value.course_id === todo.course_id)[0]}
 		{@const due_in = new Date(todo.due_date) - new Date()}
 		{#if todo.link !== null && todo.link !== ''}
 			<a href={todo.link} target="”_blank”">
 				<div class="hover">
 					<section>
-						{#if checked_assignment === todo.assignment_id}<button
+						{#if checked_assignment === todo.assignment_id}<form method="POST" action="?/deleteTodo"><button
+								on:click={(e) => {
+									checked_assignment = "";
+									assignment_array.splice(i,1)
+									e.preventDefault();
+								}}>Delete</button
+							></form>{:else}<button
 								on:click={(e) => {
 									checked_assignment = todo.assignment_id;
 									e.preventDefault();
 								}}>Delete</button
-							>{:else}<button
-								on:click={(e) => {
-									checked_assignment = todo.assignment_id;
-									e.preventDefault();
-								}}>not</button
 							>{/if}
 					</section>
 					<section style="flex-grow: 2">
