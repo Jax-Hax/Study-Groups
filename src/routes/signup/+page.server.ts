@@ -7,12 +7,12 @@ export async function load({ url, locals: { supabase, getSession } }) {
         throw redirect(302, '/')
     }
     const { data: schoolData, error: userDataError } = await supabase
-		.from('schools')
-		.select()
+        .from('schools')
+        .select()
     if (userDataError != null) {
         console.error(userDataError.message)
     }
-    return {schoolData}
+    return { schoolData }
 }
 export const actions = {
     signout: async ({ locals: { supabase } }) => {
@@ -27,9 +27,9 @@ export const actions = {
         const session = await locals.getSession()
         const userID = session.user.id
         const { data: schoolData, error: schoolError } = await locals.supabase
-		.from('schools')
-		.select()
-		.eq('school_id', district);
+            .from('schools')
+            .select()
+            .eq('school_id', district);
         if (schoolError != null) {
             console.error(schoolError.message)
         }
@@ -43,21 +43,21 @@ export const actions = {
             }
         }
         const { data: userData, error: userDataError } = await locals.supabase
-		.from('user_data')
-		.select('*')
-		.eq('user_id', userID);
+            .from('user_data')
+            .select('*')
+            .eq('user_id', userID);
         if (userDataError != null) {
             console.error(userDataError.message)
         }
         if (userData.length <= 0) {
-            const { data,error: userDataInsertError } = await locals.supabase
-            .from('user_data')
-            .insert({ user_id: userID, student_number: student_id, school_id: district })
+            const { data, error: userDataInsertError } = await locals.supabase
+                .from('user_data')
+                .insert({ user_id: userID, student_number: student_id, school_id: district })
             if (userDataInsertError != null) {
                 console.error(userDataInsertError.message)
             }
         }
-        
+
         let courseOptions = grades_json.Gradebook.Courses.Course.map((course) => course.Title.replace(/\s+/g, ' ')); //removes whitespace
         const { data, error } = await locals.supabase
             .from('courses')
@@ -68,21 +68,39 @@ export const actions = {
             console.error(error.message)
         }
         let courseNameData = data.map((course) => course.course_name);
-        
+
         return {
             courseOptions,
             courseNameData,
             courseData: data,
-            success: true
+            success: true,
+            school_id: userData[0].school_id
         }
     },
     addCourses: async ({ locals }) => {
         const session = await locals.getSession()
         const userID = session.user.id
         const formData = locals.formData
-        const course_list_data = formData.get('selectedCoursesList')
-        const course_list = course_list_data.split(",");
-        const course_list_with_UID = course_list.map(value => ({ user_id: userID, course_id: value.split("{$}")[0], hex: value.split("{$}")[1]}));
+        const course_list_data = JSON.parse(formData.get('selectedCoursesList'))
+        const school_id = formData.get('school_id')
+        let course_list_with_UID;
+        course_list_data.forEach(async (course) => {
+            if (course.course_id === "NA") {
+                //not made yet
+                const { data, error1 } = await locals.supabase
+                    .from('courses')
+                    .insert({num_students: 1, course_name: course.course_name, type_of_class: course.course_level, school_id, moderator_id: userID})
+                    .select()
+                if (error1 != null) {
+                    console.error(error1)
+                }
+                course_list_with_UID.push({ user_id: userID, course_id: data[0].course_id, hex: course.hex });
+            }
+            else {
+                //already a course
+                course_list_with_UID.push({ user_id: userID, course_id: course.course_id, hex: course.hex });
+            }
+        })
         const { error } = await locals.supabase
             .from('users_in_courses')
             .insert(course_list_with_UID)

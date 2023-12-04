@@ -17,16 +17,23 @@
 				return (~~(Math.random() * 16)).toString(16);
 			}),
 			course_level: get_course_level(courseToFind),
-			course_name: form.courseOptions[form.courseOptions.indexOf(courseToFind)]
+			course_name: form.courseOptions[form.courseOptions.indexOf(courseToFind)],
+			course_id: check_for_course_id(courseToFind)
 		});
 	});
 	function get_course_level(courseToFind) {
 		let index = form.courseNameData.indexOf(courseToFind)
-		console.log(index)
 		if (index > -1) {
 			return form.courseData[index].type_of_class
 		}
 		return "HON"
+	}
+	function check_for_course_id(courseToFind) {
+		let index = form.courseNameData.indexOf(courseToFind)
+		if (index > -1) {
+			return form.courseData[index].course_id
+		}
+		return "NA"
 	}
 </script>
 
@@ -57,7 +64,7 @@
 	{/each}
 </div>
 {#if courseConfirm}
-	<CourseConfirm {selectedCourses} {form} bind:courseConfirm />
+	<CourseConfirm {selectedCourses} {form} {data} bind:courseConfirm />
 {/if}
 
 <style>

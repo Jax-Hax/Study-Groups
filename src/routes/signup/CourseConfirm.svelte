@@ -4,6 +4,7 @@
 	export let selectedCourses;
 	export let courseConfirm;
 	export let form;
+	export let data;
 	let dialog;
 	let selectedCoursesList;
 	$: if (dialog && courseConfirm) dialog.showModal();
@@ -44,7 +45,8 @@
 			
 		{/each}
 		<form method="POST" use:enhance action="?/addCourses">
-			<input type="hidden" name="selectedCoursesList" value={selectedCoursesList} />
+			<input type="hidden" name="selectedCoursesList" value={JSON.stringify(selectedCourses)} />
+			<input type="hidden" name="school_id" value={data.school_id} />
 			<button class="bouncyButton">Confirm</button>
 		</form>
 	</div>
