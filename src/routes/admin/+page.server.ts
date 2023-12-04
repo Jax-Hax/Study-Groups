@@ -1,10 +1,35 @@
 import { login, getDaysOfWeek, getFirstDayOfMonth } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
-export async function load({ url, locals }) {
+export async function load({ url, locals, cookies }) {
     const session = await locals.getSession()
     if (!session) {
         throw redirect(302, '/')
     }
+    async function generateRSAKeyPair() {
+        const keyPair = await crypto.subtle.generateKey(
+          {
+            name: "RSA-OAEP",
+            modulusLength: 2048,
+            publicExponent: new Uint8Array([0x01, 0x00, 0x01]), // 65537
+            hash: { name: "SHA-256" },
+          },
+          true,
+          ["encrypt", "decrypt"]
+        );
+        return keyPair;
+      }
+      
+      const keyPair = await generateRSAKeyPair();
+    let publicKey = await crypto.subtle.exportKey("spki", keyPair.publicKey);
+    let privateKey = await crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
+    function storeKeysInLocalStorage(publicKey, privateKey) {
+        const publicKeyBytes = new Uint8Array(publicKey);
+        const privateKeyBytes = new Uint8Array(privateKey);
+      
+        console.log(JSON.stringify(publicKeyBytes));
+        console.log(JSON.stringify(privateKeyBytes));
+      }
+      storeKeysInLocalStorage(publicKey,privateKey)
     const userID = session.user.id
     //get classes you are the mod of
     const { data: course_data, error: courseError2 } = await locals.supabase
