@@ -95,12 +95,15 @@
 							>
 								<input type="hidden" value={todo.assignment_id} name="assignment_id" />
 								<input type="hidden" value={getIfCustom(todo.user_id)} name="if_custom" />
-								<button>Delete</button>
+								<p style="color: var(--text-color)">Are you sure?</p>
+								<button type="submit" class="symbolButton"><span class="material-symbols-outlined">check</span></button>
+								<button class="badSymbolButton" on:click={() => 
+									checked_assignment = ""}><span class="material-symbols-outlined">close</span></button>
 							</form>{:else}<button
 								on:click={(e) => {
 									checked_assignment = todo.assignment_id;
 									e.preventDefault();
-								}}>Delete</button
+								}} class="bouncyButton" style="--pop: var(--dark-red)">Finish</button
 							>{/if}
 					</section>
 					<section style="flex-grow: 2">
@@ -110,18 +113,18 @@
 								<p>
 									Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 										+((due_in / 3600000) % 24).toFixed(1)
-									)} hours
+									)} hour(s)
 								</p>
 							{:else}
 								<p style="color: var(--red)">
-									Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hours
+									Due in {Math.abs(+((due_in / 3600000) % 24).toFixed(1))} hour(s)
 								</p>
 							{/if}
 						{:else if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
 							<p style="color: var(--dark-red)">
 								Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 									+((due_in / 3600000) % 24).toFixed(1)
-								)} hours
+								)} hour(s)
 							</p>
 						{:else}
 							<p style="color: var(--dark-red)">
@@ -149,14 +152,39 @@
 					</section>
 				</div></a
 			>{:else}
-			<div>
+			<div out:fade>
+				<section>
+					{#if checked_assignment === todo.assignment_id}<form
+							method="POST"
+							action="?/deleteTodo"
+							use:enhance={() => {
+								checked_assignment = '';
+								return async ({ update }) => {
+									await update();
+								};
+							}}
+						>
+							<input type="hidden" value={todo.assignment_id} name="assignment_id" />
+							<input type="hidden" value={getIfCustom(todo.user_id)} name="if_custom" />
+							<p style="color: var(--text-color)">Are you sure?</p>
+							<button type="submit" class="symbolButton"><span class="material-symbols-outlined">check</span></button>
+							<button class="badSymbolButton" on:click={() => 
+								checked_assignment = ""}><span class="material-symbols-outlined">close</span></button>
+						</form>{:else}<button
+							on:click={(e) => {
+								checked_assignment = todo.assignment_id;
+								e.preventDefault();
+							}} class="bouncyButton" style="--pop: var(--dark-red)">Finish</button
+						>{/if}
+				</section>
+				<section style="flex-grow: 2">
 				<h1 style="font-size: 2.5rem; letter-spacing: 0">{todo.text}</h1>
 				{#if due_in > 0}
 					{#if Math.abs(+(due_in / (3600000 * 24)).toFixed(1)) > 1}
 						<p>
 							Due in {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 								+((due_in / 3600000) % 24).toFixed(1)
-							)} hours
+							)} hour(s)
 						</p>
 					{:else}
 						<p style="color: var(--red)">
@@ -167,7 +195,7 @@
 					<p style="color: var(--dark-red)">
 						Overdue by {Math.abs(+(due_in / (3600000 * 24)).toFixed(0))} days and {Math.abs(
 							+((due_in / 3600000) % 24).toFixed(1)
-						)} hours
+						)} hour(s)
 					</p>
 				{:else}
 					<p style="color: var(--dark-red)">
@@ -199,6 +227,7 @@
 						Custom
 					</p>
 				{/if}
+				</section>
 			</div>
 		{/if}
 	{/each}
@@ -235,7 +264,34 @@
 			width: 15em;
 		}
 	}
-
+	.symbolButton {
+		border-radius: 50%;
+		background-color: var(--green);
+		border: none;
+		cursor: pointer;
+	}
+	.symbolButton:hover{
+		background-color: var(--dark-green);
+	}
+	.symbolButton span {
+		padding: 0.5em;
+		color: white;
+		font-size: 1.5rem;
+	}
+	.badSymbolButton {
+		border-radius: 50%;
+		background-color: var(--red);
+		border: none;
+		cursor: pointer;
+	}
+	.badSymbolButton:hover{
+		background-color: var(--dark-red);
+	}
+	.badSymbolButton span {
+		padding: 0.5em;
+		color: white;
+		font-size: 1.5rem;
+	}
 	.hover:hover {
 		background-color: var(--background-5) !important;
 		cursor: pointer;

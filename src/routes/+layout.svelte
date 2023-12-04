@@ -23,7 +23,7 @@
 			--pop: #005b96;
 			--grayed-pop: #28597a;
 			--dark-pop: #011f4b;
-            --highlight-pop: #005b96;
+            --highlight-pop: #0063a3;
 			--green: #26b54c;
 			--dark-green: #1d8c3b;
 			--red: #ea5252;
