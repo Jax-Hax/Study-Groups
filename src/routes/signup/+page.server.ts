@@ -43,6 +43,19 @@ export const actions = {
                 success: false,
             }
         }
+        const { data: isMultipleUsers, error: DataError } = await locals.supabase
+            .from('user_data')
+            .select()
+            .eq('student_number', student_id);
+        if (DataError != null) {
+            console.error(DataError.message)
+        }
+        if (isMultipleUsers.length > 0) {
+            return {
+                message: 'An account already exists with that student number',
+                success: false,
+            }
+        }
         const { data: userData, error: userDataError } = await locals.supabase
             .from('user_data')
             .select('*')
