@@ -184,7 +184,6 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
   }
   return {
     user_data: data[0],
-    course_data,
     custom_todo_data,
     current_assignments,
     new_assignments,

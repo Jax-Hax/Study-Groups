@@ -49,7 +49,7 @@
 				Course: <br />
 				<select name="course">
 					<option value="None">None</option>
-					{#each data.course_data as course}
+					{#each data.grades as course}
 						<option value={course.course_id}>{course.course_name}</option>
 					{/each}
 				</select>
