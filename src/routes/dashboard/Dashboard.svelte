@@ -19,19 +19,17 @@
 	let courseSelected;
 </script>
 
-{#if form?.gpa}
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<div id="gpa">
 		<h1>GPA:</h1>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<p class:textshadow={!showGpa} on:click={() => (showGpa = !showGpa)}>
-			{#if showGpa}{form.gpa}{:else}Show{/if}
+			{#if showGpa}{data.gpa}{:else}Show{/if}
 		</p>
-	</div>{/if}
+	</div>
 	<ClassPopup {form} {data} bind:showPopup bind:courseSelected />
 <div id="grid">
-	{#if form?.grades}
-		{#each form.grades as course}
+		{#each data.grades as course}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div on:click={() => {courseSelected = course; showPopup = true}}>
@@ -54,7 +52,6 @@
 				</p>
 			</div>
 		{/each}
-	{/if}
 </div>
 
 <style>
