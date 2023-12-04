@@ -2,7 +2,6 @@
 	import Hidden from "./Hidden.svelte";
 
     export let data;
-    export let form;
     export let gradesShown;
 </script>
 {#if gradesShown}
@@ -15,8 +14,7 @@
 		>
 		<h1 style="text-align: center; flex: 1; color: white;">New Grades</h1>
 	</section>
-	{#if form?.grades}
-		{#each form.grades as course}
+		{#each data.grades as course}
 			<div>
                 <button
 							class="addBtn"
@@ -28,7 +26,6 @@
                 {/each}
 			</div>
 		{/each}
-	{/if}
 </div>
 {:else}
     <Hidden bind:isEnabled={gradesShown}><h1 style="text-align: center; flex: 1; color: white;">New Grades</h1></Hidden>

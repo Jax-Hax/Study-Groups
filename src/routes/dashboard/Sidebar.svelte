@@ -61,14 +61,10 @@
 			clubs = false;
 		}}
 	>
-		{#if form?.grades}
 			<span
 				>{data.new_assignments.length +
-					form.grades.reduce((count, obj) => count + obj.new_assignments.length, 0)}</span
+					data.grades.reduce((count, obj) => count + obj.new_assignments.length, 0)}</span
 			>
-		{:else}
-			<span>{data.new_assignments.length}</span>
-		{/if}
 		<div class="sidebar-tooltip">New</div>
 	</div>
 	<form method="POST" style="margin-top: auto;" use:enhance action="?/switchToAdmin">

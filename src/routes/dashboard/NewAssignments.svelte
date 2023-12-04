@@ -2,7 +2,6 @@
 	import Hidden from './Hidden.svelte';
 
 	export let data;
-	export let form;
 	export let assignmentsShown;
 </script>
 

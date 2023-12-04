@@ -19,7 +19,7 @@
 {:else if todo}
 <div class="content"><ToDo {form} {data}/></div>
 {:else if new_stuff}
-<div class="content"><New {form} {data}/></div>
+<div class="content"><New {data}/></div>
 {:else if clubs}
 <div class="content"><Clubs {form} {data}/></div>
 {/if}</body>
