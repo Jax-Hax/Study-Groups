@@ -81,18 +81,15 @@
 		align-items: center;
 		padding: 1em;
 	}
-	.addBtn {
-		background-color: var(--green);
-		border: none;
-		color: white;
-		padding: 0.5em;
-		border-radius: 50%;
-		text-align: center;
-		cursor: pointer;
-	}
-	.addBtn:hover {
-		background-color: var(--dark-green);
-	}
+	select {
+    color: var(--text-color);
+    background-color: var(--background-3);
+    border: 0.1em solid var(--pop);
+    border-radius: 10px;
+    padding: 0.5em;
+    width: 100%;
+    margin-bottom: 1em;
+}
 	.dialog {
 		position: absolute;
 		top: 50%;
