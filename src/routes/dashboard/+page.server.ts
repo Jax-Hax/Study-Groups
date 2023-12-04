@@ -306,7 +306,17 @@ export const actions = {
     return { delete_assignment_id: assignment_id }
   },
 }
-function getGrades(password, userData) {
+async function getGrades(password, userData) {
+  const { data: schoolData, error: schoolError } = await locals.supabase
+      .from('schools')
+      .select()
+      .eq('school_id', userData[0].school_id);
+        if (schoolError != null) {
+            console.error(schoolError.message)
+        }
+  let client = await login(schoolData[0].school_studentvue_url, userData[0].student_number, password);
+  let grades_return = await client.getGradebook();
+  let grades_json = JSON.parse(grades_return);
   if (!grades_json.Gradebook) {
     return {
       error: 'You did not input the correct password, please try again',
