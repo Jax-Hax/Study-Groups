@@ -191,7 +191,6 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
     club_data,
     all_club_data,
     grades,
-    success: true,
     gpa: sum / gpas.length
   }
 }
