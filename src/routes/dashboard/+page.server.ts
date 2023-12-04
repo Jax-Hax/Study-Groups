@@ -22,13 +22,33 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
   //check for pass cookie
   let encrypted_password = cookies.get("svk-p-s-629542")
   if (!encrypted_password) {
-      throw redirect(303, '/login')
+    throw redirect(303, '/login')
   }
   let password = decryptPassword(encrypted_password)
-  //grab courses the user is in
+  //get studentvue data
+  const { data: schoolData, error: schoolError } = await supabase
+    .from('schools')
+    .select()
+    .eq('school_id', data[0].school_id);
+  if (schoolError != null) {
+    console.error(schoolError.message)
+  }
+  let client = await login(schoolData[0].school_studentvue_url, data[0].student_number, password);
+  let grades_return = await client.getGradebook();
+  let grades_json = JSON.parse(grades_return);
+
+  if (!grades_json.Gradebook) {
+    throw redirect(302, `/login`)
+  }
+  let course_grades = grades_json.Gradebook.Courses.Course.map((course) => ({
+    name: course.Title.replace(/\s+/g, ' '),
+    grade: parseFloat(course.Marks.Mark[0].CalculatedScoreRaw),
+    assignment_list: course.Marks.Mark[0].Assignments.Assignment
+  }));
+  //get course info
   const { data: user_in_course_data, error: courseError1 } = await supabase
     .from('users_in_courses')
-    .select('*')
+    .select()
     .eq('user_id', userID);
   if (courseError1 != null) {
     console.error(courseError1.message)
@@ -42,6 +62,68 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
   if (courseError2 != null) {
     console.error(courseError2.message)
   }
+  let courses_with_grades = course_grades.map(course1 => {
+    const matchingCourse = course_data.find(course => course1.name === course.course_name);
+    return matchingCourse ? { "grade": course1.grade, "assignment_list": course1.assignment_list, "known_assignments": user_in_course_data.find(course => matchingCourse.course_id === course.course_id).grade_id_list, ...matchingCourse } : null;
+  }).filter(Boolean);
+  //calculate gpa
+  let gpas = courses_with_grades.map(course => {
+    let grade_offset = 0;
+    if (course.type_of_class === "AP") {
+      grade_offset = 1.0;
+    }
+    else if (course.type_of_class === "HON") {
+      grade_offset = 0.5;
+    }
+    let gpa = 0;
+    if (Math.round(course.grade) >= 97) {
+      gpa = 4.5;
+    }
+    else if (Math.round(course.grade) >= 90) {
+      gpa = 4;
+    }
+    else if (Math.round(course.grade) >= 86) {
+      gpa = 3.5;
+    }
+    else if (Math.round(course.grade) >= 80) {
+      gpa = 3;
+    }
+    else if (Math.round(course.grade) >= 76) {
+      gpa = 2.5;
+    }
+    else if (Math.round(course.grade) >= 70) {
+      gpa = 2;
+    }
+    else if (Math.round(course.grade) >= 66) {
+      gpa = 1.5;
+    }
+    else if (Math.round(course.grade) >= 60) {
+      gpa = 1;
+    }
+    gpa += grade_offset;
+    return gpa
+  })
+  var sum = gpas.reduce((accumulator, currentValue) => {
+    return accumulator + currentValue
+  }, 0);
+  //get new grades
+  const grades = courses_with_grades.map(course => {
+    // Destructure the item and extract the 'name' property
+    const { known_assignments, ...rest } = course;
+    const filteredAssignments = course.assignment_list.filter(assignment => {
+      const gradebookID = parseInt(assignment.GradebookID, 10);
+      if (assignment.Score.replace(/0+$/, '').replace(/\.$/, '') === "Not Graded") {
+        return false;
+      }
+      return !known_assignments.includes(gradebookID);
+    });
+    // Create a new object with the remaining properties and the modified 'fullName' property
+    return {
+      ...rest,
+      new_assignments: filteredAssignments, // Changing the value of 'name' to 'fullName'
+      new_assignments_list_of_ids: filteredAssignments.map(value => value.GradebookID).join()
+    };
+  });
   //fetch todos
   const { data: custom_todo_data, error: courseError3 } = await supabase
     .from('custom_todos')
@@ -108,7 +190,10 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
     new_assignments,
     user_in_course_data,
     club_data,
-    all_club_data
+    all_club_data,
+    grades,
+    success: true,
+    gpa: sum / gpas.length
   }
 }
 export const actions = {
@@ -305,111 +390,4 @@ export const actions = {
     console.log(name)
     return { delete_assignment_id: assignment_id }
   },
-}
-async function getGrades(password, userData) {
-  const { data: schoolData, error: schoolError } = await locals.supabase
-      .from('schools')
-      .select()
-      .eq('school_id', userData[0].school_id);
-        if (schoolError != null) {
-            console.error(schoolError.message)
-        }
-  let client = await login(schoolData[0].school_studentvue_url, userData[0].student_number, password);
-  let grades_return = await client.getGradebook();
-  let grades_json = JSON.parse(grades_return);
-  if (!grades_json.Gradebook) {
-    return {
-      error: 'You did not input the correct password, please try again',
-      success: false,
-    }
-  }
-  let course_grades = grades_json.Gradebook.Courses.Course.map((course) => ({
-    name: course.Title.replace(/\s+/g, ' '),
-    grade: parseFloat(course.Marks.Mark[0].CalculatedScoreRaw),
-    assignment_list: course.Marks.Mark[0].Assignments.Assignment
-  }));
-  //get course info
-  const { data: user_in_course_data, error: courseError1 } = await locals.supabase
-    .from('users_in_courses')
-    .select()
-    .eq('user_id', userID);
-  if (courseError1 != null) {
-    console.error(courseError1.message)
-  }
-  //contains course ids
-  const course_list = user_in_course_data.map(value => (value.course_id));
-  const { data: course_data, error: courseError2 } = await locals.supabase
-    .from('courses')
-    .select()
-    .in('course_id', course_list);
-  if (courseError2 != null) {
-    console.error(courseError2.message)
-  }
-  let courses_with_grades = course_grades.map(course1 => {
-    const matchingCourse = course_data.find(course => course1.name === course.course_name);
-    return matchingCourse ? { "grade": course1.grade, "assignment_list": course1.assignment_list, "known_assignments": user_in_course_data.find(course => matchingCourse.course_id === course.course_id).grade_id_list, ...matchingCourse } : null;
-  }).filter(Boolean);
-  //calculate gpa
-  let gpas = courses_with_grades.map(course => {
-    let grade_offset = 0;
-    if (course.type_of_class === "AP") {
-      grade_offset = 1.0;
-    }
-    else if (course.type_of_class === "HON") {
-      grade_offset = 0.5;
-    }
-    let gpa = 0;
-    if (Math.round(course.grade) >= 97) {
-      gpa = 4.5;
-    }
-    else if (Math.round(course.grade) >= 90) {
-      gpa = 4;
-    }
-    else if (Math.round(course.grade) >= 86) {
-      gpa = 3.5;
-    }
-    else if (Math.round(course.grade) >= 80) {
-      gpa = 3;
-    }
-    else if (Math.round(course.grade) >= 76) {
-      gpa = 2.5;
-    }
-    else if (Math.round(course.grade) >= 70) {
-      gpa = 2;
-    }
-    else if (Math.round(course.grade) >= 66) {
-      gpa = 1.5;
-    }
-    else if (Math.round(course.grade) >= 60) {
-      gpa = 1;
-    }
-    gpa += grade_offset;
-    return gpa
-  })
-  var sum = gpas.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue
-  }, 0);
-  //get new grades
-  const grades = courses_with_grades.map(course => {
-    // Destructure the item and extract the 'name' property
-    const { known_assignments, ...rest } = course;
-    const filteredAssignments = course.assignment_list.filter(assignment => {
-      const gradebookID = parseInt(assignment.GradebookID, 10);
-      if (assignment.Score.replace(/0+$/, '').replace(/\.$/, '') === "Not Graded") {
-        return false;
-      }
-      return !known_assignments.includes(gradebookID);
-    });
-    // Create a new object with the remaining properties and the modified 'fullName' property
-    return {
-      ...rest,
-      new_assignments: filteredAssignments, // Changing the value of 'name' to 'fullName'
-      new_assignments_list_of_ids: filteredAssignments.map(value => value.GradebookID).join()
-    };
-  });
-  return {
-    grades,
-    success: true,
-    gpa: sum / gpas.length
-  }
 }
