@@ -195,8 +195,9 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
   }
 }
 export const actions = {
-  signout: async ({ locals: { supabase } }) => {
+  signout: async ({ cookies, locals: { supabase } }) => {
     await supabase.auth.signOut()
+    cookies.delete('svk-p-s-629542', {path: '/'});
     throw redirect(303, '/')
   },
   switchToAdmin: async ({ }) => {

@@ -15,8 +15,9 @@ export async function load({ url, locals: { supabase, getSession } }) {
     return { schoolData }
 }
 export const actions = {
-    signout: async ({ locals: { supabase } }) => {
+    signout: async ({ cookies, locals: { supabase } }) => {
         await supabase.auth.signOut()
+        cookies.delete('svk-p-s-629542', {path: '/'});
         throw redirect(303, '/')
     },
     import: async ({ locals }) => {
