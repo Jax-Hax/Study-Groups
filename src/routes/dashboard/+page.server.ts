@@ -188,6 +188,9 @@ export const actions = {
       const { known_assignments, ...rest } = course;
       const filteredAssignments = course.assignment_list.filter(assignment => {
         const gradebookID = parseInt(assignment.GradebookID, 10);
+        if (assignment.Score.replace(/0+$/, '').replace(/\.$/, '') === "Not Graded") {
+          return false;
+        }
         return !known_assignments.includes(gradebookID);
       });
       // Create a new object with the remaining properties and the modified 'fullName' property
@@ -207,7 +210,7 @@ export const actions = {
     await supabase.auth.signOut()
     throw redirect(303, '/')
   },
-  switchToAdmin: async ({  }) => {
+  switchToAdmin: async ({ }) => {
     throw redirect(303, '/admin')
   },
   addTodo: async ({ locals }) => {
@@ -220,13 +223,13 @@ export const actions = {
     const course_id = formData.get('course');
     const assignment_type = formData.get('assignment_type');
     const publicOrPrivate = formData.get('publicOrPrivate');
-    if (course_id === "None" && publicOrPrivate === "on"){
+    if (course_id === "None" && publicOrPrivate === "on") {
       return {
         message: 'You can not make a public assignment with no course chosen',
         success: false,
       }
     }
-    
+
     if (publicOrPrivate === "on") {
       const { data, error: userDataInsertError } = await locals.supabase
         .from('canvas_assignments')
@@ -281,11 +284,11 @@ export const actions = {
     }
     const list_of_dates = dates.map(date => date.toISOString().split("T")[0])
     const { data, error: clubError } = await locals.supabase
-        .from('clubs')
-        .insert({ sponsor, school_id, name, description, location, start_time: starting_time, end_time, dates: list_of_dates, is_approved: false })
-      if (clubError != null) {
-        console.error(clubError.message)
-      }
+      .from('clubs')
+      .insert({ sponsor, school_id, name, description, location, start_time: starting_time, end_time, dates: list_of_dates, is_approved: false })
+    if (clubError != null) {
+      console.error(clubError.message)
+    }
   },
   deleteTodo: async ({ locals }) => {
     const session = await locals.getSession()
@@ -294,6 +297,6 @@ export const actions = {
     const name = formData.get('if_custom');
     const assignment_id = formData.get('assignment_id');
     console.log(name)
-    return {delete_assignment_id: assignment_id}
+    return { delete_assignment_id: assignment_id }
   },
 }
