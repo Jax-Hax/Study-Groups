@@ -286,7 +286,36 @@ export const actions = {
     const formData = locals.formData
     const name = formData.get('if_custom');
     const assignment_id = formData.get('assignment_id');
-    console.log(name)
+    if (name === "custom") {
+      const { error } = await locals.supabase
+      .from('custom_todos')
+      .delete()
+      .eq('assignment_id', assignment_id)
+      if (error != null) {
+        console.error(error.message)
+      }
+    } else {
+      const { error } = await locals.supabase
+      .from('users_canvas_assignments')
+      .delete()
+      .eq('assignment_id', assignment_id)
+      if (error != null) {
+        console.error(error.message)
+      }
+    }
     return { delete_assignment_id: assignment_id }
+  },
+  updateTodo: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const description = formData.get('description');
+    const name = formData.get('name');
+    const assignment_id = formData.get('assignment_id');
+    const due_date = new Date(formData.get('dueDate')).toISOString();
+    const { error } = await locals.supabase
+      .from('custom_todos')
+      .update({ text: name, description, due_date})
+      .eq('assignment_id', assignment_id)
   },
 }

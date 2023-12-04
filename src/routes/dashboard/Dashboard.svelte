@@ -26,6 +26,7 @@
 		<p class:textshadow={!showGpa} on:click={() => (showGpa = !showGpa)}>
 			{#if showGpa}{data.gpa}{:else}Show{/if}
 		</p>
+		<p>Your GPA for the current quarter</p>
 	</div>
 	<ClassPopup {form} {data} bind:showPopup bind:courseSelected />
 <div id="grid">

@@ -89,7 +89,7 @@
 								use:enhance={() => {
 									checked_assignment = '';
 									return async ({ update }) => {
-										await update({ invalidateAll: false });
+										await update();
 									};
 								}}
 							>
