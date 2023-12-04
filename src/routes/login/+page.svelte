@@ -15,6 +15,6 @@
 
 <style>
 	body {
-		background-color: var(--background-3);
+		background-color: var(--background-2);
 	}
 </style>
