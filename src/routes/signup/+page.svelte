@@ -17,7 +17,7 @@ import StudentVueAuth from './StudentVueAuth.svelte';
 	<StudentVueAuth {form} {data} />
 	{/if}
 	{#if showCourses}
-	<CourseSelection {form} />
+	<CourseSelection {form} {data} />
 	{/if}
 </body>
 

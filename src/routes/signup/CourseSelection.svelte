@@ -64,7 +64,7 @@
 	{/each}
 </div>
 {#if courseConfirm}
-	<CourseConfirm {selectedCourses} {form} {data} bind:courseConfirm />
+	<CourseConfirm {selectedCourses} {form} bind:courseConfirm />
 {/if}
 
 <style>

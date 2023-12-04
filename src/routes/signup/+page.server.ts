@@ -50,7 +50,7 @@ export const actions = {
             console.error(userDataError.message)
         }
         if (userData.length <= 0) {
-            const { data, error: userDataInsertError } = await locals.supabase
+            const { error: userDataInsertError } = await locals.supabase
                 .from('user_data')
                 .insert({ user_id: userID, student_number: student_id, school_id: district })
             if (userDataInsertError != null) {
@@ -62,19 +62,18 @@ export const actions = {
         const { data, error } = await locals.supabase
             .from('courses')
             .select()
-            .eq('school_id', userData[0].school_id)
+            .eq('school_id', district)
             .in('course_name', courseOptions)
         if (error != null) {
             console.error(error.message)
         }
         let courseNameData = data.map((course) => course.course_name);
-
         return {
             courseOptions,
             courseNameData,
             courseData: data,
             success: true,
-            school_id: userData[0].school_id
+            school_id: district
         }
     },
     addCourses: async ({ locals }) => {
@@ -83,7 +82,7 @@ export const actions = {
         const formData = locals.formData
         const course_list_data = JSON.parse(formData.get('selectedCoursesList'))
         const school_id = formData.get('school_id')
-        let course_list_with_UID;
+        let course_list_with_UID: { user_id: any; course_id: any; hex: any; grade_id_list: never[]; }[] = [];
         course_list_data.forEach(async (course) => {
             if (course.course_id === "NA") {
                 //not made yet
@@ -94,11 +93,11 @@ export const actions = {
                 if (error1 != null) {
                     console.error(error1)
                 }
-                course_list_with_UID.push({ user_id: userID, course_id: data[0].course_id, hex: course.hex });
+                course_list_with_UID.push({ user_id: userID, course_id: data[0].course_id, hex: course.hex, grade_id_list: [] });
             }
             else {
                 //already a course
-                course_list_with_UID.push({ user_id: userID, course_id: course.course_id, hex: course.hex });
+                course_list_with_UID.push({ user_id: userID, course_id: course.course_id, hex: course.hex, grade_id_list: [] });
             }
         })
         const { error } = await locals.supabase
