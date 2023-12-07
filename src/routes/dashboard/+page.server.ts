@@ -319,4 +319,16 @@ export const actions = {
       .update({ text: name, description, due_date})
       .eq('assignment_id', assignment_id)
   },
+  seenCourse: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const courseID = formData.get('courseID');
+    const last_sign_in_time = new Date().toISOString();
+    const { error } = await locals.supabase
+      .from('users_in_courses')
+      .update({ last_sign_in_time})
+      .eq('user_id', userID)
+      .eq('course_id', courseID)
+  },
 }

@@ -28,9 +28,9 @@
 		>
 		<div style="display: flex;">
 		<h1>{courseSelected.course_name}</h1>
-		<form method="post" action="?/seenCourse">
+		<form method="post" use:enhance style="margin-left: auto; margin-right: 3em" action="?/seenCourse">
 			<input type="hidden" name="courseID" value={courseSelected.course_id}>
-			<button class="bouncyButton" style="margin-left: auto; margin-right: 3em">Seen all</button>
+			<button class="bouncyButton" >Seen all</button>
 		</form>
 		</div>
 		{#each courseSelected.new_assignments as assignment}
