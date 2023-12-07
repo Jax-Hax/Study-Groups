@@ -299,6 +299,7 @@ export const actions = {
       .from('users_canvas_assignments')
       .delete()
       .eq('assignment_id', assignment_id)
+      .eq('user_id', userID)
       if (error != null) {
         console.error(error.message)
       }
