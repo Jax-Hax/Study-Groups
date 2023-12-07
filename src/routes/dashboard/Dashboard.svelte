@@ -28,7 +28,9 @@
 		</p>
 		<p>Your GPA for the current quarter</p>
 	</div>
+	{#if showPopup}
 	<ClassPopup {form} {data} bind:showPopup bind:courseSelected />
+	{/if}
 <div id="grid">
 		{#each data.grades as course}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -49,7 +51,7 @@
 					class:textshadow={!showGrades}
 					on:click={() => (showGrades = !showGrades)}
 				>
-					{#if showGrades}{course.grade.round()}{:else}Show{/if}
+					{#if showGrades}{course.grade}{:else}Show{/if}
 				</p>
 			</div>
 		{/each}
