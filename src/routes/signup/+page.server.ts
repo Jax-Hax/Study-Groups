@@ -96,8 +96,8 @@ export const actions = {
         const formData = locals.formData
         const course_list_data = JSON.parse(formData.get('selectedCoursesList'))
         const school_id = formData.get('school_id')
-        let course_list_with_UID: { user_id: any; course_id: any; hex: any; grade_id_list: never[]; }[] = [];
-        course_list_data.forEach(async (course) => {
+        let course_list_with_UID = [];
+        for await (const course of course_list_data) {
             if (course.course_id === "NA") {
                 //not made yet
                 const { data, error1 } = await locals.supabase
@@ -107,13 +107,16 @@ export const actions = {
                 if (error1 != null) {
                     console.error(error1)
                 }
-                course_list_with_UID.push({ user_id: userID, course_id: data[0].course_id, hex: course.hex, grade_id_list: [] });
+                let user_in_course = { user_id: userID, course_id: data[0].course_id, hex: course.hex, grade_id_list: [] }
+                course_list_with_UID.push(user_in_course);
+                console.log(course_list_with_UID)
             }
             else {
                 //already a course
                 course_list_with_UID.push({ user_id: userID, course_id: course.course_id, hex: course.hex, grade_id_list: [] });
             }
-        })
+        }
+        console.log("course list: " + course_list_with_UID)
         const { error } = await locals.supabase
             .from('users_in_courses')
             .insert(course_list_with_UID)
