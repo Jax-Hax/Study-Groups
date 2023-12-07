@@ -49,7 +49,7 @@
 				<p
 					style="display: inline"
 					class:textshadow={!showGrades}
-					on:click={() => (showGrades = !showGrades)}
+					on:click={() => (showGrades = !showGrades)} on:click|stopPropagation
 				>
 					{#if showGrades}{course.grade}{:else}Show{/if}
 				</p>

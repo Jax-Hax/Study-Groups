@@ -26,65 +26,30 @@
 			style="cursor: pointer; padding:0.25em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
+		<div style="display: flex;">
 		<h1>{courseSelected.course_name}</h1>
+		<form method="post" action="?/seenCourse">
+			<input type="hidden" name="courseID" value={courseSelected.course_id}>
+			<button class="bouncyButton" style="margin-left: auto; margin-right: 3em">Seen all</button>
+		</form>
+		</div>
+		{#each courseSelected.new_assignments as assignment}
+                    <p>{@html assignment.Measure} - {assignment.Score.replace(/0+$/,'').replace(/\.$/, '')}</p>
+                {/each}
 	</div>
 </dialog>
 
 <style>
 	dialog {
-		top: 50%;
-		left: 50%;
-		transform: translate(calc(-50% + 2.5rem), -50%);
 		padding: 3em;
-		width: 60vw;
-		max-width: 380px;
+		width: 100vw;
+		min-height: 100vh;
 		border: none;
-		border-radius: 1em;
 		background-color: var(--background-5);
 	}
 	h1,
 	p,
-	label,
 	span {
 		color: var(--text-color);
-	}
-	.toggle {
-		cursor: pointer;
-		width: 5em;
-		height: 2.5em;
-		background: grey;
-		display: block;
-		border-radius: 100px;
-		position: relative;
-	}
-
-	.toggle:after {
-		content: '';
-		position: absolute;
-		top: 0.25em;
-		left: 5px;
-		width: 2em;
-		height: 2em;
-		background: #fff;
-		border-radius: 90px;
-		transition: 0.3s;
-	}
-
-	input:checked + .toggle {
-		background: #bada55;
-	}
-
-	input:checked + .toggle:after {
-		left: calc(100% - 5px);
-		transform: translateX(-100%);
-	}
-
-	label:active:after {
-		width: 3em;
-	}
-	.error {
-		text-align: center;
-		color: red;
-        font-size: 25px;
 	}
 </style>
