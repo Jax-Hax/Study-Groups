@@ -24,7 +24,7 @@
 		<h1>GPA:</h1>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<p class:textshadow={!showGpa} on:click={() => (showGpa = !showGpa)}>
-			{#if showGpa}{data.gpa}{:else}Show{/if}
+			{#if showGpa}{Math.round(data.gpa * 100) / 100}{:else}Show{/if}
 		</p>
 		<p>Your GPA for the current quarter</p>
 	</div>
@@ -34,7 +34,7 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div on:click={() => {courseSelected = course; showPopup = true}}>
-				<h1>{course.course_name}</h1>
+				<h1 style="font-size: max(3vw,2.5rem)">{course.course_name}</h1>
 				{#if courseAssignments[course.course_id]}
 					<p>{courseAssignments[course.course_id].length} new assignment(s)</p>
 				{:else}
@@ -49,7 +49,7 @@
 					class:textshadow={!showGrades}
 					on:click={() => (showGrades = !showGrades)}
 				>
-					{#if showGrades}{course.grade}{:else}Show{/if}
+					{#if showGrades}{course.grade.round()}{:else}Show{/if}
 				</p>
 			</div>
 		{/each}
@@ -59,7 +59,7 @@
 	#grid {
 		display: grid;
 		gap: 1rem;
-		grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+		grid-template-columns: repeat(auto-fit, 1fr);
 		align-items: center;
 		padding: 1em;
 	}
