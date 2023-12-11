@@ -70,13 +70,17 @@
 			>
 			<div class="sidebar-tooltip">New</div>
 		</div>{/if}
-	<!--<form method="POST" style="margin-top: auto;" use:enhance action="?/switchToAdmin">
+		<button on:click={() => {}} class="icon" style="padding: 2.5em; margin-top: auto">
+			<span class="material-symbols-outlined">logout</span>
+			<div class="sidebar-tooltip">Suggest Feature/Report Bug</div>
+		</button>
+	<!--<form method="POST" use:enhance action="?/switchToAdmin">
 		<button class="icon" style="padding: 2.5em">
 			<span class="material-symbols-outlined">admin_panel_settings</span>
 			<div class="sidebar-tooltip">Switch to Admin Dashboard</div>
 		</button>
 	</form>-->
-	<form method="POST" style="margin-top: auto;" use:enhance action="?/signout">
+	<form method="POST" use:enhance action="?/signout">
 		<button class="icon" style="padding: 2.5em">
 			<span class="material-symbols-outlined">logout</span>
 			<div class="sidebar-tooltip">Sign out</div>
