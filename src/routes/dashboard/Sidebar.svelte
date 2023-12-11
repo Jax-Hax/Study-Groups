@@ -51,25 +51,25 @@
 		<span class="material-symbols-outlined">sports_tennis</span>
 		<div class="sidebar-tooltip">Clubs</div>
 	</div>-->
-	<div
-		class="icon"
-		class:enabled={new_stuff}
-		on:click={() => {
-			todo = false;
-			dashboard = false;
-			new_stuff = true;
-			clubs = false;
-		}}
-	>
-	<span class="material-symbols-outlined" style="margin-left: 0.8em">
-		inbox
-		</span>
-			<span style="font-size: 0.75rem; margin-top: auto; background-color: var(--red); border-radius: 50%; padding: 0.3em 0.7em;"
+	{#if data.new_assignments.length + data.grades.reduce((count, obj) => count + obj.new_assignments.length, 0) > 0}
+		<div
+			class="icon"
+			class:enabled={new_stuff}
+			on:click={() => {
+				todo = false;
+				dashboard = false;
+				new_stuff = true;
+				clubs = false;
+			}}
+		>
+			<span class="material-symbols-outlined" style="margin-left: 0.8em"> inbox </span>
+			<span
+				style="font-size: 0.75rem; margin-top: auto; background-color: var(--red); border-radius: 50%; padding: 0.3em 0.7em;"
 				>{data.new_assignments.length +
 					data.grades.reduce((count, obj) => count + obj.new_assignments.length, 0)}</span
 			>
-		<div class="sidebar-tooltip">New</div>
-	</div>
+			<div class="sidebar-tooltip">New</div>
+		</div>{/if}
 	<form method="POST" style="margin-top: auto;" use:enhance action="?/switchToAdmin">
 		<button class="icon" style="padding: 2.5em">
 			<span class="material-symbols-outlined">admin_panel_settings</span>

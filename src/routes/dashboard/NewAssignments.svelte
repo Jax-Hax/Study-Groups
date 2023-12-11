@@ -21,9 +21,17 @@
 			})}
 			{#if new_assignments.length > 0}
 				<div>
-					<button class="addBtn" on:click={() => {}}
-						><span class="material-symbols-outlined plus">add</span></button
+					<form
+						method="post"
+						use:enhance
+						style="margin-left: auto; margin-right: 3em"
+						action="?/seenAssignments"
 					>
+						<input type="hidden" name="courseID" value={course.course_id} />
+						<button class="addBtn"
+							><span class="material-symbols-outlined plus">add</span></button
+						>
+					</form>
 					<h3 style="color: var(--text-color); font-size: 2rem">
 						{course.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}
 					</h3>

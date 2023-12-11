@@ -154,7 +154,7 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
     if (last_sign_in_date > assignment_date) {
       return undefined;
     } else {
-      return {new: true, ...assignment};
+      return { new: true, ...assignment };
     }
   }).filter(value => value !== undefined);
   let current_assignments = course_todo_data.filter(value => user_assignments.includes(value.assignment_id));
@@ -338,5 +338,22 @@ export const actions = {
       .update({ grade_id_list })
       .eq('user_id', userID)
       .eq('course_id', courseID)
+    if (error != null) {
+      console.error(error.message)
+    }
+  },
+  seenAssignments: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const courseID = formData.get('courseID');
+    const { error } = await locals.supabase
+      .from('users_in_courses')
+      .update({ last_sign_in_time: new Date().toISOString() })
+      .eq('user_id', userID)
+      .eq('course_id', courseID)
+    if (error != null) {
+      console.error(error.message)
+    }
   },
 }
