@@ -154,7 +154,7 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
     if (last_sign_in_date > assignment_date) {
       return undefined;
     } else {
-      return assignment;
+      return {new: true, ...assignment};
     }
   }).filter(value => value !== undefined);
   let current_assignments = course_todo_data.filter(value => user_assignments.includes(value.assignment_id));
