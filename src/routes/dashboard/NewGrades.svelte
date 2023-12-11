@@ -32,7 +32,7 @@
 						>
 					</form>
 					
-					<h3 style="color: var(--text-color)">{course.course_name}</h3>
+					<h3 style="color: var(--text-color)">{course.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}</h3>
 					{#each course.new_assignments as assignment}
 						<p>
 							{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(/\.$/, '')}

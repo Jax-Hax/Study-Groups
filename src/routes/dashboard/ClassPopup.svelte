@@ -28,7 +28,7 @@
 			style="cursor: pointer; padding:0.25em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
-		<h1>{courseSelected.course_name}</h1>
+		<h1>{courseSelected.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}</h1>
 		<form
 			method="post"
 			use:enhance={ () => {

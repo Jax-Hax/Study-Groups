@@ -226,7 +226,7 @@
 								(value) => value.course_id === todo.course_id
 							)[0].hex}"
 						>
-							{course.course_name}
+							{course.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}
 						</p>
 					{/if}
 					{#if todo.assignment_type === 'Test/Quiz' || todo.assignment_type === 'Homework' || todo.assignment_type === 'Project'}

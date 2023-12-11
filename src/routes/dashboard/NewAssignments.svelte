@@ -10,22 +10,29 @@
 		<section id="header" on:click={() => (assignmentsShown = false)}>
 			<span
 				class="material-symbols-outlined"
-				style="color: var(--text-color); cursor: pointer; font-size: 35px"
-				>remove</span
+				style="color: var(--text-color); cursor: pointer; font-size: 35px">remove</span
 			>
-            <h1 style="text-align: center; flex: 1; color: white;">New Assignments</h1>
-        </section>
+			<h1 style="text-align: center; flex: 1; color: white;">New Assignments</h1>
+		</section>
 
-		
-			{#each data.new_assignments as assignment}
+		{#each data.grades as course}
+			{@const new_assignments = data.new_assignments.filter((value) => {
+				return value.course_id === course.course_id;
+			})}
+			{#if new_assignments.length > 0}
 				<div>
-					<button
-						class="addBtn"
-						on:click={() => {}}><span class="material-symbols-outlined plus">add</span></button
+					<button class="addBtn" on:click={() => {}}
+						><span class="material-symbols-outlined plus">add</span></button
 					>
-					<h3 style="color: var(--text-color)">{assignment.text}</h3>
-				</div>
-			{/each}
+					<h3 style="color: var(--text-color); font-size: 2rem">
+						{course.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}
+					</h3>
+					{#each new_assignments as assignment}<h3 style="color: var(--text-color); ">
+							{assignment.text}
+						</h3>
+					{/each}
+				</div>{/if}
+		{/each}
 	</div>
 {:else}
 	<Hidden bind:isEnabled={assignmentsShown}
@@ -77,6 +84,6 @@
 		cursor: pointer;
 		display: flex;
 		align-items: center;
-        width: 100%
+		width: 100%;
 	}
 </style>
