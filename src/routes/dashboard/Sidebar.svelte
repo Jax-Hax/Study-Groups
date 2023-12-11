@@ -61,7 +61,10 @@
 			clubs = false;
 		}}
 	>
-			<span
+	<span class="material-symbols-outlined" style="margin-left: 0.8em">
+		inbox
+		</span>
+			<span style="font-size: 0.75rem; margin-top: auto; background-color: var(--red); border-radius: 50%; padding: 0.3em 0.7em;"
 				>{data.new_assignments.length +
 					data.grades.reduce((count, obj) => count + obj.new_assignments.length, 0)}</span
 			>

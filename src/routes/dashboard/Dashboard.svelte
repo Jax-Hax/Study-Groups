@@ -36,7 +36,7 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-static-element-interactions -->
 			<div on:click={() => {courseSelected = course; showPopup = true}}>
-				<h1 style="font-size: max(3vw,2.5rem)">{course.course_name}</h1>
+				<h1 style="font-size: max(3vw,2.5rem)">{course.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}</h1>
 				{#if courseAssignments[course.course_id]}
 					<p>{courseAssignments[course.course_id].length} new assignment(s)</p>
 				{:else}
