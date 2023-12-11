@@ -61,10 +61,6 @@
 			return 'canvas';
 		}
 	}
-	$: if (form?.delete_assignment_id) {
-		let index = assignment_array.indexOf(form.delete_assignment_id);
-		assignment_array.splice(index, 1);
-	}
 </script>
 
 <AddTaskPopup {form} {data} bind:showAddTask />

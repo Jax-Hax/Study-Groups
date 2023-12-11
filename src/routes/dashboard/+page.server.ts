@@ -304,7 +304,6 @@ export const actions = {
         console.error(error.message)
       }
     }
-    return { delete_assignment_id: assignment_id }
   },
   updateTodo: async ({ locals }) => {
     const session = await locals.getSession()
