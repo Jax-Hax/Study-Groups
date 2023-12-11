@@ -1,5 +1,6 @@
 <script>
 	import { enhance } from '$app/forms';
+	import FeatureReport from './FeatureReport.svelte';
 
 	export let dashboard;
 	export let todo;
@@ -7,6 +8,7 @@
 	export let data;
 	export let form;
 	export let clubs;
+	let featurePopup;
 </script>
 
 <div id="sidebar">
@@ -70,10 +72,13 @@
 			>
 			<div class="sidebar-tooltip">New</div>
 		</div>{/if}
-		<button on:click={() => {}} class="icon" style="padding: 2.5em; margin-top: auto">
-			<span class="material-symbols-outlined">logout</span>
+		<button on:click={() => {featurePopup = true}} class="icon" style="padding: 2.5em; margin-top: auto">
+			<span class="material-symbols-outlined">bug_report</span>
 			<div class="sidebar-tooltip">Suggest Feature/Report Bug</div>
 		</button>
+		{#if featurePopup}
+		<FeatureReport {form} bind:featurePopup ></FeatureReport>
+		{/if}
 	<!--<form method="POST" use:enhance action="?/switchToAdmin">
 		<button class="icon" style="padding: 2.5em">
 			<span class="material-symbols-outlined">admin_panel_settings</span>
