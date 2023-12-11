@@ -31,7 +31,12 @@
 		<h1>{courseSelected.course_name}</h1>
 		<form
 			method="post"
-			use:enhance
+			use:enhance={ () => {
+				return async ({update}) => {
+					await update();
+					dialog.close()
+				}
+			}}
 			style="margin-left: auto; margin-right: 3em"
 			action="?/seenAssignments"
 		>

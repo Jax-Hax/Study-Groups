@@ -325,7 +325,6 @@ export const actions = {
     const formData = locals.formData
     const courseID = formData.get('courseID');
     const grade_list = formData.get('grade_id_list');
-    console.log(courseID)
     const { data: current_data, error: err1 } = await locals.supabase
       .from('users_in_courses')
       .select()
@@ -334,7 +333,6 @@ export const actions = {
     if (err1 != null) {
       console.error(err1.message)
     }
-    console.log(current_data)
     let grade_id_list = current_data[0].grade_id_list.concat(grade_list.split(','))
     const { error } = await locals.supabase
       .from('users_in_courses')
