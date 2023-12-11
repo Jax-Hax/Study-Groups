@@ -197,7 +197,7 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
 export const actions = {
   signout: async ({ cookies, locals: { supabase } }) => {
     await supabase.auth.signOut()
-    cookies.delete('svk-p-s-629542', {path: '/'});
+    cookies.delete('svk-p-s-629542', { path: '/' });
     throw redirect(303, '/')
   },
   switchToAdmin: async ({ }) => {
@@ -288,18 +288,18 @@ export const actions = {
     const assignment_id = formData.get('assignment_id');
     if (name === "custom") {
       const { error } = await locals.supabase
-      .from('custom_todos')
-      .delete()
-      .eq('assignment_id', assignment_id)
+        .from('custom_todos')
+        .delete()
+        .eq('assignment_id', assignment_id)
       if (error != null) {
         console.error(error.message)
       }
     } else {
       const { error } = await locals.supabase
-      .from('users_canvas_assignments')
-      .delete()
-      .eq('assignment_id', assignment_id)
-      .eq('user_id', userID)
+        .from('users_canvas_assignments')
+        .delete()
+        .eq('assignment_id', assignment_id)
+        .eq('user_id', userID)
       if (error != null) {
         console.error(error.message)
       }
@@ -316,18 +316,29 @@ export const actions = {
     const due_date = new Date(formData.get('dueDate')).toISOString();
     const { error } = await locals.supabase
       .from('custom_todos')
-      .update({ text: name, description, due_date})
+      .update({ text: name, description, due_date })
       .eq('assignment_id', assignment_id)
   },
-  seenCourse: async ({ locals }) => {
+  seenGrades: async ({ locals }) => {
     const session = await locals.getSession()
     const userID = session.user.id
     const formData = locals.formData
     const courseID = formData.get('courseID');
-    const last_sign_in_time = new Date().toISOString();
+    const grade_list = formData.get('grade_id_list');
+    console.log(courseID)
+    const { data: current_data, error: err1 } = await locals.supabase
+      .from('users_in_courses')
+      .select()
+      .eq('user_id', userID)
+      .eq('course_id', courseID)
+    if (err1 != null) {
+      console.error(err1.message)
+    }
+    console.log(current_data)
+    let grade_id_list = current_data[0].grade_id_list.concat(grade_list.split(','))
     const { error } = await locals.supabase
       .from('users_in_courses')
-      .update({ last_sign_in_time})
+      .update({ grade_id_list })
       .eq('user_id', userID)
       .eq('course_id', courseID)
   },

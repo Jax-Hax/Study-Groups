@@ -125,4 +125,18 @@ export const actions = {
         }
         throw redirect(302, '/dashboard');
     },
+    seenGrades: async ({ locals }) => {
+        const session = await locals.getSession()
+        const userID = session.user.id
+        const formData = locals.formData
+        const course_id = formData.get('courseID')
+        const { error } = await locals.supabase
+            .from('users_in_courses')
+            .update(course_list_with_UID)
+            .eq('user_id', userID)
+            .eq('course_id', course_id)
+        if (error != null) {
+            console.error(error)
+        }
+    },
 }

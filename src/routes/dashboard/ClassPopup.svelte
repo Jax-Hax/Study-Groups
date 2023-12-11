@@ -4,8 +4,10 @@
 	export let data;
 	export let showPopup; //for use with Already a user? Log in
 	export let courseSelected;
+	let grade_id_list = [];
 	let dialog;
 	$: if (dialog && showPopup) dialog.showModal();
+	$: {grade_id_list = courseSelected.new_assignments.map((value) => value.GradebookID);}
 	let checked = false;
 </script>
 
@@ -31,10 +33,15 @@
 			method="post"
 			use:enhance
 			style="margin-left: auto; margin-right: 3em"
-			action="?/seenCourse"
+			action="?/seenAssignments"
 		>
 			<input type="hidden" name="courseID" value={courseSelected.course_id} />
 			<button class="bouncyButton">Seen all new assignments</button>
+			{#each data.new_assignments as assignment}
+				{#if assignment.course_id === courseSelected.course_id}
+					<p>{assignment.text}</p>
+				{/if}
+			{/each}
 		</form>
 		<div class="section">
 			<form
@@ -43,7 +50,8 @@
 				style="margin-left: auto; margin-right: 3em"
 				action="?/seenGrades"
 			>
-				<input type="hidden" name="courseID" value={JSON.stringify(courseSelected)} />
+				<input type="hidden" name="courseID" value={courseSelected.course_id} />
+				<input type="hidden" name="grade_id_list" value={grade_id_list.join(",")} />
 				<button class="bouncyButton">Seen all new grades</button>
 			</form>
 			{#each courseSelected.new_assignments as assignment}
