@@ -26,7 +26,7 @@
 		<p class:textshadow={!showGpa} on:click={() => (showGpa = !showGpa)}>
 			{#if showGpa}{Math.round(data.gpa * 100) / 100}{:else}Show{/if}
 		</p>
-		<p>Your GPA for the current quarter</p>
+		<p>Weighted GPA for the current quarter</p>
 	</div>
 	{#if showPopup}
 	<ClassPopup {form} {data} bind:showPopup bind:courseSelected />

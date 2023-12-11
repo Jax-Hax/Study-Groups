@@ -3,7 +3,7 @@
 	export let form;
 	export let data;
 	export let showPopup; //for use with Already a user? Log in
-    export let courseSelected;
+	export let courseSelected;
 	let dialog;
 	$: if (dialog && showPopup) dialog.showModal();
 	let checked = false;
@@ -26,16 +26,30 @@
 			style="cursor: pointer; padding:0.25em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
-		<div style="display: flex;">
 		<h1>{courseSelected.course_name}</h1>
-		<form method="post" use:enhance style="margin-left: auto; margin-right: 3em" action="?/seenCourse">
-			<input type="hidden" name="courseID" value={courseSelected.course_id}>
-			<button class="bouncyButton" >Seen all</button>
+		<form
+			method="post"
+			use:enhance
+			style="margin-left: auto; margin-right: 3em"
+			action="?/seenCourse"
+		>
+			<input type="hidden" name="courseID" value={courseSelected.course_id} />
+			<button class="bouncyButton">Seen all new assignments</button>
 		</form>
+		<div class="section">
+			<form
+				method="post"
+				use:enhance
+				style="margin-left: auto; margin-right: 3em"
+				action="?/seenGrades"
+			>
+				<input type="hidden" name="courseID" value={JSON.stringify(courseSelected)} />
+				<button class="bouncyButton">Seen all new grades</button>
+			</form>
+			{#each courseSelected.new_assignments as assignment}
+				<p>{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(/\.$/, '')}</p>
+			{/each}
 		</div>
-		{#each courseSelected.new_assignments as assignment}
-                    <p>{@html assignment.Measure} - {assignment.Score.replace(/0+$/,'').replace(/\.$/, '')}</p>
-                {/each}
 	</div>
 </dialog>
 
