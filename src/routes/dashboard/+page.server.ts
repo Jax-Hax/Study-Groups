@@ -112,7 +112,8 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
     const { known_assignments, ...rest } = course;
     const filteredAssignments = course.assignment_list.filter(assignment => {
       const gradebookID = parseInt(assignment.GradebookID, 10);
-      if (assignment.Score.replace(/0+$/, '').replace(/\.$/, '') === "Not Graded") {
+      let score = assignment.Score.replace(/0+$/, '').replace(/\.$/, '');
+      if (score === "Not Graded" || score === "Not Due") {
         return false;
       }
       return !known_assignments.includes(gradebookID);
@@ -366,6 +367,18 @@ export const actions = {
     const { error } = await locals.supabase
       .from('feature_requests')
       .insert({ description, email, error_type })
+    if (error != null) {
+      console.error(error.message)
+    }
+  },
+  seenAllAssignments: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const { error } = await locals.supabase
+      .from('users_in_courses')
+      .update({ last_sign_in_time: new Date().toISOString() })
+      .eq('user_id', userID)
     if (error != null) {
       console.error(error.message)
     }
