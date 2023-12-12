@@ -4,9 +4,9 @@
 
 <div id="attention">
 	<div>
-		<h1>___ - Everything Canvas can't give you</h1>
+		<h1>Cognnect - Bringing Students Together</h1>
 		<p>
-			Agendas for all classes (tests, quizzes, assignments, projects, etc), study material, study groups, a summary of the announcements/list of clubs, StudentVue grades, and more!
+			GPA calculator, see new grades posted, all in one place todo list, assignment view, and more!
 		</p>
 		<button on:click={() => (showSignup = true)} class="bouncyButton"> Sign up </button>
 	</div>

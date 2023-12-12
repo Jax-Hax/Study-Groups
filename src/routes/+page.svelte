@@ -8,7 +8,7 @@
 </script>
 
 <svelte:head>
-	<title>StockShare - Practice Trading Stocks with Friends</title>
+	<title>Cognnect - Practice Trading Stocks with Friends</title>
 	<meta
 		name="description"
 		content="Learn about the stock market without risk. Invite your friends to a competition for free!"
@@ -16,7 +16,7 @@
 </svelte:head>
 <header>
 	<img src="/favicon.png" alt="the logo for StockShare" style="width: min(9vw,5em)" />
-	<h1 id="nav-title"><a href="/" style="text-decoration: none">StockShare</a></h1>
+	<h1 id="nav-title"><a href="/" style="text-decoration: none">Cognnect</a></h1>
 	<div>
 		<button id="signupButton" on:click={() => (showSignup = true)}>Get Started</button>
 		<button id="loginButton" on:click={() => (showLogin = true)}>Log In</button>
@@ -46,7 +46,7 @@
 		text-decoration: none;
 		color: var(--text-color);
 		transition: all 0.3s ease 0s;
-	}
+	}Cognnect
 	header a:hover {
 		color: var(--pop);
 		text-decoration: underline;
