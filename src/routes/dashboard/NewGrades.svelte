@@ -6,45 +6,51 @@
 	export let gradesShown;
 </script>
 
-{#if gradesShown}
-	<div id="grid">
-		<section id="header" on:click={() => (gradesShown = false)}>
-			<span
-				class="material-symbols-outlined"
-				style="color: var(--text-color); cursor: pointer; font-size: 35px">remove</span
-			>
-			<h1 style="text-align: center; flex: 1; color: white;">New Grades</h1>
-		</section>
-		{#each data.grades as course}
-			{#if course.new_assignments.length > 0}
-			{@const grade_id_list = course.new_assignments.map((value) => value.GradebookID)}
-			<div>
-					<form
-						method="post"
-						use:enhance
-						style="margin-left: auto; margin-right: 3em"
-						action="?/seenGrades"
-					>
-						<input type="hidden" name="courseID" value={course.course_id} />
-						<input type="hidden" name="grade_id_list" value={grade_id_list.join(',')} />
-						<button class="addBtn"
-							><span class="material-symbols-outlined plus">add</span></button
+{#if data.grades.reduce((total, course) => total + (course.new_assignments.length > 0 ? course.new_assignments.length : 0), 0) > 0}
+	{#if gradesShown}
+		<div id="grid">
+			<section id="header" on:click={() => (gradesShown = false)}>
+				<span
+					class="material-symbols-outlined"
+					style="color: var(--text-color); cursor: pointer; font-size: 35px">remove</span
+				>
+				<h1 style="text-align: center; flex: 1; color: white;">New Grades</h1>
+			</section>
+			{#each data.grades as course}
+				{#if course.new_assignments.length > 0}
+					{@const grade_id_list = course.new_assignments.map((value) => value.GradebookID)}
+					<div>
+						<form
+							method="post"
+							use:enhance
+							style="margin-left: auto; margin-right: 3em"
+							action="?/seenGrades"
 						>
-					</form>
-					
-					<h3 style="color: var(--text-color)">{course.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}</h3>
-					{#each course.new_assignments as assignment}
-						<p>
-							{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(/\.$/, '')}
-						</p>
-					{/each}
-				</div>{/if}
-		{/each}
-	</div>
-{:else}
-	<Hidden bind:isEnabled={gradesShown}
-		><h1 style="text-align: center; flex: 1; color: white;">New Grades</h1></Hidden
-	>
+							<input type="hidden" name="courseID" value={course.course_id} />
+							<input type="hidden" name="grade_id_list" value={grade_id_list.join(',')} />
+							<button class="addBtn"><span class="material-symbols-outlined plus">add</span></button
+							>
+						</form>
+
+						<h3 style="color: var(--text-color)">
+							{course.course_name.replace(/\s*\([^)]*\)$/, '').replace(/\bADV PLACEMENT\b/g, 'AP')}
+						</h3>
+						{#each course.new_assignments as assignment}
+							<p>
+								{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(
+									/\.$/,
+									''
+								)}
+							</p>
+						{/each}
+					</div>{/if}
+			{/each}
+		</div>
+	{:else}
+		<Hidden bind:isEnabled={gradesShown}
+			><h1 style="text-align: center; flex: 1; color: white;">New Grades</h1></Hidden
+		>
+	{/if}
 {/if}
 
 <style>
