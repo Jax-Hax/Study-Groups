@@ -363,11 +363,9 @@ export const actions = {
     const description = formData.get('description');
     const email = formData.get('email');
     const error_type = formData.get('error_type');
-    const { error } = await locals.supabase //FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX THISSSSSSSSS IT SHOULD INSERT INOT NEW TABLE
-      .from('users_in_courses')
-      .insert({ last_sign_in_time: new Date().toISOString() })
-      .eq('user_id', userID)
-      .eq('course_id', courseID)
+    const { error } = await locals.supabase
+      .from('feature_requests')
+      .insert({ description, email, error_type })
     if (error != null) {
       console.error(error.message)
     }

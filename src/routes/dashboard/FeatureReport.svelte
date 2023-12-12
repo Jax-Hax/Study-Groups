@@ -31,7 +31,7 @@
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
 			<label>
-				Repeats <br />
+				Type of report <br />
 				<select name="error_type" bind:value={selected}>
 					<option value="Bug/Error">Bug/Error</option>
 					<option value="Feature">Feature</option>
