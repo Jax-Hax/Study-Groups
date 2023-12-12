@@ -356,4 +356,20 @@ export const actions = {
       console.error(error.message)
     }
   },
+  featureRequest: async ({ locals }) => {
+    const session = await locals.getSession()
+    const userID = session.user.id
+    const formData = locals.formData
+    const description = formData.get('description');
+    const email = formData.get('email');
+    const error_type = formData.get('error_type');
+    const { error } = await locals.supabase //FIXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX THISSSSSSSSS IT SHOULD INSERT INOT NEW TABLE
+      .from('users_in_courses')
+      .insert({ last_sign_in_time: new Date().toISOString() })
+      .eq('user_id', userID)
+      .eq('course_id', courseID)
+    if (error != null) {
+      console.error(error.message)
+    }
+  },
 }

@@ -4,6 +4,7 @@
 	export let featurePopup; //for use with Already a user? Log in
 	let dialog;
 	$: if (dialog && featurePopup) dialog.showModal();
+	let selected;
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -23,44 +24,47 @@
 			style="cursor: pointer; padding:0.25em; font-size: 30px"
 			on:click={() => dialog.close()}>arrow_back</span
 		>
-		<form method="POST" use:enhance action="?/login">
-			<h1 style="text-align: center; letter-spacing: 0.05em">Log In</h1>
+		<form method="POST" class="form" use:enhance action="?/featureRequest">
+			<h1 style="text-align: center; letter-spacing: 0.05em">Report</h1>
 			{#if form?.success == false}
 				<p class="error">{form.message}</p>
 				<!-- Can not just be !form.success or it will show if it is null -->
 			{/if}
 			<label>
-				Email:
-				<input name="email" type="email" required placeholder="mail" />
+				Repeats <br />
+				<select name="error_type" bind:value={selected}>
+					<option value="Bug/Error">Bug/Error</option>
+					<option value="Feature">Feature</option>
+					<option value="Other">Other</option>
+				</select>
 			</label>
+			{#if selected === 'Bug/Error'}
+				<textarea
+					rows="4"
+					name="description"
+					required
+					placeholder="Description of problem (Please be as specific as possible so I can try to correct the error, something like &quot;I can't see my classes&quot; will NOT work, you need context."
+				/>
+			{:else if selected === 'Feature'}
+				<textarea rows="4" name="description" required placeholder="Description of feature" />
+			{:else if selected === 'Other'}
+				<textarea
+					rows="4"
+					name="description"
+					required
+					placeholder="Describe what you are experiencing"
+				/>
+			{/if}
 			<label>
-				Password:
-				<input name="password" type="password" required placeholder="lock" />
+				Email (optional, in case I need to contact for further questions):
+				<input name="email" type="email" placeholder="mail" />
 			</label>
-			<button class="bouncyButton">Log In</button>
+			<button class="bouncyButton">Submit</button>
 		</form>
 	</div>
 </dialog>
 
 <style>
-	form {
-		position: relative;
-		display: flex;
-		padding: 2em;
-		max-width: 20em;
-		margin: auto;
-		flex-direction: column;
-		color: var(--text-color);
-		border-radius: 2em;
-	}
-	input:invalid {
-		border: 1px solid red;
-	}
-	input {
-		width: 90%;
-		padding: 0.5em;
-		margin-bottom: 0.5em;
-	}
 	dialog {
 		top: 50%;
 		left: 50%;
@@ -85,14 +89,6 @@
 		background-color: var(--background-1-darkest);
 		color: var(--text-color);
 		font-size: 18px;
-	}
-	.already {
-		cursor: pointer;
-		text-align: center;
-	}
-	.already:hover {
-		color: var(--pop);
-		text-decoration: underline;
 	}
 	input::placeholder {
 		font-family: 'Material Symbols Outlined';
