@@ -35,6 +35,7 @@ export const actions = {
     get_studentvue_data: async ({ locals, cookies }) => {
         const session = await locals.getSession()
         const userID = session.user.id
+        const formData = locals.formData
         const student_id = formData.get('student_id_for_auth');
         const student_password = formData.get('studentvue_password_for_auth');
         const district = formData.get('district_for_auth');
@@ -54,8 +55,6 @@ export const actions = {
                 success: false,
             }
         }
-        const formData = locals.formData
-        const student_password = formData.get('studentvue_password_for_auth');
         cookies.set('svk-p-s-629542', encryptPassword(student_password), {
             httpOnly: true,
             sameSite: 'strict',

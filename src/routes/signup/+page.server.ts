@@ -64,6 +64,9 @@ export const actions = {
             console.error(userDataError.message)
         }
         if (userData.length <= 0) {
+            let student_info = await client.getStudentInfo();
+            let student_info_json = JSON.parse(student_info);
+            console.log(student_info_json) //DO SOMETHING WITH THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
             const { error: userDataInsertError } = await locals.supabase
                 .from('user_data')
                 .insert({ user_id: userID, student_number: student_id, school_id: district })
