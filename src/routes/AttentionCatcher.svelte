@@ -13,7 +13,7 @@
 	<div>
 		<img
 			style="max-width: min(50vw,50em); max-height: 50%"
-			src="favicon.png"
+			src="cognnect.png"
 			alt="the stockshare logo"
 		/>
 	</div>
