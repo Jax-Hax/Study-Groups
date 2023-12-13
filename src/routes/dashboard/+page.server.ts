@@ -1,4 +1,4 @@
-import { login, getDaysOfWeek, getFirstDayOfMonth, decryptPassword } from '$lib';
+import { login, getDaysOfWeek, getFirstDayOfMonth, decryptPassword, calculateWeighted } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, cookies, locals: { supabase, getSession } }) {
@@ -69,40 +69,7 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
   }).filter(Boolean);
   //calculate gpa
   let gpas = courses_with_grades.map(course => {
-    let grade_offset = 0;
-    if (course.type_of_class === "AP") {
-      grade_offset = 1.0;
-    }
-    else if (course.type_of_class === "HON") {
-      grade_offset = 0.5;
-    }
-    let gpa = 0;
-    if (Math.round(course.grade) >= 97) {
-      gpa = 4.5;
-    }
-    else if (Math.round(course.grade) >= 90) {
-      gpa = 4;
-    }
-    else if (Math.round(course.grade) >= 86) {
-      gpa = 3.5;
-    }
-    else if (Math.round(course.grade) >= 80) {
-      gpa = 3;
-    }
-    else if (Math.round(course.grade) >= 76) {
-      gpa = 2.5;
-    }
-    else if (Math.round(course.grade) >= 70) {
-      gpa = 2;
-    }
-    else if (Math.round(course.grade) >= 66) {
-      gpa = 1.5;
-    }
-    else if (Math.round(course.grade) >= 60) {
-      gpa = 1;
-    }
-    gpa += grade_offset;
-    return gpa
+    return calculateWeighted(course)
   })
   var sum = gpas.reduce((accumulator, currentValue) => {
     return accumulator + currentValue

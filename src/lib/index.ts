@@ -194,3 +194,39 @@ export function decryptPassword(encodedMessage) {
         String.fromCharCode((c <= 'Z' ? 65 : 97) + (c.charCodeAt(0) - (c <= 'Z' ? 65 : 97) + unshift) % 26)
     );
 }
+export function calculateWeighted(course) {
+    let grade_offset = 0;
+    if (course.type_of_class === "AP") {
+      grade_offset = 1.0;
+    }
+    else if (course.type_of_class === "HON") {
+      grade_offset = 0.5;
+    }
+    let gpa = 0;
+    if (Math.round(course.grade) >= 97) {
+      gpa = 4.5;
+    }
+    else if (Math.round(course.grade) >= 90) {
+      gpa = 4;
+    }
+    else if (Math.round(course.grade) >= 86) {
+      gpa = 3.5;
+    }
+    else if (Math.round(course.grade) >= 80) {
+      gpa = 3;
+    }
+    else if (Math.round(course.grade) >= 76) {
+      gpa = 2.5;
+    }
+    else if (Math.round(course.grade) >= 70) {
+      gpa = 2;
+    }
+    else if (Math.round(course.grade) >= 66) {
+      gpa = 1.5;
+    }
+    else if (Math.round(course.grade) >= 60) {
+      gpa = 1;
+    }
+    gpa += grade_offset;
+    return gpa
+}
