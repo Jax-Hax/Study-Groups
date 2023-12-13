@@ -4,7 +4,7 @@
 
 	export let data;
 	export let assignmentsShown;
-	$: console.log(data.new_assignments);
+
 </script>
 
 {#if data.new_assignments.length > 0}
@@ -27,11 +27,11 @@
 						<form
 							method="post"
 							use:enhance
-							style="margin-left: auto; margin-right: 3em"
 							action="?/seenAssignments"
 						>
 							<input type="hidden" name="courseID" value={course.course_id} />
-							<button class="addBtn"><span class="material-symbols-outlined plus">add</span></button
+							<input type="hidden" name="new_assignments" value={new_assignments.map((value) => {return value.assignment_id}).join(",")} />
+							<button class="bouncyButton" style="--pop: var(--green)">Add New Assignments To Todo</button
 							>
 						</form>
 						<h3 style="color: var(--text-color); font-size: 2rem">

@@ -275,7 +275,7 @@ export const actions = {
       dates = date_list.split(",").map(date => new Date(date))
     }
     const list_of_dates = dates.map(date => date.toISOString().split("T")[0])
-    const { data, error: clubError } = await locals.supabase
+    const { error: clubError } = await locals.supabase
       .from('clubs')
       .insert({ sponsor, school_id, name, description, location, start_time: starting_time, end_time, dates: list_of_dates, is_approved: false })
     if (clubError != null) {
@@ -349,6 +349,20 @@ export const actions = {
     const userID = session.user.id
     const formData = locals.formData
     const courseID = formData.get('courseID');
+    const new_assignments = formData.get('new_assignments').split(",");
+    const json_array = new_assignments.map(id => {
+      return {
+        assignment_id: id,
+        user_id: userID
+      };
+    });
+    
+    const { error: error1 } = await locals.supabase
+      .from('users_canvas_assignments')
+      .insert(json_array)
+    if (error1 != null) {
+      console.error(error1.message)
+    }
     const { error } = await locals.supabase
       .from('users_in_courses')
       .update({ last_sign_in_time: new Date().toISOString() })
