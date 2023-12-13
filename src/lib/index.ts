@@ -10,7 +10,7 @@ class StudentVueClient {
 
         this.client = client;
     }
-    
+
     getMessages() {
         return this._xmlJsonSerialize(this._makeServiceRequest('GetPXPMessages'));
     }
@@ -179,11 +179,18 @@ export function getDaysOfWeek(currentDate, endDate, dayOfWeek) {
     return days;
 }
 
-export function encryptPassword(password) {
-    let encrypted_password = password;
-    return encrypted_password
+export function encryptPassword(message) {
+    let shift = 5;
+    return message.replace(/[a-zA-Z]/g, c =>
+        String.fromCharCode((c <= 'Z' ? 65 : 97) + (c.charCodeAt(0) - (c <= 'Z' ? 65 : 97) + shift) % 26)
+    );
+
 }
-export function decryptPassword(encrypted_password) {
-    let decrypted_password = encrypted_password
-    return encrypted_password
+
+export function decryptPassword(encodedMessage) {
+    let shift = 5;
+    let unshift = (26 - shift) % 26;
+    return encodedMessage.replace(/[a-zA-Z]/g, c =>
+        String.fromCharCode((c <= 'Z' ? 65 : 97) + (c.charCodeAt(0) - (c <= 'Z' ? 65 : 97) + unshift) % 26)
+    );
 }

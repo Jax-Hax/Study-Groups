@@ -6,7 +6,7 @@
 	<div>
 		<h1>Cognnect - Bringing Students Together</h1>
 		<p>
-			Join a network of students posting current assignments, making study guides, joining study groups, and more! <br /> Don't have any classmates in Cognnect? Don't worry, we have a GPA calculator, new grades notifications, all in one place todo list, and more!
+			Join a network of students posting current assignments, making study guides, joining study groups, and more! <br /> Don't have any classmates in Cognnect? Don't worry, we have a GPA calculator, new grades notifications, school todo list, and more!
 		</p>
 		<button on:click={() => (showSignup = true)} class="bouncyButton"> Sign up </button>
 	</div>

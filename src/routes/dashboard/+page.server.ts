@@ -38,6 +38,7 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
   let grades_json = JSON.parse(grades_return);
 
   if (!grades_json.Gradebook) {
+    cookies.delete('svk-p-s-629542', { path: '/' });
     throw redirect(302, `/login`)
   }
   let course_grades = grades_json.Gradebook.Courses.Course.map((course) => ({
