@@ -390,6 +390,20 @@ export const actions = {
     const session = await locals.getSession()
     const userID = session.user.id
     const formData = locals.formData
+    const new_assignments = formData.get('new_assignments').split(",");
+    const json_array = new_assignments.map(id => {
+      return {
+        assignment_id: id,
+        user_id: userID
+      };
+    });
+    
+    const { error: error1 } = await locals.supabase
+      .from('users_canvas_assignments')
+      .insert(json_array)
+    if (error1 != null) {
+      console.error(error1.message)
+    }
     const { error } = await locals.supabase
       .from('users_in_courses')
       .update({ last_sign_in_time: new Date().toISOString() })
