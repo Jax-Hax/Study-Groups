@@ -60,7 +60,7 @@
 				<button class="bouncyButton">Seen all new grades</button>
 			</form>
 			{#each courseSelected.new_assignments as assignment}
-				<p>{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(/\.$/, '')}</p>
+				<p>{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(/\.$/, '')} - {assignment.Type}</p>
 			{/each}
 		</div>
 	</div>

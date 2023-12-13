@@ -70,6 +70,15 @@
 		on:click={() => (showAddTask = true)}
 		style="padding: 0.5em 4em; font-size: 30px">Add Task</button
 	>
+	<form
+		method="post"
+		use:enhance
+		style="margin-left: auto; margin-right: 3em"
+		action="?/seenAllAssignments"
+	>
+		<input type="hidden" name="assignment_id_list" value={data.grades.map((course) => {return course.new_assignments.map((assignment) => {return assignment.assignment_id}).join(",")}).join(',')} />
+		<button class="bouncyButton">Seen all new grades</button>
+	</form>
 	{#each assignment_array as todo, i}
 		{@const course = data.grades.filter((value) => value.course_id === todo.course_id)[0]}
 		{@const due_in = new Date(todo.due_date) - new Date()}

@@ -360,7 +360,8 @@ export const actions = {
     const session = await locals.getSession()
     const userID = session.user.id
     const formData = locals.formData
-    const new_assignments = formData.get('new_assignments').split(",");
+    const new_assignments = formData.get('assignment_id_list').split(",");
+    console.log(new_assignments)
     const json_array = new_assignments.map(id => {
       return {
         assignment_id: id,
