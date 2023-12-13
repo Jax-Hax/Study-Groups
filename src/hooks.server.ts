@@ -33,25 +33,6 @@ export const handle: Handle = async ({ event, resolve }) => {
     // get the form data from the request
     const formData = await event.request.formData()
     event.locals.formData = formData
-    
-    if (formData.get('studentvue_password_for_auth')) {
-      const student_id = formData.get('student_id_for_auth');
-      const student_password = formData.get('studentvue_password_for_auth');
-      const district = formData.get('district_for_auth');
-      const { data: schoolData, error: schoolError } = await event.locals.supabase
-      .from('schools')
-      .select()
-      .eq('school_id', district);
-        if (schoolError != null) {
-            console.error(schoolError.message)
-        }
-      let client = await login(schoolData[0].school_studentvue_url, student_id, student_password);
-      event.locals.getGrades = async () => {
-        let grades_return = await client.getGradebook();
-        let grades_json = JSON.parse(grades_return);
-        return grades_json
-      }
-    }
   }
 
   return resolve(event, {
