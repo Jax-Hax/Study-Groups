@@ -24,9 +24,13 @@
 		<h1>GPA:</h1>
 		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<p class:textshadow={!showGpa} on:click={() => (showGpa = !showGpa)}>
-			{#if showGpa}{Math.round(data.gpa * 100) / 100}{:else}Show{/if}
+			{#if showGpa}{Math.round(data.weightedGPA * 100) / 100}{:else}Show{/if}
 		</p>
 		<p>Weighted GPA for the current quarter</p>
+		<p class:textshadow={!showGpa} on:click={() => (showGpa = !showGpa)}>
+			{#if showGpa}{Math.round(data.unweightedGPA * 100) / 100}{:else}Show{/if}
+		</p>
+		<p>Unweighted GPA for the current quarter</p>
 	</div>
 	{#if showPopup}
 	<ClassPopup {form} {data} bind:showPopup bind:courseSelected />

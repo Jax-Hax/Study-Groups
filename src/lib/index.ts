@@ -197,36 +197,66 @@ export function decryptPassword(encodedMessage) {
 export function calculateWeighted(course) {
     let grade_offset = 0;
     if (course.type_of_class === "AP") {
-      grade_offset = 1.0;
+        grade_offset = 1.0;
     }
     else if (course.type_of_class === "HON") {
-      grade_offset = 0.5;
+        grade_offset = 0.5;
     }
+    let roundedGrade = Math.round(course.grade);
     let gpa = 0;
-    if (Math.round(course.grade) >= 97) {
-      gpa = 4.5;
-    }
-    else if (Math.round(course.grade) >= 90) {
-      gpa = 4;
-    }
-    else if (Math.round(course.grade) >= 86) {
-      gpa = 3.5;
-    }
-    else if (Math.round(course.grade) >= 80) {
-      gpa = 3;
-    }
-    else if (Math.round(course.grade) >= 76) {
-      gpa = 2.5;
-    }
-    else if (Math.round(course.grade) >= 70) {
-      gpa = 2;
-    }
-    else if (Math.round(course.grade) >= 66) {
-      gpa = 1.5;
-    }
-    else if (Math.round(course.grade) >= 60) {
-      gpa = 1;
+
+    if (roundedGrade >= 97) {
+        gpa = 4.5;
+    } else if (roundedGrade >= 90) {
+        gpa = 4;
+    } else if (roundedGrade >= 86) {
+        gpa = 3.5;
+    } else if (roundedGrade >= 80) {
+        gpa = 3;
+    } else if (roundedGrade >= 76) {
+        gpa = 2.5;
+    } else if (roundedGrade >= 70) {
+        gpa = 2;
+    } else if (roundedGrade >= 66) {
+        gpa = 1.5;
+    } else if (roundedGrade >= 60) {
+        gpa = 1;
+    } else {
+        gpa = 0;
     }
     gpa += grade_offset;
+    return gpa
+}
+export function calculateUnweighted(course) {
+    let grade = Math.round(course.grade);
+    let gpa = 0;
+
+    if (grade >= 97) {
+        gpa = 4.0;
+    } else if (grade >= 94) {
+        gpa = 4.0;
+    } else if (grade >= 90) {
+        gpa = 3.7;
+    } else if (grade >= 87) {
+        gpa = 3.3;
+    } else if (grade >= 84) {
+        gpa = 3.0;
+    } else if (grade >= 80) {
+        gpa = 2.7;
+    } else if (grade >= 77) {
+        gpa = 2.3;
+    } else if (grade >= 74) {
+        gpa = 2.0;
+    } else if (grade >= 70) {
+        gpa = 1.7;
+    } else if (grade >= 67) {
+        gpa = 1.3;
+    } else if (grade >= 64) {
+        gpa = 1.0;
+    } else if (grade >= 60) {
+        gpa = 0.7;
+    } else {
+        gpa = 0.0;
+    }
     return gpa
 }

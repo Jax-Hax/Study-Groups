@@ -1,4 +1,4 @@
-import { login, getDaysOfWeek, getFirstDayOfMonth, decryptPassword, calculateWeighted } from '$lib';
+import { login, getDaysOfWeek, getFirstDayOfMonth, decryptPassword, calculateWeighted, calculateUnweighted } from '$lib';
 import { fail, redirect } from '@sveltejs/kit'
 
 export async function load({ url, cookies, locals: { supabase, getSession } }) {
@@ -68,12 +68,14 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
     return matchingCourse ? { "grade": course1.grade, "assignment_list": course1.assignment_list, "known_assignments": user_in_course_data.find(course => matchingCourse.course_id === course.course_id).grade_id_list, ...matchingCourse } : null;
   }).filter(Boolean);
   //calculate gpa
-  let gpas = courses_with_grades.map(course => {
-    return calculateWeighted(course)
+  let weightedGPA = 0;
+  let unweightedGPA = 0;
+  courses_with_grades.forEach(course => {
+    weightedGPA += calculateWeighted(course)
+    unweightedGPA += calculateUnweighted(course)
   })
-  var sum = gpas.reduce((accumulator, currentValue) => {
-    return accumulator + currentValue
-  }, 0);
+  weightedGPA /= courses_with_grades.length;
+  unweightedGPA /= courses_with_grades.length;
   //get new grades
   const grades = courses_with_grades.map(course => {
     // Destructure the item and extract the 'name' property
@@ -160,7 +162,8 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
     club_data,
     all_club_data,
     grades,
-    gpa: sum / gpas.length
+    weightedGPA,
+    unweightedGPA
   }
 }
 export const actions = {

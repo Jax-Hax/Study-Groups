@@ -40,7 +40,7 @@
 								{@html assignment.Measure} - {assignment.Score.replace(/0+$/, '').replace(
 									/\.$/,
 									''
-								)}
+								)} - {assignment.Type}
 							</p>
 						{/each}
 					</div>{/if}
