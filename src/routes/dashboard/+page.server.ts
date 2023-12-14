@@ -96,7 +96,11 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
         new_assignments_list_of_ids: filteredAssignments.map(value => value.GradebookID).join()
       };
     }
-    
+    return {
+      ...rest,
+      new_assignments: [], // Changing the value of 'name' to 'fullName'
+      new_assignments_list_of_ids: []
+    };
   });
   //fetch todos
   const { data: custom_todo_data, error: courseError3 } = await supabase
