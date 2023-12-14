@@ -200,8 +200,8 @@
 								checked_assignment = todo.assignment_id;
 								e.preventDefault();
 							}}
-							class="bouncyButton"
-							style="--pop: var(--dark-red)">Finish</button
+							class="badSymbolButton"
+							style="--pop: var(--dark-red)"><span class="material-symbols-outlined">delete</span></button
 						>{/if}
 				</section>
 				<section style="flex-grow: 2">
@@ -288,14 +288,14 @@
 		border-radius: 16px;
 		font-size: 1.25em;
 		border-radius: 16px;
-		width: 80vw;
+		width: max(70vw,5em);
 		text-align: center;
 		display: flex;
 		align-items: center;
 	}
 	@media (max-width: 750px) {
 		#grid div {
-			width: 15em;
+			width: 13em;
 		}
 	}
 	.symbolButton {

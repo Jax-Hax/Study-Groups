@@ -34,7 +34,7 @@
 	.form {
 		display: flex;
 		padding: 2em;
-		max-width: 30em;
+		max-width: max(20em, 60vw);
 		height: max(60vh,15em);
 		margin: auto;
 		flex-direction: column;
