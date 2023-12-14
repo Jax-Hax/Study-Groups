@@ -8,10 +8,10 @@
 </script>
 
 <svelte:head>
-	<title>Cognnect - Practice Trading Stocks with Friends</title>
+	<title>Cognnect - Bringing Students Together</title>
 	<meta
 		name="description"
-		content="Learn about the stock market without risk. Invite your friends to a competition for free!"
+		content="Join a network of students collaborating to make school a more enjoyable experience!"
 	/>
 </svelte:head>
 <header>
