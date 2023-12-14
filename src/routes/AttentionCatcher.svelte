@@ -32,7 +32,7 @@
 		gap: 1rem;
 	}
 	#attention h1 {
-		font-size: max(4.5vw, 4em);
+		font-size: max(4.5vw, 3.5em);
 		color: var(--text-color);
 	}
 	#attention p {
