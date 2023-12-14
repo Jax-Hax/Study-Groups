@@ -80,20 +80,23 @@ export async function load({ url, cookies, locals: { supabase, getSession } }) {
   const grades = courses_with_grades.map(course => {
     // Destructure the item and extract the 'name' property
     const { known_assignments, ...rest } = course;
-    const filteredAssignments = course.assignment_list.filter(assignment => {
-      const gradebookID = parseInt(assignment.GradebookID, 10);
-      let score = assignment.Score.replace(/0+$/, '').replace(/\.$/, '');
-      if (score === "Not Graded" || score === "Not Due") {
-        return false;
-      }
-      return !known_assignments.includes(gradebookID);
-    });
-    // Create a new object with the remaining properties and the modified 'fullName' property
-    return {
-      ...rest,
-      new_assignments: filteredAssignments, // Changing the value of 'name' to 'fullName'
-      new_assignments_list_of_ids: filteredAssignments.map(value => value.GradebookID).join()
-    };
+    if (course.assignment_list.length > 0) {
+      const filteredAssignments = course.assignment_list.filter(assignment => {
+        const gradebookID = parseInt(assignment.GradebookID, 10);
+        let score = assignment.Score.replace(/0+$/, '').replace(/\.$/, '');
+        if (score === "Not Graded" || score === "Not Due") {
+          return false;
+        }
+        return !known_assignments.includes(gradebookID);
+      });
+      // Create a new object with the remaining properties and the modified 'fullName' property
+      return {
+        ...rest,
+        new_assignments: filteredAssignments, // Changing the value of 'name' to 'fullName'
+        new_assignments_list_of_ids: filteredAssignments.map(value => value.GradebookID).join()
+      };
+    }
+    
   });
   //fetch todos
   const { data: custom_todo_data, error: courseError3 } = await supabase
