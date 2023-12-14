@@ -12,7 +12,7 @@ import StudentVueAuth from './StudentVueAuth.svelte';
 	<form method="post" action="?/signout">
 		<button class="bouncyButton" style="margin: 1em">Sign out</button>
 	</form>
-	<h1 style="color: var(--text-color); text-align: center; margin-top: -1em">Welcome to __!</h1>
+	<h1 style="color: var(--text-color); text-align: center; margin-top: -1em">Welcome to Cognnect!</h1>
 	{#if showStudentvue}
 	<StudentVueAuth {form} {data} />
 	{/if}
